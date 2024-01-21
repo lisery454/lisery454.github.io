@@ -1,9 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Godot 初次使用记录</title>
+    <url>/2024/01/21/Godot%20%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>最近尝试开始学习godot，记录一下对godot使用下来的一点想法。</p>
+<p>也是刚开始学，就想把之前在unity上做的一个扫雷小游戏的项目直接移植到godot上。</p>
+<p>以下是我的一些使用下来的看法：</p>
+<p>我觉得和unity不同的是它是以类的继承为主要的添加行为方式。这里我看到了它用的是C#的局部类，说明godot它后台会自动帮我把整个类补全，让我专注于写自己的逻辑，我觉得这一点很好。</p>
+<p>还有就是整个节点通信方式。父级调用子类可以直接GetNode调用，而子类调用父级是使用signal进行一个事件的绑定。我觉得也是非常清晰的相比于unity。</p>
+<p>但是我写下来发现Godot的代码很多都是偏向于硬编码的字符串，比如获取资源，获取Node，都是需要提供一个路径。这样虽然容易上手，但是会导致Node或资源改变了路径就要重新修改路径，很容易产生问题。</p>
+<p>还有Load场景也一定要用通过路径加载的，不能用PackedScene加载，不然如果循环加载就会出问题。</p>
+<p>整体的UI控件基本的是有的，但是可配置性不高。如果需要高配置的话需要自己从零开始做一个。</p>
+<p>基本上没出过什么大问题，就是有些小问题，重启一下或者多试一次就可以解决的程度。</p>
+<p>build的速度相比于unity很快，可以修改代码马上就可以运行。不像unity那样build要个十几秒。</p>
+<p>读取文件的话也是有自带的api，可以读取cfg文件。</p>
+<p>总而言之还是很看好godot的，虽然还是有很多缺陷，但是整体上我觉得让我使用下来很舒服，相比于unity的一大堆莫名奇妙的东西让人去使用，godot提供了清晰而又明了的解决方法。</p>
+<p>这是我做的扫雷项目的代码：<a class="link" href="https://github.com/lisery454/mine-sweeper-godot">https://github.com/lisery454/mine-sweeper-godot <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>Godot</tag>
+        <tag>CSharp</tag>
+        <tag>Dotnet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Get Screen Color in Unity Shader</title>
+    <url>/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/</url>
+    <content><![CDATA[<p>最近做项目需要获取屏幕颜色然后反转，搞了一段时间，因此记录一下</p>
+<h2 id="1-世界中物体的shader"><a href="#1-世界中物体的shader" class="headerlink" title="1. 世界中物体的shader"></a>1. 世界中物体的shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/Invert&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [HideInInspector]_MainTex (&quot;Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line"></span><br><span class="line">            struct a2v</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 pos : SV_POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">                float4 screen_pos : TEXCOORD1;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            v2f vert(a2v v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f o;</span><br><span class="line">                o.pos = UnityObjectToClipPos(v.vertex);</span><br><span class="line">                <span class="comment">// o.uv = v.uv;</span></span><br><span class="line">                o.uv = TRANSFORM_TEX(v.uv, _MainTex);</span><br><span class="line">                o.screen_pos = ComputeGrabScreenPos(o.pos);</span><br><span class="line">                o.screen_pos /= o.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f i) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// fixed4 colorMain = tex2D(_MainTex, i.uv);</span></span><br><span class="line">                fixed3 color = tex2D(_GrabTexture, i.screen_pos).rgb;</span><br><span class="line">                fixed3 white = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> fixed4(white - color, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Fallback Off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-UI中的shader"><a href="#2-UI中的shader" class="headerlink" title="2. UI中的shader"></a>2. UI中的shader</h2><p>其中的2560和1440是因为</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/image-20230819170346237.png" class>
+
+<p>这样的话只对特定比例的屏幕有效，比例和2560x1440不同的话就会出现拉伸的现象</p>
+<div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/InvertUI&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [PerRendererData] _MainTex (&quot;Sprite Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">        _Color (&quot;Tint&quot;, Color) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        _StencilComp (&quot;Stencil Comparison&quot;, Float) = <span class="number">8</span></span><br><span class="line">        _Stencil (&quot;Stencil ID&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilOp (&quot;Stencil Operation&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilWriteMask (&quot;Stencil Write Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line">        _StencilReadMask (&quot;Stencil Read Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">        _ColorMask (&quot;Color Mask&quot;, Float) = <span class="number">15</span></span><br><span class="line"></span><br><span class="line">        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip (&quot;Use Alpha Clip&quot;, Float) = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;IgnoreProjector&quot;=&quot;True&quot;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;PreviewType&quot;=&quot;Plane&quot;</span><br><span class="line">            &quot;CanUseSpriteAtlas&quot;=&quot;True&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        Stencil</span><br><span class="line">        &#123;</span><br><span class="line">            Ref [_Stencil]</span><br><span class="line">            Comp [_StencilComp]</span><br><span class="line">            Pass [_StencilOp]</span><br><span class="line">            ReadMask [_StencilReadMask]</span><br><span class="line">            WriteMask [_StencilWriteMask]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Cull Off</span><br><span class="line">        Lighting Off</span><br><span class="line">        ZWrite Off</span><br><span class="line">        ZTest [unity_GUIZTestMode]</span><br><span class="line">        Blend SrcAlpha OneMinusSrcAlpha</span><br><span class="line">        ColorMask [_ColorMask]</span><br><span class="line"></span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            Name &quot;Default&quot;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line">            <span class="meta">#pragma target 2.0</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line">            <span class="meta">#include &quot;UnityUI.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_CLIP_RECT</span></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_ALPHACLIP</span></span><br><span class="line"></span><br><span class="line">            struct appdata_t</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                UNITY_VERTEX_INPUT_INSTANCE_ID</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : SV_POSITION;</span><br><span class="line">                fixed4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                float4 worldPosition : TEXCOORD1;</span><br><span class="line">                float4 screen_pos : TEXCOORD2;</span><br><span class="line">                UNITY_VERTEX_OUTPUT_STEREO</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line">            fixed4 _Color;</span><br><span class="line">            fixed4 _TextureSampleAdd;</span><br><span class="line">            float4 _ClipRect;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line"></span><br><span class="line">            v2f vert(appdata_t v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f OUT;</span><br><span class="line">                UNITY_SETUP_INSTANCE_ID(v);</span><br><span class="line">                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);</span><br><span class="line">                OUT.worldPosition = v.vertex;</span><br><span class="line">                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);</span><br><span class="line"></span><br><span class="line">                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);</span><br><span class="line"></span><br><span class="line">                OUT.color = v.color * _Color;</span><br><span class="line">                OUT.screen_pos = ComputeGrabScreenPos(OUT.worldPosition);</span><br><span class="line">                OUT.screen_pos /= OUT.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> OUT;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f IN) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;</span><br><span class="line">                float2 screenPos = IN.screen_pos.xy;</span><br><span class="line">                screenPos.xy *= <span class="number">2</span>;</span><br><span class="line">                screenPos.xy /= float2(<span class="number">2560</span>, <span class="number">1440</span>);</span><br><span class="line">                screenPos.xy += <span class="number">0.5</span>;</span><br><span class="line">                half3 screenColor = tex2D(_GrabTexture, screenPos).rgb;</span><br><span class="line">                half3 invertScreenColor = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) - screenColor;</span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_CLIP_RECT</span></span><br><span class="line">                color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_ALPHACLIP</span></span><br><span class="line">                clip (color.a - <span class="number">0.001</span>);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> fixed4(invertScreenColor, color.a);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>Shader</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to use Hexo to build your self blog</title>
+    <url>/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/</url>
+    <content><![CDATA[<p>本文介绍如何使用<code>Github</code>和<code>Hexo</code>框架搭建自己的博客，纯新手教程</p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ol>
+<li>安装<code>Git</code></li>
+<li>有<code>Github</code>账号</li>
+<li>有安装了<code>NodeJS</code></li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
+<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
+<p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/create_github_repo.png" class>
+
+
+
+<h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
+<p>命令行输入，安装<code>hexo</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
+
+<p>创建hexo项目文件夹，并构建。这里的hexo-blog可以换名字，就是创建的文件夹名字</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init hexo-blog</span><br><span class="line">cd hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
+
+<p>本地将markdown生成网页</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
+
+<p>本地运行网页</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
+
+<p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/default_page.png" class>
+
+<h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
+<p>这是它的github地址：<a class="link" href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo-blog</span><br><span class="line">----</span><br><span class="line">----themes</span><br><span class="line">--------fluid</span><br><span class="line">------------下载的放这里</span><br><span class="line">----</span><br></pre></td></tr></table></figure></div>
+
+<p>然后是指定安装的主题和语言</p>
+<p>修改根目录下的<code>_config.yaml</code></p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">fluid</span>  <span class="comment"># 指定主题</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span>  <span class="comment"># 指定语言</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="创建-关于-页面"><a href="#创建-关于-页面" class="headerlink" title="创建 关于 页面"></a>创建 关于 页面</h3><p>命令行输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
+
+<p>编辑根目录下<code>/source/about/index.md</code></p>
+<div class="highlight-container" data-rel="Markdown"><figure class="iseeu highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2023-06-21 17:18:14</span><br><span class="line"><span class="section">layout: about</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">你好！hello！这里可以写你要写的东西</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="个性化配置"><a href="#个性化配置" class="headerlink" title="个性化配置"></a>个性化配置</h3><p>修改根目录下的<code>_config.yaml</code>，常见的有：</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Lisery&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;what are you doing?&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Lisery</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://lisery454.github.io</span></span><br></pre></td></tr></table></figure></div>
+
+<p>修改<code>sources/fluid/_config.yaml</code>，常见的有：</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span></span><br><span class="line">  <span class="attr">slogan:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="string">&quot;Lisery&#x27;s Blog&quot;</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">  <span class="attr">math:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启后就可以使用math公式</span></span><br><span class="line">    <span class="attr">specific:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">engine:</span> <span class="string">mathjax</span></span><br></pre></td></tr></table></figure></div>
+
+<p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
+<h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
+<p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/leanClound_example.png" class>
+
+
+
+<p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>更多配置查看<code>Fluid</code>的 官网：<a class="link" href="https://hexo.fluid-dev.com/docs/guide/">https://hexo.fluid-dev.com/docs/guide/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
+
+<p>配置根目录下的<code>_config.yaml</code></p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="comment"># 刚开始创建的git仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">token:</span> <span class="comment"># GitHub Personal access tokens，具体获取可以查阅网上</span></span><br></pre></td></tr></table></figure></div>
+
+<p>之后直接输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
+
+<p>就可以生成网页完直接上传到github仓库了</p>
+<p>之后就可以访问<code>username.github.io</code>就可以访问自己的网站了</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Typora插入图片路径重复问题"><a href="#Typora插入图片路径重复问题" class="headerlink" title="Typora插入图片路径重复问题"></a>Typora插入图片路径重复问题</h3><p>参见：<a class="link" href="https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md">https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-typora-image</span><br></pre></td></tr></table></figure></div>
+
+<p>然后在typora的最前面的yml配置区加入<code>typora-copy-images-to: &#123;&#123; title &#125;&#125;</code></p>
+<h3 id="绑定自己的域名"><a href="#绑定自己的域名" class="headerlink" title="绑定自己的域名"></a>绑定自己的域名</h3><p>先去一些云平台上购买域名，比如阿里云，腾讯云等</p>
+<p>然后在仓库根目录下创建CNAME文件，名字不能改，然后里面填上你买的域名，比如我的是<code>lisery.com</code></p>
+<p>然后控制台输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ping yourname.github.io</span><br></pre></td></tr></table></figure></div>
+
+<p>获取你这个网站的ip</p>
+<p>然后在你购买域名的平台上面修改域名解析</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/dns.png" class>
+
+<p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
+]]></content>
+      <categories>
+        <category>tutorial</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Github</tag>
+        <tag>NodeJS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AvaloniaUI Learn Notes</title>
     <url>/2024/01/21/AvaloniaUI%20Learn%20Notes/</url>
-    <content><![CDATA[<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><p>![](AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png)</p>
+    <content><![CDATA[<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><img lazyload src="/images/loading.svg" data-src="/2024/01/21/AvaloniaUI%20Learn%20Notes/image-20230928203007995.png" class>
+
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;Window xmlns=&quot;https://github.com/avaloniaui&quot;</span><br><span class="line">        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span><br><span class="line">        xmlns:vm=&quot;using:BasicMvvmSample.ViewModels&quot;</span><br><span class="line">        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span><br><span class="line">        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><br><span class="line">        mc:Ignorable=&quot;d&quot; d:DesignWidth=&quot;800&quot; d:DesignHeight=&quot;450&quot;</span><br><span class="line">        x:Class=&quot;BasicMvvmSample.Views.MainWindow&quot;</span><br><span class="line">        x:DataType=&quot;vm:MainWindowViewModel&quot;</span><br><span class="line">        x:CompileBindings=&quot;True&quot;</span><br><span class="line">        Icon=&quot;/Assets/avalonia-logo.ico&quot;</span><br><span class="line">        Title=&quot;BasicMvvmSample&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;Design.DataContext&gt;</span><br><span class="line">        &lt;!-- 声明全局VM --&gt;</span><br><span class="line">        &lt;vm:MainWindowViewModel /&gt;</span><br><span class="line">    &lt;/Design.DataContext&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- View结构和绑定 --&gt;</span><br><span class="line">    &lt;StackPanel DataContext=&quot;&#123;Binding SimpleViewModel&#125;&quot; Spacing=&quot;10&quot;&gt;</span><br><span class="line">        &lt;TextBlock&gt;Enter your Name:&lt;/TextBlock&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Name&#125;&quot; /&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Greeting, Mode=OneWay&#125;&quot;</span><br><span class="line">                 IsReadOnly=&quot;True&quot;</span><br><span class="line">                 FontWeight=&quot;Bold&quot; /&gt;</span><br><span class="line">    &lt;/StackPanel&gt;</span><br><span class="line">&lt;/Window&gt;</span><br></pre></td></tr></table></figure></div>
 
 <div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainWindowViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> SimpleViewModel SimpleViewModel &#123; <span class="keyword">get</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -38,12 +186,7 @@
 
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;NumericUpDown Grid.Row=&quot;3&quot; Grid.Column=&quot;1&quot;</span><br><span class="line">                       IsReadOnly=&quot;True&quot;&gt;</span><br><span class="line">    &lt;NumericUpDown.Value&gt;</span><br><span class="line">        &lt;MultiBinding Converter=&quot;&#123;StaticResource MathMultiConverter&#125;&quot; Mode=&quot;OneWay&quot;&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Operator&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number1&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number2&quot; /&gt;</span><br><span class="line">        &lt;/MultiBinding&gt;</span><br><span class="line">    &lt;/NumericUpDown.Value&gt;</span><br><span class="line">&lt;/NumericUpDown&gt;</span><br></pre></td></tr></table></figure></div>
 
-<img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="AvaloniaUI Learn Notes/image-20230928213605606.png"
-                      style="zoom:67%;" 
-                >
+<img lazyload src="/images/loading.svg" data-src="./AvaloniaUI Learn Notes/image-20230928213605606.png" style="zoom:67%;">
 
 <hr>
 <h3 id="x-DataType"><a href="#x-DataType" class="headerlink" title="x:DataType"></a>x:DataType</h3><p>指定View所对应的ViewModel，然后设置比如一个window的context绑定到一个ViewModel，系统根据ViewLocator去用这个ViewModel自动找到对应的View去展示</p>
@@ -55,218 +198,16 @@
         <category>notes</category>
       </categories>
       <tags>
-        <tag>Avalonia</tag>
         <tag>CSharp</tag>
         <tag>Dotnet</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to use Hexo to build your self blog</title>
-    <url>/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/</url>
-    <content><![CDATA[<p>本文介绍如何使用<code>Github</code>和<code>Hexo</code>框架搭建自己的博客，纯新手教程</p>
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ol>
-<li>安装<code>Git</code></li>
-<li>有<code>Github</code>账号</li>
-<li>有安装了<code>NodeJS</code></li>
-</ol>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
-<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
-<p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
-<p>![](How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
-<h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
-<p>命令行输入，安装<code>hexo</code></p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
-
-<p>创建hexo项目文件夹，并构建。这里的hexo-blog可以换名字，就是创建的文件夹名字</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init hexo-blog</span><br><span class="line">cd hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
-
-<p>本地将markdown生成网页</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
-
-<p>本地运行网页</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
-
-<p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
-<p>![](How to use Hexo to build your self blog&#x2F;default_page.png)</p>
-<h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
-<p>这是它的github地址：<a class="link"   href="https://github.com/fluid-dev/hexo-theme-fluid" >https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo-blog</span><br><span class="line">----</span><br><span class="line">----themes</span><br><span class="line">--------fluid</span><br><span class="line">------------下载的放这里</span><br><span class="line">----</span><br></pre></td></tr></table></figure></div>
-
-<p>然后是指定安装的主题和语言</p>
-<p>修改根目录下的<code>_config.yaml</code></p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">fluid</span>  <span class="comment"># 指定主题</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span>  <span class="comment"># 指定语言</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="创建-关于-页面"><a href="#创建-关于-页面" class="headerlink" title="创建 关于 页面"></a>创建 关于 页面</h3><p>命令行输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
-
-<p>编辑根目录下<code>/source/about/index.md</code></p>
-<div class="highlight-container" data-rel="Markdown"><figure class="iseeu highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2023-06-21 17:18:14</span><br><span class="line"><span class="section">layout: about</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">你好！hello！这里可以写你要写的东西</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="个性化配置"><a href="#个性化配置" class="headerlink" title="个性化配置"></a>个性化配置</h3><p>修改根目录下的<code>_config.yaml</code>，常见的有：</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Lisery&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;what are you doing?&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Lisery</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://lisery454.github.io</span></span><br></pre></td></tr></table></figure></div>
-
-<p>修改<code>sources/fluid/_config.yaml</code>，常见的有：</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span></span><br><span class="line">  <span class="attr">slogan:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="string">&quot;Lisery&#x27;s Blog&quot;</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">  <span class="attr">math:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启后就可以使用math公式</span></span><br><span class="line">    <span class="attr">specific:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">engine:</span> <span class="string">mathjax</span></span><br></pre></td></tr></table></figure></div>
-
-<p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
-<h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
-<p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
-<p>![](How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
-<p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-
-
-<p>更多配置查看<code>Fluid</code>的 官网：<a class="link"   href="https://hexo.fluid-dev.com/docs/guide/" >https://hexo.fluid-dev.com/docs/guide/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>安装</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
-
-<p>配置根目录下的<code>_config.yaml</code></p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="comment"># 刚开始创建的git仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">token:</span> <span class="comment"># GitHub Personal access tokens，具体获取可以查阅网上</span></span><br></pre></td></tr></table></figure></div>
-
-<p>之后直接输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
-
-<p>就可以生成网页完直接上传到github仓库了</p>
-<p>之后就可以访问<code>username.github.io</code>就可以访问自己的网站了</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Typora插入图片路径重复问题"><a href="#Typora插入图片路径重复问题" class="headerlink" title="Typora插入图片路径重复问题"></a>Typora插入图片路径重复问题</h3><p>参见：<a class="link"   href="https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md" >https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>安装</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-typora-image</span><br></pre></td></tr></table></figure></div>
-
-<p>然后在typora的最前面的yml配置区加入<code>typora-copy-images-to: &#123;&#123; title &#125;&#125;</code></p>
-<h3 id="绑定自己的域名"><a href="#绑定自己的域名" class="headerlink" title="绑定自己的域名"></a>绑定自己的域名</h3><p>先去一些云平台上购买域名，比如阿里云，腾讯云等</p>
-<p>然后在仓库根目录下创建CNAME文件，名字不能改，然后里面填上你买的域名，比如我的是<code>lisery.com</code></p>
-<p>然后控制台输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ping yourname.github.io</span><br></pre></td></tr></table></figure></div>
-
-<p>获取你这个网站的ip</p>
-<p>然后在你购买域名的平台上面修改域名解析</p>
-<p>![](How to use Hexo to build your self blog&#x2F;dns.png)</p>
-<p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
-]]></content>
-      <categories>
-        <category>tutorial</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Github</tag>
-        <tag>NodeJS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity URP Shader Learn Note</title>
-    <url>/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/</url>
-    <content><![CDATA[<h2 id="初步使用URP-和-Shader-Graph"><a href="#初步使用URP-和-Shader-Graph" class="headerlink" title="初步使用URP 和 Shader Graph"></a>初步使用URP 和 Shader Graph</h2><h3 id="使用URP"><a href="#使用URP" class="headerlink" title="使用URP"></a>使用URP</h3><p>导入URP包然后创建在项目中创建<code>Universal Render Pipeline Asset</code>，名字可以自己取。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719190336106.png)</p>
-<p>之后设置<code>Project Settings/Graphics/Scriptable Render Pipeline Settings</code>为自己刚刚创建的<code>asset</code>。</p>
-<p>这样这个项目就配置为URP管线而不是内置管线了。</p>
-<p>目前项目结构为</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719190652919.png)</p>
-<h3 id="创建ShaderGraph"><a href="#创建ShaderGraph" class="headerlink" title="创建ShaderGraph"></a>创建ShaderGraph</h3><p>创建<code>Shader Graph/URP/Lit Shader Graph</code>名为<code>Test Shader Graph</code>，打开来如图所示。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719191438389.png)</p>
-<p>并创建一个材质使用这个<code>shader graph</code>，并创建一个Cube并使用这个材质</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719192141645.png)</p>
-<p>接下来给这个shader输入增加一个贴图输入，并设置默认贴图</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719192414662.png)</p>
-<p>创建一个纹理采样节点，它使用MainTex作为输入，用第一套UV0作为采样的坐标，输出纹理上的颜色</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193348018.png)</p>
-<p>记得点击左上角的保存按钮，不然shader不会保存，也就没有改变效果。效果如下</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193504200.png)</p>
-<p>现在增加一个颜色输入，同上。并将其和上一步采样的颜色输出相乘返回输出。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193811748.png)</p>
-<p>这样的话就可以通过改Color的颜色来修改材质的颜色了。</p>
-<p>同理，可以加一个设置饱和度的输入，不再赘述</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719194213153.png)</p>
-<h3 id="通过C-动态修改Material的属性"><a href="#通过C-动态修改Material的属性" class="headerlink" title="通过C#动态修改Material的属性"></a>通过C#动态修改Material的属性</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChangeMaterial</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] <span class="keyword">private</span> Material material;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.T))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// material.SetColor(&quot;_Color&quot;, Color.green);</span></span><br><span class="line">            material.SetColor(Shader.PropertyToID(<span class="string">&quot;_Color&quot;</span>), Color.green);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>其中的字符串索引便是之前在<code>Shader Graph</code>中输入节点的<code>Reference</code>属性。</p>
-<p>注释中的代码也可以，就是字符串索引效率低，可以换成另一种。</p>
-<p>要注意这种修改材质的方式，是直接修改文件的，也就是说如果改变材质了，停止运行也不会变成原来的状态了。</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=VsUK9K6UbY4" >https://www.youtube.com/watch?v=VsUK9K6UbY4 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="Shader实现溶解动画"><a href="#Shader实现溶解动画" class="headerlink" title="Shader实现溶解动画"></a>Shader实现溶解动画</h2><p>原理：把一张图的通道值进行一个平滑插值，将其值作为透明度通道的值。</p>
-<p>其中Progress为0到1的值，作为插值的key；StepAmount是平滑插值中间的那段长度。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230719205236013.png)</p>
-<p>代码修改Progress值，如下</p>
-<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line">[<span class="meta">RequireComponent(typeof(SpriteRenderer))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Transition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Material material;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">int</span> ProgressID = Shader.PropertyToID(<span class="string">&quot;_Progress&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        material = GetComponent&lt;SpriteRenderer&gt;().material;</span><br><span class="line">        StartCoroutine(ProgressCoroutine());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">ProgressCoroutine</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            material.SetFloat(ProgressID, Mathf.Abs(Time.time % <span class="number">2</span> - <span class="number">1f</span>));</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>效果图：</p>
-<p>![](Unity URP Shader Learn Note&#x2F;1.gif)</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=tNrLowO5OOY" >https://www.youtube.com/watch?v=tNrLowO5OOY <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="实现2D随风摇摆的效果"><a href="#实现2D随风摇摆的效果" class="headerlink" title="实现2D随风摇摆的效果"></a>实现2D随风摇摆的效果</h2><p>原理：修改物体坐标下的顶点位置，通过噪声使其产生x方向上的偏移</p>
-<p>产生噪声如图，根据时间和世界坐标对噪音图进行采样，之后把噪音映射到-0.5到0.5之间。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720102639400.png)</p>
-<p>噪音还要乘上uv的y值，这样图片底部就不会动了</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103050771.png)</p>
-<p>把原本的物体坐标的x加上噪音</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103011065.png)</p>
-<p>全图：</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103217809.png)</p>
-<p>![](Unity URP Shader Learn Note&#x2F;2.gif)</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=VcUiksxYT88" >https://www.youtube.com/watch?v=VcUiksxYT88 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D构建动画"><a href="#2D构建动画" class="headerlink" title="2D构建动画"></a>2D构建动画</h2><p>原理：根据progress的值（0到1）决定是否这个物体被构建出来。然后根据这个值进行原图片的裁剪，也就是修改alpha值，达成部分构建的效果，具体就不阐述了。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720134816594.png)</p>
-<p>然后是构建边缘发光的效果，就是用同一个方法，progress稍微快一点，然后两者做差，产生边缘。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720134936048.png)</p>
-<p>最终效果：</p>
-<p>![](Unity URP Shader Learn Note&#x2F;3.gif)</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=OzyLWXTr3Io" >https://www.youtube.com/watch?v=OzyLWXTr3Io <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D图形外轮廓实现"><a href="#2D图形外轮廓实现" class="headerlink" title="2D图形外轮廓实现"></a>2D图形外轮廓实现</h2><p>原理：通过原本图片的上下左右偏移一个距离，然后加起来拼出外轮廓，缺点是无法有很大的外轮廓。</p>
-<p>上下左右偏移并加起来，记住要saturate，不然会有问题。</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152307570.png)</p>
-<p>拼接原来的图形和外轮廓</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152441981.png)</p>
-<p>效果：</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152229089.png)</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=FvQFhkS90nI" >https://www.youtube.com/watch?v=FvQFhkS90nI <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D像素风格shader"><a href="#2D像素风格shader" class="headerlink" title="2D像素风格shader"></a>2D像素风格shader</h2><p>原理：把采样的UV离散化。UV本来是0到1连续的，把它变为阶梯一样的</p>
-<p>![](Unity URP Shader Learn Note&#x2F;image-20230720154304049.png)</p>
-<p>参考：</p>
-<p><a class="link"   href="https://www.youtube.com/watch?v=siiqnXA156Y" >https://www.youtube.com/watch?v=siiqnXA156Y <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>URP</tag>
-        <tag>Shader</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Get Screen Color in Unity Shader</title>
-    <url>/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/</url>
-    <content><![CDATA[<p>最近做项目需要获取屏幕颜色然后反转，搞了一段时间，因此记录一下</p>
-<h2 id="1-世界中物体的shader"><a href="#1-世界中物体的shader" class="headerlink" title="1. 世界中物体的shader"></a>1. 世界中物体的shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/Invert&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [HideInInspector]_MainTex (&quot;Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line"></span><br><span class="line">            struct a2v</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 pos : SV_POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">                float4 screen_pos : TEXCOORD1;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            v2f vert(a2v v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f o;</span><br><span class="line">                o.pos = UnityObjectToClipPos(v.vertex);</span><br><span class="line">                <span class="comment">// o.uv = v.uv;</span></span><br><span class="line">                o.uv = TRANSFORM_TEX(v.uv, _MainTex);</span><br><span class="line">                o.screen_pos = ComputeGrabScreenPos(o.pos);</span><br><span class="line">                o.screen_pos /= o.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f i) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// fixed4 colorMain = tex2D(_MainTex, i.uv);</span></span><br><span class="line">                fixed3 color = tex2D(_GrabTexture, i.screen_pos).rgb;</span><br><span class="line">                fixed3 white = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> fixed4(white - color, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Fallback Off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="2-UI中的shader"><a href="#2-UI中的shader" class="headerlink" title="2. UI中的shader"></a>2. UI中的shader</h2><p>其中的2560和1440是因为</p>
-<p>![image-20230819170346237](Get Screen Color in Unity shader&#x2F;image-20230819170346237.png)</p>
-<p>这样的话只对特定比例的屏幕有效，比例和2560x1440不同的话就会出现拉伸的现象</p>
-<div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/InvertUI&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [PerRendererData] _MainTex (&quot;Sprite Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">        _Color (&quot;Tint&quot;, Color) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        _StencilComp (&quot;Stencil Comparison&quot;, Float) = <span class="number">8</span></span><br><span class="line">        _Stencil (&quot;Stencil ID&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilOp (&quot;Stencil Operation&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilWriteMask (&quot;Stencil Write Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line">        _StencilReadMask (&quot;Stencil Read Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">        _ColorMask (&quot;Color Mask&quot;, Float) = <span class="number">15</span></span><br><span class="line"></span><br><span class="line">        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip (&quot;Use Alpha Clip&quot;, Float) = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;IgnoreProjector&quot;=&quot;True&quot;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;PreviewType&quot;=&quot;Plane&quot;</span><br><span class="line">            &quot;CanUseSpriteAtlas&quot;=&quot;True&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        Stencil</span><br><span class="line">        &#123;</span><br><span class="line">            Ref [_Stencil]</span><br><span class="line">            Comp [_StencilComp]</span><br><span class="line">            Pass [_StencilOp]</span><br><span class="line">            ReadMask [_StencilReadMask]</span><br><span class="line">            WriteMask [_StencilWriteMask]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Cull Off</span><br><span class="line">        Lighting Off</span><br><span class="line">        ZWrite Off</span><br><span class="line">        ZTest [unity_GUIZTestMode]</span><br><span class="line">        Blend SrcAlpha OneMinusSrcAlpha</span><br><span class="line">        ColorMask [_ColorMask]</span><br><span class="line"></span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            Name &quot;Default&quot;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line">            <span class="meta">#pragma target 2.0</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line">            <span class="meta">#include &quot;UnityUI.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_CLIP_RECT</span></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_ALPHACLIP</span></span><br><span class="line"></span><br><span class="line">            struct appdata_t</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                UNITY_VERTEX_INPUT_INSTANCE_ID</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : SV_POSITION;</span><br><span class="line">                fixed4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                float4 worldPosition : TEXCOORD1;</span><br><span class="line">                float4 screen_pos : TEXCOORD2;</span><br><span class="line">                UNITY_VERTEX_OUTPUT_STEREO</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line">            fixed4 _Color;</span><br><span class="line">            fixed4 _TextureSampleAdd;</span><br><span class="line">            float4 _ClipRect;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line"></span><br><span class="line">            v2f vert(appdata_t v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f OUT;</span><br><span class="line">                UNITY_SETUP_INSTANCE_ID(v);</span><br><span class="line">                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);</span><br><span class="line">                OUT.worldPosition = v.vertex;</span><br><span class="line">                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);</span><br><span class="line"></span><br><span class="line">                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);</span><br><span class="line"></span><br><span class="line">                OUT.color = v.color * _Color;</span><br><span class="line">                OUT.screen_pos = ComputeGrabScreenPos(OUT.worldPosition);</span><br><span class="line">                OUT.screen_pos /= OUT.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> OUT;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f IN) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;</span><br><span class="line">                float2 screenPos = IN.screen_pos.xy;</span><br><span class="line">                screenPos.xy *= <span class="number">2</span>;</span><br><span class="line">                screenPos.xy /= float2(<span class="number">2560</span>, <span class="number">1440</span>);</span><br><span class="line">                screenPos.xy += <span class="number">0.5</span>;</span><br><span class="line">                half3 screenColor = tex2D(_GrabTexture, screenPos).rgb;</span><br><span class="line">                half3 invertScreenColor = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) - screenColor;</span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_CLIP_RECT</span></span><br><span class="line">                color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_ALPHACLIP</span></span><br><span class="line">                clip (color.a - <span class="number">0.001</span>);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> fixed4(invertScreenColor, color.a);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>Shader</tag>
+        <tag>Avalonia</tag>
       </tags>
   </entry>
   <entry>
     <title>Use AutoHotKey to Configure Keys</title>
     <url>/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/</url>
     <content><![CDATA[<p>最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。</p>
-<h3 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1.官网下载"></a>1.官网下载</h3><p><a class="link"   href="https://www.autohotkey.com/" >https://www.autohotkey.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1.官网下载"></a>1.官网下载</h3><p><a class="link" href="https://www.autohotkey.com/">https://www.autohotkey.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>这是官网，我下载的是v2。</p>
 <h3 id="2-创建映射配置"><a href="#2-创建映射配置" class="headerlink" title="2.创建映射配置"></a>2.创建映射配置</h3><p>创建一个后缀为<code>.ahk</code>的文件。根据官网上的教程简单的映射几个键位。</p>
 <p>比如我的是：</p>
@@ -275,8 +216,10 @@
 <p>比如第一句就是菜单键加D就是→键。</p>
 <p>直接双击<code>.ahk</code>的文件就可以直接运行了。</p>
 <h3 id="3-开机启动"><a href="#3-开机启动" class="headerlink" title="3.开机启动"></a>3.开机启动</h3><p>使用其的编译功能将其转换为exe文件</p>
-<p>![](Use AutoHotKey to Configure Keys&#x2F;image-20230912144244936.png)</p>
-<p>![](Use AutoHotKey to Configure Keys&#x2F;image-20230912144402683.png)</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png" class>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png" class>
+
 <p>之后把生成的exe放到开机启动的文件夹下</p>
 <p>路径应该是：<code>C:\Users\&#123;username&#125;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
 <p>之后应该就可以开机启动了。</p>
@@ -289,32 +232,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Godot 初次使用记录</title>
-    <url>/2024/01/21/Godot%20%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>最近尝试开始学习godot，记录一下对godot使用下来的一点想法。</p>
-<p>也是刚开始学，就想把之前在unity上做的一个扫雷小游戏的项目直接移植到godot上。</p>
-<p>以下是我的一些使用下来的看法：</p>
-<p>我觉得和unity不同的是它是以类的继承为主要的添加行为方式。这里我看到了它用的是C#的局部类，说明godot它后台会自动帮我把整个类补全，让我专注于写自己的逻辑，我觉得这一点很好。</p>
-<p>还有就是整个节点通信方式。父级调用子类可以直接GetNode调用，而子类调用父级是使用signal进行一个事件的绑定。我觉得也是非常清晰的相比于unity。</p>
-<p>但是我写下来发现Godot的代码很多都是偏向于硬编码的字符串，比如获取资源，获取Node，都是需要提供一个路径。这样虽然容易上手，但是会导致Node或资源改变了路径就要重新修改路径，很容易产生问题。</p>
-<p>还有Load场景也一定要用通过路径加载的，不能用PackedScene加载，不然如果循环加载就会出问题。</p>
-<p>整体的UI控件基本的是有的，但是可配置性不高。如果需要高配置的话需要自己从零开始做一个。</p>
-<p>基本上没出过什么大问题，就是有些小问题，重启一下或者多试一次就可以解决的程度。</p>
-<p>build的速度相比于unity很快，可以修改代码马上就可以运行。不像unity那样build要个十几秒。</p>
-<p>读取文件的话也是有自带的api，可以读取cfg文件。</p>
-<p>总而言之还是很看好godot的，虽然还是有很多缺陷，但是整体上我觉得让我使用下来很舒服，相比于unity的一大堆莫名奇妙的东西让人去使用，godot提供了清晰而又明了的解决方法。</p>
-<p>这是我做的扫雷项目的代码：<a class="link"   href="https://github.com/lisery454/mine-sweeper-godot" >https://github.com/lisery454/mine-sweeper-godot <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-        <tag>Dotnet</tag>
-        <tag>Godot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于游戏内数字的一些思考</title>
     <url>/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<h2 id="游戏内的数字"><a href="#游戏内的数字" class="headerlink" title="游戏内的数字"></a>游戏内的数字</h2><p>在游戏设计中，或者说在一场游戏中，经常或者说大多数游戏都会出现数字。就现实中的游戏不论，要说一款电子游戏中完全没有数字是不可能的。因为电子软件本身的底层就是数字，而玩家的输入输出都是也都是数字的具象化。而这里我要深入讨论的，不是这些数字，而是游戏策划中的数字。它们和游戏如何表现无关，而是和游戏如何给予玩家体验有关。简单来说，就是规则中的数字，而不是底层的数字。</p>
@@ -323,21 +240,13 @@
 <p>数字也是一种方便策划修改和平衡游戏的方式。因为如果是浮点数，它相对于整数来说更加光滑（虽然底层并不连续&#x2F;(ㄒoㄒ)&#x2F;~~），也就是说，可以不断二分取一个中间值。相比于离散的设计，这种光滑的数值更加方便地修改游戏平衡。</p>
 <h2 id="我们需要这么多数字吗"><a href="#我们需要这么多数字吗" class="headerlink" title="我们需要这么多数字吗"></a>我们需要这么多数字吗</h2><p>虽然数字有它的好处，但是我的观点是游戏并不需要这么多的数字。数字像一种香料，往一盘游戏菜肴里面加一点可以增加香味，但是加多了就变成的全是香料，反而变得难吃了。或者换句话说，数字越多玩家越没有好的体验，少量数字优于大量数字。还有就是个位数优于整数优于浮点数。以下我就简要谈谈这两条。</p>
 <p>首先是少量数字优于大量数字。我举一个我心目中这方面做的很好的例子，植物大战僵尸。整个界面上数字只有阳光和植物所需要的阳光消耗量（左下角的钱数和游戏的关卡内内容无关，不再讨论）。并且很细节的一点是这些阳光量都是25的倍数，也就是说，其实25就是1单位，75是3单位，这样的话，其实这是一个广义来说的个位数的数字。这样做的好处是玩家对于这个的记忆量和计算量就会变少，而更加专注于如何利用有限的阳光处理场上的局面。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/./%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png"
-                     
-                ></p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png" class>
+
 <p>其次是冷却时间，游戏中把它做成了进度条，这是一种常见的把数字消失的方法，这种方式把一个数字形象地变成了进度条的长短。我的观念中，图形大于数字，永远是这样的（比如上学的时候的数学题能画图做就坚决不用解析做），图形带来的给玩家的反馈大于数字。</p>
 <p>紧接着是植物的生命值和攻击力，还有一些特殊的数值，比如土豆地雷几秒钟会钻出来，食人花要几秒才能吞一个怪。我们会发现，这些数值完全没有在游戏中出现，但是玩家的体验并没有消失，反而是变得更好了。这是因为合理的关卡设置和之前游戏给予的经验。比如这个植物被僵尸吃几口就没了，这在之前的游戏中会映入脑袋，玩家可能不会记得数值，因为有些比如坚果等植物要吃很多口，所以玩家只有一个大致经验，比如这个耐吃，这个不耐吃。游戏很好地把数值变成了玩家的大体印象，这是很好的把数字消失的方式。因为玩家专注于数值的话，游戏就会变成数学题，变成了一个如何在条件下创造最多优势的数学问题，这是我们不想看到的，玩家需要的是快乐，而不是研究数学（如果有人说研究数学使我快乐，那么请你去做数学题而不是玩游戏）。而如果玩家专注于一种印象，这样玩家就可以通过这种印象很轻松地做出当前对他更有利的操作，也许不是理论上最好的，但一定是玩家心中觉得最好的。这就是游戏应该让玩家做出的操作，然后根据游戏之后的反馈，逐渐修改玩家心中的印象，以致最后能不断地修改做出更好的操作。</p>
 <p>我再举一个例子，这是一个极度依赖数字的游戏，文明6。我对于这一类策略游戏的看法是不太积极的。我认为这种过多数值的设计反而让一个游戏变成了数学题目，不能让一个玩家享受其中。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/./%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111213654868.png"
-                     
-                ></p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111213654868.png" class>
+
 <p>就上一张游戏截图而言，屏幕上的数字多到数不过来。我承认文明6确实在减少数字上下了很大功夫，也尽量把数字缩小，改成便于计算的整数。但是数字的多就意味着要考虑的多，要考虑的多意味着玩家需要思考的多。也许确实有人喜欢玩这种需要复杂计算的，但是我认为游戏应该是能让你玩的开心的，是可以随便玩的，应该是玩家随便的操作都能从中获取他们不一样的快乐。而这种过多数字的表现意味着决策上存在一定方向的较优解，这是我认为不可取的。</p>
 <p>其次，数字的多对于新手玩家而言，很难去上手。这是一个我不愿意看到的现象。</p>
 <h2 id="对于使用数字的想法和建议"><a href="#对于使用数字的想法和建议" class="headerlink" title="对于使用数字的想法和建议"></a>对于使用数字的想法和建议</h2><h3 id="不要让玩家看到过多数字"><a href="#不要让玩家看到过多数字" class="headerlink" title="不要让玩家看到过多数字"></a>不要让玩家看到过多数字</h3><p>尽量让UI界面上不要出现数字，在一定要出现数字的地方让数字尽量变小，从浮点数变成整数，从整数变成十位数，个位数。把数字变成一种感性的描述，比如攻击力增加了10点，变成攻击力小幅上涨。这样玩家可以自己尝试到底上升了多少，有了一种发现和体会的过程。</p>
@@ -355,27 +264,131 @@
   <entry>
     <title>godot像素黑白后处理shader</title>
     <url>/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/</url>
-    <content><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png"
-                     
-                ></p>
+    <content><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png" class>
+
 <h2 id="shader"><a href="#shader" class="headerlink" title="shader"></a>shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">shader_type canvas_item;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec2</span> size = <span class="type">vec2</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> threshold = <span class="number">0.5</span>;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> screen_texture : hint_screen_texture, repeat_disable, filter_nearest;</span><br><span class="line"></span><br><span class="line"><span class="type">vec4</span> to_one_bit(<span class="type">vec4</span> color) &#123;</span><br><span class="line">	<span class="type">float</span> sum = (color.r * <span class="number">0.299</span> + color.g * <span class="number">0.587</span> + color.b * <span class="number">0.114</span>);</span><br><span class="line">	<span class="type">float</span> f = <span class="built_in">ceil</span>(sum - threshold);</span><br><span class="line">	color = <span class="built_in">mix</span>(<span class="type">vec4</span>(<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">1</span>), <span class="type">vec4</span>(<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">1</span>), f);</span><br><span class="line">	<span class="keyword">return</span> color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">vec2</span> get_new_uv(<span class="type">vec2</span> uv, <span class="type">vec2</span> screen_pixel_size) &#123;</span><br><span class="line">	<span class="type">vec2</span> size_uv = screen_pixel_size * size;</span><br><span class="line">	<span class="type">vec2</span> new_uv = <span class="built_in">floor</span>(uv / size_uv) * size_uv;</span><br><span class="line">	<span class="keyword">return</span> new_uv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> fragment() &#123;</span><br><span class="line">		<span class="type">vec2</span> new_uv = get_new_uv(SCREEN_UV, SCREEN_PIXEL_SIZE);</span><br><span class="line">		<span class="type">vec4</span> color = <span class="built_in">textureLod</span>(screen_texture, new_uv, <span class="number">0.0</span>);</span><br><span class="line">		COLOR = to_one_bit(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png"
-                     
-                ></p>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png" class>
 ]]></content>
       <categories>
         <category>notes</category>
       </categories>
       <tags>
-        <tag>Shader</tag>
         <tag>Godot</tag>
+        <tag>Shader</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity URP Shader Learn Note</title>
+    <url>/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/</url>
+    <content><![CDATA[<h2 id="初步使用URP-和-Shader-Graph"><a href="#初步使用URP-和-Shader-Graph" class="headerlink" title="初步使用URP 和 Shader Graph"></a>初步使用URP 和 Shader Graph</h2><h3 id="使用URP"><a href="#使用URP" class="headerlink" title="使用URP"></a>使用URP</h3><p>导入URP包然后创建在项目中创建<code>Universal Render Pipeline Asset</code>，名字可以自己取。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719190336106.png" class>
+
+<p>之后设置<code>Project Settings/Graphics/Scriptable Render Pipeline Settings</code>为自己刚刚创建的<code>asset</code>。</p>
+<p>这样这个项目就配置为URP管线而不是内置管线了。</p>
+<p>目前项目结构为</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719190652919.png" class>
+
+<h3 id="创建ShaderGraph"><a href="#创建ShaderGraph" class="headerlink" title="创建ShaderGraph"></a>创建ShaderGraph</h3><p>创建<code>Shader Graph/URP/Lit Shader Graph</code>名为<code>Test Shader Graph</code>，打开来如图所示。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719191438389.png" class>
+
+<p>并创建一个材质使用这个<code>shader graph</code>，并创建一个Cube并使用这个材质</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719192141645.png" class>
+
+<p>接下来给这个shader输入增加一个贴图输入，并设置默认贴图</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719192414662.png" class>
+
+<p>创建一个纹理采样节点，它使用MainTex作为输入，用第一套UV0作为采样的坐标，输出纹理上的颜色</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193348018.png" class>
+
+<p>记得点击左上角的保存按钮，不然shader不会保存，也就没有改变效果。效果如下</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193504200.png" class>
+
+<p>现在增加一个颜色输入，同上。并将其和上一步采样的颜色输出相乘返回输出。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193811748.png" class>
+
+<p>这样的话就可以通过改Color的颜色来修改材质的颜色了。</p>
+<p>同理，可以加一个设置饱和度的输入，不再赘述</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719194213153.png" class>
+
+<h3 id="通过C-动态修改Material的属性"><a href="#通过C-动态修改Material的属性" class="headerlink" title="通过C#动态修改Material的属性"></a>通过C#动态修改Material的属性</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChangeMaterial</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] <span class="keyword">private</span> Material material;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.T))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// material.SetColor(&quot;_Color&quot;, Color.green);</span></span><br><span class="line">            material.SetColor(Shader.PropertyToID(<span class="string">&quot;_Color&quot;</span>), Color.green);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中的字符串索引便是之前在<code>Shader Graph</code>中输入节点的<code>Reference</code>属性。</p>
+<p>注释中的代码也可以，就是字符串索引效率低，可以换成另一种。</p>
+<p>要注意这种修改材质的方式，是直接修改文件的，也就是说如果改变材质了，停止运行也不会变成原来的状态了。</p>
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=VsUK9K6UbY4">https://www.youtube.com/watch?v=VsUK9K6UbY4 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="Shader实现溶解动画"><a href="#Shader实现溶解动画" class="headerlink" title="Shader实现溶解动画"></a>Shader实现溶解动画</h2><p>原理：把一张图的通道值进行一个平滑插值，将其值作为透明度通道的值。</p>
+<p>其中Progress为0到1的值，作为插值的key；StepAmount是平滑插值中间的那段长度。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719205236013.png" class>
+
+<p>代码修改Progress值，如下</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line">[<span class="meta">RequireComponent(typeof(SpriteRenderer))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Transition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Material material;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">int</span> ProgressID = Shader.PropertyToID(<span class="string">&quot;_Progress&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        material = GetComponent&lt;SpriteRenderer&gt;().material;</span><br><span class="line">        StartCoroutine(ProgressCoroutine());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">ProgressCoroutine</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            material.SetFloat(ProgressID, Mathf.Abs(Time.time % <span class="number">2</span> - <span class="number">1f</span>));</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>效果图：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/1.gif" class>
+
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=tNrLowO5OOY">https://www.youtube.com/watch?v=tNrLowO5OOY <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="实现2D随风摇摆的效果"><a href="#实现2D随风摇摆的效果" class="headerlink" title="实现2D随风摇摆的效果"></a>实现2D随风摇摆的效果</h2><p>原理：修改物体坐标下的顶点位置，通过噪声使其产生x方向上的偏移</p>
+<p>产生噪声如图，根据时间和世界坐标对噪音图进行采样，之后把噪音映射到-0.5到0.5之间。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720102639400.png" class>
+
+<p>噪音还要乘上uv的y值，这样图片底部就不会动了</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103050771.png" class>
+
+<p>把原本的物体坐标的x加上噪音</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103011065.png" class>
+
+<p>全图：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103217809.png" class>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/2.gif" class>
+
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=VcUiksxYT88">https://www.youtube.com/watch?v=VcUiksxYT88 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="2D构建动画"><a href="#2D构建动画" class="headerlink" title="2D构建动画"></a>2D构建动画</h2><p>原理：根据progress的值（0到1）决定是否这个物体被构建出来。然后根据这个值进行原图片的裁剪，也就是修改alpha值，达成部分构建的效果，具体就不阐述了。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720134816594.png" class>
+
+<p>然后是构建边缘发光的效果，就是用同一个方法，progress稍微快一点，然后两者做差，产生边缘。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720134936048.png" class>
+
+<p>最终效果：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/3.gif" class>
+
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=OzyLWXTr3Io">https://www.youtube.com/watch?v=OzyLWXTr3Io <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="2D图形外轮廓实现"><a href="#2D图形外轮廓实现" class="headerlink" title="2D图形外轮廓实现"></a>2D图形外轮廓实现</h2><p>原理：通过原本图片的上下左右偏移一个距离，然后加起来拼出外轮廓，缺点是无法有很大的外轮廓。</p>
+<p>上下左右偏移并加起来，记住要saturate，不然会有问题。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152307570.png" class>
+
+<p>拼接原来的图形和外轮廓</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152441981.png" class>
+
+<p>效果：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152229089.png" class>
+
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=FvQFhkS90nI">https://www.youtube.com/watch?v=FvQFhkS90nI <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+<h2 id="2D像素风格shader"><a href="#2D像素风格shader" class="headerlink" title="2D像素风格shader"></a>2D像素风格shader</h2><p>原理：把采样的UV离散化。UV本来是0到1连续的，把它变为阶梯一样的</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720154304049.png" class>
+
+<p>参考：</p>
+<p><a class="link" href="https://www.youtube.com/watch?v=siiqnXA156Y">https://www.youtube.com/watch?v=siiqnXA156Y <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<hr>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>Shader</tag>
+        <tag>URP</tag>
       </tags>
   </entry>
 </search>
