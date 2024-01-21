@@ -72,7 +72,7 @@
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
 <h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
 <p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
 <h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
 <p>命令行输入，安装<code>hexo</code></p>
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
@@ -87,7 +87,7 @@
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
 
 <p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;default_page.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;default_page.png)</p>
 <h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
 <p>这是它的github地址：<a class="link"   href="https://github.com/fluid-dev/hexo-theme-fluid" >https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
@@ -112,7 +112,7 @@
 <p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
 <h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
 <p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
 <p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
 <div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
 
@@ -142,7 +142,7 @@
 
 <p>获取你这个网站的ip</p>
 <p>然后在你购买域名的平台上面修改域名解析</p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;dns.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;dns.png)</p>
 <p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
 ]]></content>
       <categories>
@@ -158,26 +158,26 @@
     <title>Unity URP Shader Learn Note</title>
     <url>/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/</url>
     <content><![CDATA[<h2 id="初步使用URP-和-Shader-Graph"><a href="#初步使用URP-和-Shader-Graph" class="headerlink" title="初步使用URP 和 Shader Graph"></a>初步使用URP 和 Shader Graph</h2><h3 id="使用URP"><a href="#使用URP" class="headerlink" title="使用URP"></a>使用URP</h3><p>导入URP包然后创建在项目中创建<code>Universal Render Pipeline Asset</code>，名字可以自己取。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719190336106.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719190336106.png)</p>
 <p>之后设置<code>Project Settings/Graphics/Scriptable Render Pipeline Settings</code>为自己刚刚创建的<code>asset</code>。</p>
 <p>这样这个项目就配置为URP管线而不是内置管线了。</p>
 <p>目前项目结构为</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719190652919.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719190652919.png)</p>
 <h3 id="创建ShaderGraph"><a href="#创建ShaderGraph" class="headerlink" title="创建ShaderGraph"></a>创建ShaderGraph</h3><p>创建<code>Shader Graph/URP/Lit Shader Graph</code>名为<code>Test Shader Graph</code>，打开来如图所示。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719191438389.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719191438389.png)</p>
 <p>并创建一个材质使用这个<code>shader graph</code>，并创建一个Cube并使用这个材质</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719192141645.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719192141645.png)</p>
 <p>接下来给这个shader输入增加一个贴图输入，并设置默认贴图</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719192414662.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719192414662.png)</p>
 <p>创建一个纹理采样节点，它使用MainTex作为输入，用第一套UV0作为采样的坐标，输出纹理上的颜色</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719193348018.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193348018.png)</p>
 <p>记得点击左上角的保存按钮，不然shader不会保存，也就没有改变效果。效果如下</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719193504200.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193504200.png)</p>
 <p>现在增加一个颜色输入，同上。并将其和上一步采样的颜色输出相乘返回输出。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719193811748.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719193811748.png)</p>
 <p>这样的话就可以通过改Color的颜色来修改材质的颜色了。</p>
 <p>同理，可以加一个设置饱和度的输入，不再赘述</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719194213153.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719194213153.png)</p>
 <h3 id="通过C-动态修改Material的属性"><a href="#通过C-动态修改Material的属性" class="headerlink" title="通过C#动态修改Material的属性"></a>通过C#动态修改Material的属性</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChangeMaterial</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] <span class="keyword">private</span> Material material;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.T))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// material.SetColor(&quot;_Color&quot;, Color.green);</span></span><br><span class="line">            material.SetColor(Shader.PropertyToID(<span class="string">&quot;_Color&quot;</span>), Color.green);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>其中的字符串索引便是之前在<code>Shader Graph</code>中输入节点的<code>Reference</code>属性。</p>
@@ -188,49 +188,49 @@
 <hr>
 <h2 id="Shader实现溶解动画"><a href="#Shader实现溶解动画" class="headerlink" title="Shader实现溶解动画"></a>Shader实现溶解动画</h2><p>原理：把一张图的通道值进行一个平滑插值，将其值作为透明度通道的值。</p>
 <p>其中Progress为0到1的值，作为插值的key；StepAmount是平滑插值中间的那段长度。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230719205236013.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230719205236013.png)</p>
 <p>代码修改Progress值，如下</p>
 <div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line">[<span class="meta">RequireComponent(typeof(SpriteRenderer))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Transition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Material material;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">int</span> ProgressID = Shader.PropertyToID(<span class="string">&quot;_Progress&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        material = GetComponent&lt;SpriteRenderer&gt;().material;</span><br><span class="line">        StartCoroutine(ProgressCoroutine());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">ProgressCoroutine</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            material.SetFloat(ProgressID, Mathf.Abs(Time.time % <span class="number">2</span> - <span class="number">1f</span>));</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>效果图：</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;1.gif)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;1.gif)</p>
 <p>参考：</p>
 <p><a class="link"   href="https://www.youtube.com/watch?v=tNrLowO5OOY" >https://www.youtube.com/watch?v=tNrLowO5OOY <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <hr>
 <h2 id="实现2D随风摇摆的效果"><a href="#实现2D随风摇摆的效果" class="headerlink" title="实现2D随风摇摆的效果"></a>实现2D随风摇摆的效果</h2><p>原理：修改物体坐标下的顶点位置，通过噪声使其产生x方向上的偏移</p>
 <p>产生噪声如图，根据时间和世界坐标对噪音图进行采样，之后把噪音映射到-0.5到0.5之间。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720102639400.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720102639400.png)</p>
 <p>噪音还要乘上uv的y值，这样图片底部就不会动了</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720103050771.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103050771.png)</p>
 <p>把原本的物体坐标的x加上噪音</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720103011065.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103011065.png)</p>
 <p>全图：</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720103217809.png)</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;2.gif)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720103217809.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;2.gif)</p>
 <p>参考：</p>
 <p><a class="link"   href="https://www.youtube.com/watch?v=VcUiksxYT88" >https://www.youtube.com/watch?v=VcUiksxYT88 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <hr>
 <h2 id="2D构建动画"><a href="#2D构建动画" class="headerlink" title="2D构建动画"></a>2D构建动画</h2><p>原理：根据progress的值（0到1）决定是否这个物体被构建出来。然后根据这个值进行原图片的裁剪，也就是修改alpha值，达成部分构建的效果，具体就不阐述了。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720134816594.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720134816594.png)</p>
 <p>然后是构建边缘发光的效果，就是用同一个方法，progress稍微快一点，然后两者做差，产生边缘。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720134936048.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720134936048.png)</p>
 <p>最终效果：</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;3.gif)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;3.gif)</p>
 <p>参考：</p>
 <p><a class="link"   href="https://www.youtube.com/watch?v=OzyLWXTr3Io" >https://www.youtube.com/watch?v=OzyLWXTr3Io <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <hr>
 <h2 id="2D图形外轮廓实现"><a href="#2D图形外轮廓实现" class="headerlink" title="2D图形外轮廓实现"></a>2D图形外轮廓实现</h2><p>原理：通过原本图片的上下左右偏移一个距离，然后加起来拼出外轮廓，缺点是无法有很大的外轮廓。</p>
 <p>上下左右偏移并加起来，记住要saturate，不然会有问题。</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720152307570.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152307570.png)</p>
 <p>拼接原来的图形和外轮廓</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720152441981.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152441981.png)</p>
 <p>效果：</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720152229089.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720152229089.png)</p>
 <p>参考：</p>
 <p><a class="link"   href="https://www.youtube.com/watch?v=FvQFhkS90nI" >https://www.youtube.com/watch?v=FvQFhkS90nI <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <hr>
 <h2 id="2D像素风格shader"><a href="#2D像素风格shader" class="headerlink" title="2D像素风格shader"></a>2D像素风格shader</h2><p>原理：把采样的UV离散化。UV本来是0到1连续的，把它变为阶梯一样的</p>
-<p>![](.&#x2F;Unity URP Shader Learn Note&#x2F;image-20230720154304049.png)</p>
+<p>![](Unity URP Shader Learn Note&#x2F;image-20230720154304049.png)</p>
 <p>参考：</p>
 <p><a class="link"   href="https://www.youtube.com/watch?v=siiqnXA156Y" >https://www.youtube.com/watch?v=siiqnXA156Y <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <hr>
@@ -275,8 +275,8 @@
 <p>比如第一句就是菜单键加D就是→键。</p>
 <p>直接双击<code>.ahk</code>的文件就可以直接运行了。</p>
 <h3 id="3-开机启动"><a href="#3-开机启动" class="headerlink" title="3.开机启动"></a>3.开机启动</h3><p>使用其的编译功能将其转换为exe文件</p>
-<p>![](.&#x2F;Use AutoHotKey to Configure Keys&#x2F;image-20230912144244936.png)</p>
-<p>![](.&#x2F;Use AutoHotKey to Configure Keys&#x2F;image-20230912144402683.png)</p>
+<p>![](Use AutoHotKey to Configure Keys&#x2F;image-20230912144244936.png)</p>
+<p>![](Use AutoHotKey to Configure Keys&#x2F;image-20230912144402683.png)</p>
 <p>之后把生成的exe放到开机启动的文件夹下</p>
 <p>路径应该是：<code>C:\Users\&#123;username&#125;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
 <p>之后应该就可以开机启动了。</p>
@@ -366,7 +366,7 @@
 <h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/./godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png"
+                     data-src="/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png"
                      
                 ></p>
 ]]></content>

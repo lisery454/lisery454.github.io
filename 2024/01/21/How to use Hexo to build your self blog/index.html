@@ -26,7 +26,7 @@
 <meta property="og:description" content="本文介绍如何使用Github和Hexo框架搭建自己的博客，纯新手教程 前提 安装Git 有Github账号 有安装了NodeJS  原理Github提供了Github Page的功能，只要我们传输网页文件到某个自己的特定的仓库，Github就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。 操作步骤创建一个">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-21T08:47:15.766Z">
-<meta property="article:modified_time" content="2024-01-21T07:13:23.501Z">
+<meta property="article:modified_time" content="2024-01-21T08:58:24.107Z">
 <meta property="article:author" content="Lisery">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="Github">
@@ -495,8 +495,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 15:13:23</span>
-            <span class="mobile">2024-01-21 15:13:23</span>
+            <span class="desktop">2024-01-21 16:58:24</span>
+            <span class="mobile">2024-01-21 16:58:24</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -567,7 +567,7 @@
 <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
 <h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
 <p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
 <h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
 <p>命令行输入，安装<code>hexo</code></p>
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
@@ -582,7 +582,7 @@
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
 
 <p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;default_page.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;default_page.png)</p>
 <h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
 <p>这是它的github地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid" >https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
@@ -607,7 +607,7 @@
 <p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
 <h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
 <p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
 <p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
 <div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
 
@@ -637,7 +637,7 @@
 
 <p>获取你这个网站的ip</p>
 <p>然后在你购买域名的平台上面修改域名解析</p>
-<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;dns.png)</p>
+<p>![](How to use Hexo to build your self blog&#x2F;dns.png)</p>
 <p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
 
         </div>
