@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Lisery">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/avaloniaui learn notes/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="基础知识MVVM &amp; Binding![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png) 123456789101112131415161718192021222324252627&lt;Window xmlns&#x3D;&quot;https:&#x2F;&#x2F;github.com&#x2F;avaloniaui&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AvaloniaUI Learn Notes">
+<meta property="og:url" content="https://lisery454.github.io/2024/01/21/AvaloniaUI%20Learn%20Notes/index.html">
+<meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="基础知识MVVM &amp; Binding![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png) 123456789101112131415161718192021222324252627&lt;Window xmlns&#x3D;&quot;https:&#x2F;&#x2F;github.com&#x2F;avaloniaui&quot;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lisery454.github.io/2024/01/21/AvaloniaUI%20Learn%20Notes/AvaloniaUI%20Learn%20Notes/image-20230928213605606.png">
+<meta property="article:published_time" content="2024-01-21T08:47:15.737Z">
+<meta property="article:modified_time" content="2024-01-21T07:13:21.435Z">
+<meta property="article:author" content="Lisery">
+<meta property="article:tag" content="Avalonia">
+<meta property="article:tag" content="CSharp">
+<meta property="article:tag" content="Dotnet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lisery454.github.io/2024/01/21/AvaloniaUI%20Learn%20Notes/AvaloniaUI%20Learn%20Notes/image-20230928213605606.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            AvaloniaUI Learn Notes -
+        
+        Lisery&#39;s Blogs
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Lisery&#39;s Blogs
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"lisery454.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"草木温柔择青赤，淋漓染作一罥诗","subtitle":{"text":[],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/lisery454","instagram":null,"zhihu":null,"twitter":null,"email":"lixinlin1945@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":4,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/fontawesome/light.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Lisery&#39;s Blogs
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-solid fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/"
+                                        >
+                                    <i class="fa-solid fa-folder fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">AvaloniaUI Learn Notes</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-21 16:47:15</span>
+        <span class="mobile">2024-01-21 16:47:15</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-21 15:13:21</span>
+            <span class="mobile">2024-01-21 15:13:21</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/notes/">notes</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Avalonia/">Avalonia</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/CSharp/">CSharp</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Dotnet/">Dotnet</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><p>![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png)</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;Window xmlns=&quot;https://github.com/avaloniaui&quot;</span><br><span class="line">        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span><br><span class="line">        xmlns:vm=&quot;using:BasicMvvmSample.ViewModels&quot;</span><br><span class="line">        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span><br><span class="line">        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><br><span class="line">        mc:Ignorable=&quot;d&quot; d:DesignWidth=&quot;800&quot; d:DesignHeight=&quot;450&quot;</span><br><span class="line">        x:Class=&quot;BasicMvvmSample.Views.MainWindow&quot;</span><br><span class="line">        x:DataType=&quot;vm:MainWindowViewModel&quot;</span><br><span class="line">        x:CompileBindings=&quot;True&quot;</span><br><span class="line">        Icon=&quot;/Assets/avalonia-logo.ico&quot;</span><br><span class="line">        Title=&quot;BasicMvvmSample&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;Design.DataContext&gt;</span><br><span class="line">        &lt;!-- 声明全局VM --&gt;</span><br><span class="line">        &lt;vm:MainWindowViewModel /&gt;</span><br><span class="line">    &lt;/Design.DataContext&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- View结构和绑定 --&gt;</span><br><span class="line">    &lt;StackPanel DataContext=&quot;&#123;Binding SimpleViewModel&#125;&quot; Spacing=&quot;10&quot;&gt;</span><br><span class="line">        &lt;TextBlock&gt;Enter your Name:&lt;/TextBlock&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Name&#125;&quot; /&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Greeting, Mode=OneWay&#125;&quot;</span><br><span class="line">                 IsReadOnly=&quot;True&quot;</span><br><span class="line">                 FontWeight=&quot;Bold&quot; /&gt;</span><br><span class="line">    &lt;/StackPanel&gt;</span><br><span class="line">&lt;/Window&gt;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainWindowViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> SimpleViewModel SimpleViewModel &#123; <span class="keyword">get</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这里默认使用了ReactiveUI的框架，可以调用<code>RaiseAndSetIfChanged</code>等已经定义好的方法。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> ReactiveUI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BasicMvvmSample.ViewModels</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimpleViewModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.WhenAnyValue(o =&gt; o.Name)</span><br><span class="line">            .Subscribe(o =&gt; <span class="keyword">this</span>.RaisePropertyChanged(<span class="keyword">nameof</span>(Greeting)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span>? _name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span>? Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _name;</span><br><span class="line">        <span class="keyword">set</span> =&gt; <span class="keyword">this</span>.RaiseAndSetIfChanged(<span class="keyword">ref</span> _name, <span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Greeting =&gt; <span class="built_in">string</span>.IsNullOrEmpty(Name) ? <span class="string">&quot;Hello World from Avalonia.Samples&quot;</span> : <span class="string">$&quot;Hello <span class="subst">&#123;Name&#125;</span>&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h4 id="this-RaiseAndSetIfChanged-ref-name-value"><a href="#this-RaiseAndSetIfChanged-ref-name-value" class="headerlink" title="this.RaiseAndSetIfChanged(ref _name, value);"></a>this.RaiseAndSetIfChanged(ref _name, value);</h4><p>修改属性值，并且通知UI</p>
+<h4 id="this-WhenAnyValue-o-o-Name-Subscribe-o-doSomething"><a href="#this-WhenAnyValue-o-o-Name-Subscribe-o-doSomething" class="headerlink" title="this.WhenAnyValue(o &#x3D;&gt; o.Name).Subscribe(o &#x3D;&gt; doSomething());"></a>this.WhenAnyValue(o &#x3D;&gt; o.Name).Subscribe(o &#x3D;&gt; doSomething());</h4><p>当某个属性值改变时做某事</p>
+<hr>
+<h3 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h3><p>命令包装了一层VM中的方法，传给View</p>
+<h4 id="普通Command"><a href="#普通Command" class="headerlink" title="普通Command"></a>普通Command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReactiveCommand.Create(OpenThePodBayDoors)</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="有条件情况的command"><a href="#有条件情况的command" class="headerlink" title="有条件情况的command"></a>有条件情况的command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果RobotName 不为null或Empty</span></span><br><span class="line"><span class="keyword">var</span> canExecuteFellowRobotCommand =</span><br><span class="line">            <span class="keyword">this</span>.WhenAnyValue(vm =&gt; vm.RobotName, (name) =&gt; !<span class="built_in">string</span>.IsNullOrEmpty(name));</span><br><span class="line"><span class="comment">// 才能执行这个命令（比如不能执行时按钮是不可按的）</span></span><br><span class="line">ReactiveCommand.Create&lt;<span class="built_in">string</span>?&gt;(OpenThePodBayDoorsFellowRobot, canExecuteFellowRobotCommand);</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="异步Command"><a href="#异步Command" class="headerlink" title="异步Command"></a>异步Command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保证了command在执行过程中，触发command的按钮是不可按的</span></span><br><span class="line">ReactiveCommand.CreateFromTask(OpenThePodBayDoorsAsync);</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="ObservableCollection"><a href="#ObservableCollection" class="headerlink" title="ObservableCollection&lt;T&gt;"></a>ObservableCollection&lt;T&gt;</h4><p>可观察的列表</p>
+<hr>
+<h3 id="Value-Conversion"><a href="#Value-Conversion" class="headerlink" title="Value Conversion"></a>Value Conversion</h3><p>在converter中不要抛异常。如果转换不了，就return <code>BindingBotification</code> 或者 如果Converter什么都不做，就return <code>BindingOperations.DONothing</code></p>
+<h4 id="IValueConverter"><a href="#IValueConverter" class="headerlink" title="IValueConverter"></a>IValueConverter</h4><p>相当于一个给binding用的修饰</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MathAddConverter</span> : <span class="title">IValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? Convert(<span class="built_in">object</span>? <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// For add this is simple. just return the sum of the value and the parameter.</span></span><br><span class="line">        <span class="comment">// You may want to validate value and parameter in a real world App</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">decimal</span>?)<span class="keyword">value</span> + (<span class="built_in">decimal</span>?)parameter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? ConvertBack(<span class="built_in">object</span>? <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// If we want to convert back, we need to subtract instead of add.</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">decimal</span>?)<span class="keyword">value</span> - (<span class="built_in">decimal</span>?)parameter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;NumericUpDown Value=&quot;&#123;Binding Number1, Converter=&#123;StaticResource MathAddConverter&#125;, ConverterParameter=&#123;StaticResource MyConverterParameter&#125;&#125;&quot; /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="静态资源导入"><a href="#静态资源导入" class="headerlink" title="静态资源导入"></a>静态资源导入</h4><p>ex.</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Window.Resources&gt;</span><br><span class="line">    &lt;conv:MathAddConverter x:Key=&quot;MathAddConverter&quot; /&gt;</span><br><span class="line">    &lt;x:Decimal x:Key=&quot;MyConverterParameter&quot;&gt;2&lt;/x:Decimal&gt;</span><br><span class="line">&lt;/Window.Resources&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="IMultiValueConverter"><a href="#IMultiValueConverter" class="headerlink" title="IMultiValueConverter"></a>IMultiValueConverter</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> This converter can calculate any number of values.</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MathMultiConverter</span> : <span class="title">IMultiValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? Convert(IList&lt;<span class="built_in">object</span>?&gt; values, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// We need to validate if the provided values are valid. We need at least 3 values.</span></span><br><span class="line">        <span class="comment">// The first value is the operator and the other two values should be a decimal.</span></span><br><span class="line">        <span class="keyword">if</span> (values.Count != <span class="number">3</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// We can write a message into the Trace if we want to inform the developer.</span></span><br><span class="line">            Trace.WriteLine(<span class="string">&quot;Exactly three values expected&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// return &quot;BindingOperations.DoNothing&quot; instead of throwing an Exception.</span></span><br><span class="line">            <span class="comment">// If you want, you can also return a BindingNotification with an Exception</span></span><br><span class="line">            <span class="keyword">return</span> BindingOperations.DoNothing;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The first item of values is the operation.</span></span><br><span class="line">        <span class="comment">// The operation to use is stored as a string.</span></span><br><span class="line">        <span class="built_in">string</span> operation = values[<span class="number">0</span>] <span class="keyword">as</span> <span class="built_in">string</span> ?? <span class="string">&quot;+&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create a variable result and assign the first value we have to if</span></span><br><span class="line">        <span class="built_in">decimal</span> value1 = values[<span class="number">1</span>] <span class="keyword">as</span> <span class="built_in">decimal</span>? ?? <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">decimal</span> value2 = values[<span class="number">2</span>] <span class="keyword">as</span> <span class="built_in">decimal</span>? ?? <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// depending on the operator calculate the result.</span></span><br><span class="line">        <span class="keyword">switch</span> (operation)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;+&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 + value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;-&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 - value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;*&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 * value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;/&quot;</span>:</span><br><span class="line">                <span class="comment">// We cannot divide by zero. If value2 is &#x27;0&#x27;, return an error.</span></span><br><span class="line">                <span class="keyword">if</span> (value2 == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> BindingNotification(<span class="keyword">new</span> DivideByZeroException(<span class="string">&quot;Don&#x27;t do this!&quot;</span>), BindingErrorType.Error);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> value1 / value2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// If we reach this line, something was wrong. So we return an error notification</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BindingNotification(<span class="keyword">new</span> InvalidOperationException(<span class="string">&quot;Something went wrong&quot;</span>), BindingErrorType.Error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;NumericUpDown Grid.Row=&quot;3&quot; Grid.Column=&quot;1&quot;</span><br><span class="line">                       IsReadOnly=&quot;True&quot;&gt;</span><br><span class="line">    &lt;NumericUpDown.Value&gt;</span><br><span class="line">        &lt;MultiBinding Converter=&quot;&#123;StaticResource MathMultiConverter&#125;&quot; Mode=&quot;OneWay&quot;&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Operator&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number1&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number2&quot; /&gt;</span><br><span class="line">        &lt;/MultiBinding&gt;</span><br><span class="line">    &lt;/NumericUpDown.Value&gt;</span><br><span class="line">&lt;/NumericUpDown&gt;</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="./AvaloniaUI Learn Notes/image-20230928213605606.png"
+                      style="zoom:67%;" 
+                >
+
+<hr>
+<h3 id="x-DataType"><a href="#x-DataType" class="headerlink" title="x:DataType"></a>x:DataType</h3><p>指定View所对应的ViewModel，然后设置比如一个window的context绑定到一个ViewModel，系统根据ViewLocator去用这个ViewModel自动找到对应的View去展示</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Content=&quot;&#123;Binding ContentViewModel&#125;&quot;</span><br><span class="line">---</span><br><span class="line">x:DataType=&quot;vm:ToDoListViewModel&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="x-Class"><a href="#x-Class" class="headerlink" title="x:Class"></a>x:Class</h3><p>指定View对应的类</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Avalonia/">#Avalonia</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CSharp/">#CSharp</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Dotnet/">#Dotnet</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Get Screen Color in Unity Shader</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">AvaloniaUI Learn Notes</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM-Binding"><span class="nav-text">MVVM &amp; Binding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Command"><span class="nav-text">Command</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Value-Conversion"><span class="nav-text">Value Conversion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-DataType"><span class="nav-text">x:DataType</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x-Class"><span class="nav-text">x:Class</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Lisery</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

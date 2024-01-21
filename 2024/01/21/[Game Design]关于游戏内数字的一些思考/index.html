@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Lisery">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/[game design]关于游戏内数字的一些思考/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="游戏内的数字在游戏设计中，或者说在一场游戏中，经常或者说大多数游戏都会出现数字。就现实中的游戏不论，要说一款电子游戏中完全没有数字是不可能的。因为电子软件本身的底层就是数字，而玩家的输入输出都是也都是数字的具象化。而这里我要深入讨论的，不是这些数字，而是游戏策划中的数字。它们和游戏如何表现无关，而是和游戏如何给予玩家体验有关。简单来说，就是规则中的数字，而不是底层的数字。 数字有什么用数字作为一种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于游戏内数字的一些思考">
+<meta property="og:url" content="https://lisery454.github.io/2024/01/21/[Game%20Design]%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/index.html">
+<meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="游戏内的数字在游戏设计中，或者说在一场游戏中，经常或者说大多数游戏都会出现数字。就现实中的游戏不论，要说一款电子游戏中完全没有数字是不可能的。因为电子软件本身的底层就是数字，而玩家的输入输出都是也都是数字的具象化。而这里我要深入讨论的，不是这些数字，而是游戏策划中的数字。它们和游戏如何表现无关，而是和游戏如何给予玩家体验有关。简单来说，就是规则中的数字，而不是底层的数字。 数字有什么用数字作为一种">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lisery454.github.io/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png">
+<meta property="og:image" content="https://lisery454.github.io/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111213654868.png">
+<meta property="article:published_time" content="2024-01-21T08:47:16.050Z">
+<meta property="article:modified_time" content="2024-01-21T07:13:20.391Z">
+<meta property="article:author" content="Lisery">
+<meta property="article:tag" content="GameDesign">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lisery454.github.io/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            关于游戏内数字的一些思考 -
+        
+        Lisery&#39;s Blogs
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Lisery&#39;s Blogs
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"lisery454.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"草木温柔择青赤，淋漓染作一罥诗","subtitle":{"text":[],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/lisery454","instagram":null,"zhihu":null,"twitter":null,"email":"lixinlin1945@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":4,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/fontawesome/light.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Lisery&#39;s Blogs
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-solid fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/"
+                                        >
+                                    <i class="fa-solid fa-folder fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">关于游戏内数字的一些思考</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-21 16:47:16</span>
+        <span class="mobile">2024-01-21 16:47:16</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-21 15:13:20</span>
+            <span class="mobile">2024-01-21 15:13:20</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/notes/">notes</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/GameDesign/">GameDesign</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="游戏内的数字"><a href="#游戏内的数字" class="headerlink" title="游戏内的数字"></a>游戏内的数字</h2><p>在游戏设计中，或者说在一场游戏中，经常或者说大多数游戏都会出现数字。就现实中的游戏不论，要说一款电子游戏中完全没有数字是不可能的。因为电子软件本身的底层就是数字，而玩家的输入输出都是也都是数字的具象化。而这里我要深入讨论的，不是这些数字，而是游戏策划中的数字。它们和游戏如何表现无关，而是和游戏如何给予玩家体验有关。简单来说，就是规则中的数字，而不是底层的数字。</p>
+<h2 id="数字有什么用"><a href="#数字有什么用" class="headerlink" title="数字有什么用"></a>数字有什么用</h2><p>数字作为一种公正的裁判，非常适合游戏这样一个对所有人都给予平等规则的娱乐形式。因为数字是说一不二的，两个人比赛谁跑的快，测一下时间比一下谁大就行了，输的那方也不会辩解说其实是我赢了。某电子游戏中，玩家的攻击力是10，那么它就可以给敌人造成10的伤害，这也是大家公认的。</p>
+<p>玩家也可以因此更好的判断自己的情况而做出相应的操作，也就是说具体的数字给予玩家良好的游戏反馈。比如生命值从20变成5了，玩家就知道生命值少了，需要补充生命值。</p>
+<p>数字也是一种方便策划修改和平衡游戏的方式。因为如果是浮点数，它相对于整数来说更加光滑（虽然底层并不连续&#x2F;(ㄒoㄒ)&#x2F;~~），也就是说，可以不断二分取一个中间值。相比于离散的设计，这种光滑的数值更加方便地修改游戏平衡。</p>
+<h2 id="我们需要这么多数字吗"><a href="#我们需要这么多数字吗" class="headerlink" title="我们需要这么多数字吗"></a>我们需要这么多数字吗</h2><p>虽然数字有它的好处，但是我的观点是游戏并不需要这么多的数字。数字像一种香料，往一盘游戏菜肴里面加一点可以增加香味，但是加多了就变成的全是香料，反而变得难吃了。或者换句话说，数字越多玩家越没有好的体验，少量数字优于大量数字。还有就是个位数优于整数优于浮点数。以下我就简要谈谈这两条。</p>
+<p>首先是少量数字优于大量数字。我举一个我心目中这方面做的很好的例子，植物大战僵尸。整个界面上数字只有阳光和植物所需要的阳光消耗量（左下角的钱数和游戏的关卡内内容无关，不再讨论）。并且很细节的一点是这些阳光量都是25的倍数，也就是说，其实25就是1单位，75是3单位，这样的话，其实这是一个广义来说的个位数的数字。这样做的好处是玩家对于这个的记忆量和计算量就会变少，而更加专注于如何利用有限的阳光处理场上的局面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/./%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png"
+                     
+                ></p>
+<p>其次是冷却时间，游戏中把它做成了进度条，这是一种常见的把数字消失的方法，这种方式把一个数字形象地变成了进度条的长短。我的观念中，图形大于数字，永远是这样的（比如上学的时候的数学题能画图做就坚决不用解析做），图形带来的给玩家的反馈大于数字。</p>
+<p>紧接着是植物的生命值和攻击力，还有一些特殊的数值，比如土豆地雷几秒钟会钻出来，食人花要几秒才能吞一个怪。我们会发现，这些数值完全没有在游戏中出现，但是玩家的体验并没有消失，反而是变得更好了。这是因为合理的关卡设置和之前游戏给予的经验。比如这个植物被僵尸吃几口就没了，这在之前的游戏中会映入脑袋，玩家可能不会记得数值，因为有些比如坚果等植物要吃很多口，所以玩家只有一个大致经验，比如这个耐吃，这个不耐吃。游戏很好地把数值变成了玩家的大体印象，这是很好的把数字消失的方式。因为玩家专注于数值的话，游戏就会变成数学题，变成了一个如何在条件下创造最多优势的数学问题，这是我们不想看到的，玩家需要的是快乐，而不是研究数学（如果有人说研究数学使我快乐，那么请你去做数学题而不是玩游戏）。而如果玩家专注于一种印象，这样玩家就可以通过这种印象很轻松地做出当前对他更有利的操作，也许不是理论上最好的，但一定是玩家心中觉得最好的。这就是游戏应该让玩家做出的操作，然后根据游戏之后的反馈，逐渐修改玩家心中的印象，以致最后能不断地修改做出更好的操作。</p>
+<p>我再举一个例子，这是一个极度依赖数字的游戏，文明6。我对于这一类策略游戏的看法是不太积极的。我认为这种过多数值的设计反而让一个游戏变成了数学题目，不能让一个玩家享受其中。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/./%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111213654868.png"
+                     
+                ></p>
+<p>就上一张游戏截图而言，屏幕上的数字多到数不过来。我承认文明6确实在减少数字上下了很大功夫，也尽量把数字缩小，改成便于计算的整数。但是数字的多就意味着要考虑的多，要考虑的多意味着玩家需要思考的多。也许确实有人喜欢玩这种需要复杂计算的，但是我认为游戏应该是能让你玩的开心的，是可以随便玩的，应该是玩家随便的操作都能从中获取他们不一样的快乐。而这种过多数字的表现意味着决策上存在一定方向的较优解，这是我认为不可取的。</p>
+<p>其次，数字的多对于新手玩家而言，很难去上手。这是一个我不愿意看到的现象。</p>
+<h2 id="对于使用数字的想法和建议"><a href="#对于使用数字的想法和建议" class="headerlink" title="对于使用数字的想法和建议"></a>对于使用数字的想法和建议</h2><h3 id="不要让玩家看到过多数字"><a href="#不要让玩家看到过多数字" class="headerlink" title="不要让玩家看到过多数字"></a>不要让玩家看到过多数字</h3><p>尽量让UI界面上不要出现数字，在一定要出现数字的地方让数字尽量变小，从浮点数变成整数，从整数变成十位数，个位数。把数字变成一种感性的描述，比如攻击力增加了10点，变成攻击力小幅上涨。这样玩家可以自己尝试到底上升了多少，有了一种发现和体会的过程。</p>
+<h3 id="不要数值膨胀"><a href="#不要数值膨胀" class="headerlink" title="不要数值膨胀"></a>不要数值膨胀</h3><p>不要给玩家过大的数值，虽然大数值方便调整数值做平衡，但是它带来的玩家对游戏的决策影响很大，玩家需要花费很大的精力去记忆和计算，这反而得不偿失了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>把数字去掉，这是我的决策。总而言之我认为这是一种用感性来取代理性的决策。虽然理性和感性两者都需要，但是我认为在游戏这种方式中，感性需要的更多。</p>
+<p>以上均为个人的观点。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/GameDesign/">#GameDesign</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">godot像素黑白后处理shader</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Use AutoHotKey to Configure Keys</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">关于游戏内数字的一些思考</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%86%85%E7%9A%84%E6%95%B0%E5%AD%97"><span class="nav-text">游戏内的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="nav-text">数字有什么用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E8%BF%99%E4%B9%88%E5%A4%9A%E6%95%B0%E5%AD%97%E5%90%97"><span class="nav-text">我们需要这么多数字吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97%E7%9A%84%E6%83%B3%E6%B3%95%E5%92%8C%E5%BB%BA%E8%AE%AE"><span class="nav-text">对于使用数字的想法和建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E8%AE%A9%E7%8E%A9%E5%AE%B6%E7%9C%8B%E5%88%B0%E8%BF%87%E5%A4%9A%E6%95%B0%E5%AD%97"><span class="nav-text">不要让玩家看到过多数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E6%95%B0%E5%80%BC%E8%86%A8%E8%83%80"><span class="nav-text">不要数值膨胀</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Lisery</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

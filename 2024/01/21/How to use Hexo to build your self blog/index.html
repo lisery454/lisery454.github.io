@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Lisery">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/how to use hexo to build your self blog/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="本文介绍如何使用Github和Hexo框架搭建自己的博客，纯新手教程 前提 安装Git 有Github账号 有安装了NodeJS  原理Github提供了Github Page的功能，只要我们传输网页文件到某个自己的特定的仓库，Github就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。 操作步骤创建一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to use Hexo to build your self blog">
+<meta property="og:url" content="https://lisery454.github.io/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/index.html">
+<meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="本文介绍如何使用Github和Hexo框架搭建自己的博客，纯新手教程 前提 安装Git 有Github账号 有安装了NodeJS  原理Github提供了Github Page的功能，只要我们传输网页文件到某个自己的特定的仓库，Github就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。 操作步骤创建一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-21T08:47:15.766Z">
+<meta property="article:modified_time" content="2024-01-21T07:13:23.501Z">
+<meta property="article:author" content="Lisery">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Github">
+<meta property="article:tag" content="NodeJS">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            How to use Hexo to build your self blog -
+        
+        Lisery&#39;s Blogs
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Lisery&#39;s Blogs
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"lisery454.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"草木温柔择青赤，淋漓染作一罥诗","subtitle":{"text":[],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/lisery454","instagram":null,"zhihu":null,"twitter":null,"email":"lixinlin1945@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":4,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/fontawesome/light.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Lisery&#39;s Blogs
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-solid fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/"
+                                        >
+                                    <i class="fa-solid fa-folder fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">How to use Hexo to build your self blog</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-21 16:47:15</span>
+        <span class="mobile">2024-01-21 16:47:15</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-21 15:13:23</span>
+            <span class="mobile">2024-01-21 15:13:23</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/tutorial/">tutorial</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Hexo/">Hexo</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Github/">Github</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/NodeJS/">NodeJS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>本文介绍如何使用<code>Github</code>和<code>Hexo</code>框架搭建自己的博客，纯新手教程</p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ol>
+<li>安装<code>Git</code></li>
+<li>有<code>Github</code>账号</li>
+<li>有安装了<code>NodeJS</code></li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
+<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
+<p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
+<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;create_github_repo.png)</p>
+<h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
+<p>命令行输入，安装<code>hexo</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
+
+<p>创建hexo项目文件夹，并构建。这里的hexo-blog可以换名字，就是创建的文件夹名字</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init hexo-blog</span><br><span class="line">cd hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
+
+<p>本地将markdown生成网页</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
+
+<p>本地运行网页</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
+
+<p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
+<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;default_page.png)</p>
+<h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
+<p>这是它的github地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid" >https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo-blog</span><br><span class="line">----</span><br><span class="line">----themes</span><br><span class="line">--------fluid</span><br><span class="line">------------下载的放这里</span><br><span class="line">----</span><br></pre></td></tr></table></figure></div>
+
+<p>然后是指定安装的主题和语言</p>
+<p>修改根目录下的<code>_config.yaml</code></p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">fluid</span>  <span class="comment"># 指定主题</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span>  <span class="comment"># 指定语言</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="创建-关于-页面"><a href="#创建-关于-页面" class="headerlink" title="创建 关于 页面"></a>创建 关于 页面</h3><p>命令行输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
+
+<p>编辑根目录下<code>/source/about/index.md</code></p>
+<div class="highlight-container" data-rel="Markdown"><figure class="iseeu highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2023-06-21 17:18:14</span><br><span class="line"><span class="section">layout: about</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">你好！hello！这里可以写你要写的东西</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="个性化配置"><a href="#个性化配置" class="headerlink" title="个性化配置"></a>个性化配置</h3><p>修改根目录下的<code>_config.yaml</code>，常见的有：</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Lisery&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;what are you doing?&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Lisery</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://lisery454.github.io</span></span><br></pre></td></tr></table></figure></div>
+
+<p>修改<code>sources/fluid/_config.yaml</code>，常见的有：</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span></span><br><span class="line">  <span class="attr">slogan:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="string">&quot;Lisery&#x27;s Blog&quot;</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">  <span class="attr">math:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启后就可以使用math公式</span></span><br><span class="line">    <span class="attr">specific:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">engine:</span> <span class="string">mathjax</span></span><br></pre></td></tr></table></figure></div>
+
+<p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
+<h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
+<p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
+<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;leanClound_example.png)</p>
+<p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>更多配置查看<code>Fluid</code>的 官网：<a class="link"   target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/guide/" >https://hexo.fluid-dev.com/docs/guide/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
+
+<p>配置根目录下的<code>_config.yaml</code></p>
+<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="comment"># 刚开始创建的git仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">token:</span> <span class="comment"># GitHub Personal access tokens，具体获取可以查阅网上</span></span><br></pre></td></tr></table></figure></div>
+
+<p>之后直接输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
+
+<p>就可以生成网页完直接上传到github仓库了</p>
+<p>之后就可以访问<code>username.github.io</code>就可以访问自己的网站了</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Typora插入图片路径重复问题"><a href="#Typora插入图片路径重复问题" class="headerlink" title="Typora插入图片路径重复问题"></a>Typora插入图片路径重复问题</h3><p>参见：<a class="link"   target="_blank" rel="noopener" href="https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md" >https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev hexo-typora-image</span><br></pre></td></tr></table></figure></div>
+
+<p>然后在typora的最前面的yml配置区加入<code>typora-copy-images-to: &#123;&#123; title &#125;&#125;</code></p>
+<h3 id="绑定自己的域名"><a href="#绑定自己的域名" class="headerlink" title="绑定自己的域名"></a>绑定自己的域名</h3><p>先去一些云平台上购买域名，比如阿里云，腾讯云等</p>
+<p>然后在仓库根目录下创建CNAME文件，名字不能改，然后里面填上你买的域名，比如我的是<code>lisery.com</code></p>
+<p>然后控制台输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping yourname.github.io</span><br></pre></td></tr></table></figure></div>
+
+<p>获取你这个网站的ip</p>
+<p>然后在你购买域名的平台上面修改域名解析</p>
+<p>![](.&#x2F;How to use Hexo to build your self blog&#x2F;dns.png)</p>
+<p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Hexo/">#Hexo</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Github/">#Github</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/NodeJS/">#NodeJS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Unity URP Shader Learn Note</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/21/Godot%20%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Godot 初次使用记录</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">How to use Hexo to build your self blog</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-text">前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%89%B9%E5%AE%9A%E7%9A%84Github%E4%BB%93%E5%BA%93"><span class="nav-text">创建一个特定的Github仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="nav-text">安装Hexo与配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Hexo%E4%B8%BB%E9%A2%98"><span class="nav-text">安装Hexo主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-%E5%85%B3%E4%BA%8E-%E9%A1%B5%E9%9D%A2"><span class="nav-text">创建 关于 页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="nav-text">个性化配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="nav-text">添加阅读量统计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-text">部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Typora%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E8%B7%AF%E5%BE%84%E9%87%8D%E5%A4%8D%E9%97%AE%E9%A2%98"><span class="nav-text">Typora插入图片路径重复问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D"><span class="nav-text">绑定自己的域名</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Lisery</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
