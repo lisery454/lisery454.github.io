@@ -18,16 +18,16 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="基础知识MVVM &amp; Binding![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png) 123456789101112131415161718192021222324252627&lt;Window xmlns&#x3D;&quot;https:&#x2F;&#x2F;github.com&#x2F;avaloniaui&quot;">
+        <meta name="description" content="一些简单的基础知识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AvaloniaUI Learn Notes">
 <meta property="og:url" content="https://lisery454.github.io/2024/01/21/AvaloniaUI%20Learn%20Notes/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
-<meta property="og:description" content="基础知识MVVM &amp; Binding![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png) 123456789101112131415161718192021222324252627&lt;Window xmlns&#x3D;&quot;https:&#x2F;&#x2F;github.com&#x2F;avaloniaui&quot;">
+<meta property="og:description" content="一些简单的基础知识">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lisery454.github.io/2024/01/21/AvaloniaUI%20Learn%20Notes/AvaloniaUI%20Learn%20Notes/image-20230928213605606.png">
 <meta property="article:published_time" content="2024-01-21T08:47:15.737Z">
-<meta property="article:modified_time" content="2024-01-21T07:13:21.435Z">
+<meta property="article:modified_time" content="2024-01-21T08:56:23.250Z">
 <meta property="article:author" content="Lisery">
 <meta property="article:tag" content="Avalonia">
 <meta property="article:tag" content="CSharp">
@@ -497,8 +497,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 15:13:21</span>
-            <span class="mobile">2024-01-21 15:13:21</span>
+            <span class="desktop">2024-01-21 16:56:23</span>
+            <span class="mobile">2024-01-21 16:56:23</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -560,7 +560,7 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><p>![](.&#x2F;AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png)</p>
+            <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><p>![](AvaloniaUI Learn Notes&#x2F;image-20230928203007995.png)</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;Window xmlns=&quot;https://github.com/avaloniaui&quot;</span><br><span class="line">        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span><br><span class="line">        xmlns:vm=&quot;using:BasicMvvmSample.ViewModels&quot;</span><br><span class="line">        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span><br><span class="line">        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><br><span class="line">        mc:Ignorable=&quot;d&quot; d:DesignWidth=&quot;800&quot; d:DesignHeight=&quot;450&quot;</span><br><span class="line">        x:Class=&quot;BasicMvvmSample.Views.MainWindow&quot;</span><br><span class="line">        x:DataType=&quot;vm:MainWindowViewModel&quot;</span><br><span class="line">        x:CompileBindings=&quot;True&quot;</span><br><span class="line">        Icon=&quot;/Assets/avalonia-logo.ico&quot;</span><br><span class="line">        Title=&quot;BasicMvvmSample&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;Design.DataContext&gt;</span><br><span class="line">        &lt;!-- 声明全局VM --&gt;</span><br><span class="line">        &lt;vm:MainWindowViewModel /&gt;</span><br><span class="line">    &lt;/Design.DataContext&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- View结构和绑定 --&gt;</span><br><span class="line">    &lt;StackPanel DataContext=&quot;&#123;Binding SimpleViewModel&#125;&quot; Spacing=&quot;10&quot;&gt;</span><br><span class="line">        &lt;TextBlock&gt;Enter your Name:&lt;/TextBlock&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Name&#125;&quot; /&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Greeting, Mode=OneWay&#125;&quot;</span><br><span class="line">                 IsReadOnly=&quot;True&quot;</span><br><span class="line">                 FontWeight=&quot;Bold&quot; /&gt;</span><br><span class="line">    &lt;/StackPanel&gt;</span><br><span class="line">&lt;/Window&gt;</span><br></pre></td></tr></table></figure></div>
 
 <div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainWindowViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> SimpleViewModel SimpleViewModel &#123; <span class="keyword">get</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -598,7 +598,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="./AvaloniaUI Learn Notes/image-20230928213605606.png"
+                     data-src="AvaloniaUI Learn Notes/image-20230928213605606.png"
                       style="zoom:67%;" 
                 >
 
