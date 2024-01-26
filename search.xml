@@ -391,4 +391,49 @@
         <tag>URP</tag>
       </tags>
   </entry>
+  <entry>
+    <title>如何使用OhMyPosh定制化WindowTerminal</title>
+    <url>/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/</url>
+    <content><![CDATA[<p>具体如何操作参考 <a class="link" href="https://ohmyposh.dev/docs%EF%BC%8C%E6%9C%AC%E6%96%87%E5%8F%AA%E6%98%AF%E6%8A%8A%E8%87%AA%E5%B7%B1%E7%9A%84%E6%93%8D%E4%BD%9C%E5%8E%86%E7%A8%8B%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B">https://ohmyposh.dev/docs，本文只是把自己的操作历程记录一下 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="安装OhMyPosh"><a href="#安装OhMyPosh" class="headerlink" title="安装OhMyPosh"></a>安装OhMyPosh</h2><p>OhMyPosh是一个对终端外观定制化引擎</p>
+<p>在终端中输入进行安装</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(&#x27;https://ohmyposh.dev/install.ps1&#x27;))</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="安装一款Nerd字体"><a href="#安装一款Nerd字体" class="headerlink" title="安装一款Nerd字体"></a>安装一款Nerd字体</h2><p>因为这些主题大多需要显示一些图标字符，所以需要有一款可以显示这些图标的字体，也就是Nerd字体。</p>
+<p>我是在<a class="link" href="https://www.nerdfonts.com/font-downloads%E7%BD%91%E4%B8%8A%E4%B8%8B%E8%BD%BD%E4%BA%86%60FiraMono">https://www.nerdfonts.com/font-downloads网上下载了`FiraMono <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> Nerd Font&#96;字体，下载完之后安装字体到系统，然后再终端中选择显示的字体为这个就好了。</p>
+<h2 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h2><p>我是从官方网站 <a class="link" href="https://ohmyposh.dev/docs/themes">https://ohmyposh.dev/docs/themes <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 上下载了主题文件，是一个json文件，例如我的是 <a class="link" href="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E3%80%82">https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json这个文件。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>然后是如何在Terminal启动时加载这个文件。</p>
+<p>把这个文件放到一个位置，比如C盘主文件夹下</p>
+<p>打开Terminal，打开<code>$PROFILE</code>对应的文件，比如我用<code>vscode</code>打开</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">code $PROFILE</span><br></pre></td></tr></table></figure></div>
+
+<p>在打开的文件中输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh --config &#x27;&#123;your_file&#125;.omp.json&#x27; | Invoke-Expression</span><br></pre></td></tr></table></figure></div>
+
+<p>然后重新打开Terminal就可以看到成功了</p>
+<blockquote>
+<p>这里官网还提供了直接使用http地址的形式加载，但是我尝试后一直报错，所以不得已采用这种本地加载的方式。</p>
+</blockquote>
+<img lazyload src="/images/loading.svg" data-src="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/image-20240126201140656.png" class title="image-20240126201140656">
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>tutorial</category>
+      </categories>
+      <tags>
+        <tag>Terminal</tag>
+      </tags>
+  </entry>
 </search>
