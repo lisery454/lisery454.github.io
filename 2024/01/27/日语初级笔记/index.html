@@ -1,445 +1,554 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Godot 初次使用记录</title>
-    <url>/2024/01/21/Godot%20%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>最近尝试开始学习godot，记录一下对godot使用下来的一点想法。</p>
-<p>也是刚开始学，就想把之前在unity上做的一个扫雷小游戏的项目直接移植到godot上。</p>
-<p>以下是我的一些使用下来的看法：</p>
-<p>我觉得和unity不同的是它是以类的继承为主要的添加行为方式。这里我看到了它用的是C#的局部类，说明godot它后台会自动帮我把整个类补全，让我专注于写自己的逻辑，我觉得这一点很好。</p>
-<p>还有就是整个节点通信方式。父级调用子类可以直接GetNode调用，而子类调用父级是使用signal进行一个事件的绑定。我觉得也是非常清晰的相比于unity。</p>
-<p>但是我写下来发现Godot的代码很多都是偏向于硬编码的字符串，比如获取资源，获取Node，都是需要提供一个路径。这样虽然容易上手，但是会导致Node或资源改变了路径就要重新修改路径，很容易产生问题。</p>
-<p>还有Load场景也一定要用通过路径加载的，不能用PackedScene加载，不然如果循环加载就会出问题。</p>
-<p>整体的UI控件基本的是有的，但是可配置性不高。如果需要高配置的话需要自己从零开始做一个。</p>
-<p>基本上没出过什么大问题，就是有些小问题，重启一下或者多试一次就可以解决的程度。</p>
-<p>build的速度相比于unity很快，可以修改代码马上就可以运行。不像unity那样build要个十几秒。</p>
-<p>读取文件的话也是有自带的api，可以读取cfg文件。</p>
-<p>总而言之还是很看好godot的，虽然还是有很多缺陷，但是整体上我觉得让我使用下来很舒服，相比于unity的一大堆莫名奇妙的东西让人去使用，godot提供了清晰而又明了的解决方法。</p>
-<p>这是我做的扫雷项目的代码：<a class="link" href="https://github.com/lisery454/mine-sweeper-godot">https://github.com/lisery454/mine-sweeper-godot <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Godot</tag>
-        <tag>CSharp</tag>
-        <tag>Dotnet</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Get Screen Color in Unity Shader</title>
-    <url>/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/</url>
-    <content><![CDATA[<p>最近做项目需要获取屏幕颜色然后反转，搞了一段时间，因此记录一下</p>
-<h2 id="1-世界中物体的shader"><a href="#1-世界中物体的shader" class="headerlink" title="1. 世界中物体的shader"></a>1. 世界中物体的shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/Invert&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [HideInInspector]_MainTex (&quot;Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line"></span><br><span class="line">            struct a2v</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 uv : TEXCOORD0;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 pos : SV_POSITION;</span><br><span class="line">                float2 uv : TEXCOORD0;</span><br><span class="line">                float4 screen_pos : TEXCOORD1;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            v2f vert(a2v v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f o;</span><br><span class="line">                o.pos = UnityObjectToClipPos(v.vertex);</span><br><span class="line">                <span class="comment">// o.uv = v.uv;</span></span><br><span class="line">                o.uv = TRANSFORM_TEX(v.uv, _MainTex);</span><br><span class="line">                o.screen_pos = ComputeGrabScreenPos(o.pos);</span><br><span class="line">                o.screen_pos /= o.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f i) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// fixed4 colorMain = tex2D(_MainTex, i.uv);</span></span><br><span class="line">                fixed3 color = tex2D(_GrabTexture, i.screen_pos).rgb;</span><br><span class="line">                fixed3 white = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> fixed4(white - color, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Fallback Off</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="2-UI中的shader"><a href="#2-UI中的shader" class="headerlink" title="2. UI中的shader"></a>2. UI中的shader</h2><p>其中的2560和1440是因为</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Get%20Screen%20Color%20in%20Unity%20shader/image-20230819170346237.png" class>
-
-<p>这样的话只对特定比例的屏幕有效，比例和2560x1440不同的话就会出现拉伸的现象</p>
-<div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">Shader &quot;Custom/InvertUI&quot;</span><br><span class="line">&#123;</span><br><span class="line">    Properties</span><br><span class="line">    &#123;</span><br><span class="line">        [PerRendererData] _MainTex (&quot;Sprite Texture&quot;, <span class="number">2</span>D) = &quot;white&quot; &#123;&#125;</span><br><span class="line">        _Color (&quot;Tint&quot;, Color) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        _StencilComp (&quot;Stencil Comparison&quot;, Float) = <span class="number">8</span></span><br><span class="line">        _Stencil (&quot;Stencil ID&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilOp (&quot;Stencil Operation&quot;, Float) = <span class="number">0</span></span><br><span class="line">        _StencilWriteMask (&quot;Stencil Write Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line">        _StencilReadMask (&quot;Stencil Read Mask&quot;, Float) = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">        _ColorMask (&quot;Color Mask&quot;, Float) = <span class="number">15</span></span><br><span class="line"></span><br><span class="line">        [Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip (&quot;Use Alpha Clip&quot;, Float) = <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SubShader</span><br><span class="line">    &#123;</span><br><span class="line">        Tags</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Queue&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;IgnoreProjector&quot;=&quot;True&quot;</span><br><span class="line">            &quot;RenderType&quot;=&quot;Transparent&quot;</span><br><span class="line">            &quot;PreviewType&quot;=&quot;Plane&quot;</span><br><span class="line">            &quot;CanUseSpriteAtlas&quot;=&quot;True&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        Stencil</span><br><span class="line">        &#123;</span><br><span class="line">            Ref [_Stencil]</span><br><span class="line">            Comp [_StencilComp]</span><br><span class="line">            Pass [_StencilOp]</span><br><span class="line">            ReadMask [_StencilReadMask]</span><br><span class="line">            WriteMask [_StencilWriteMask]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Cull Off</span><br><span class="line">        Lighting Off</span><br><span class="line">        ZWrite Off</span><br><span class="line">        ZTest [unity_GUIZTestMode]</span><br><span class="line">        Blend SrcAlpha OneMinusSrcAlpha</span><br><span class="line">        ColorMask [_ColorMask]</span><br><span class="line"></span><br><span class="line">        GrabPass &#123;&#125;</span><br><span class="line"></span><br><span class="line">        Pass</span><br><span class="line">        &#123;</span><br><span class="line">            Name &quot;Default&quot;</span><br><span class="line">            CGPROGRAM</span><br><span class="line">            <span class="meta">#pragma vertex vert</span></span><br><span class="line">            <span class="meta">#pragma fragment frag</span></span><br><span class="line">            <span class="meta">#pragma target 2.0</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#include &quot;UnityCG.cginc&quot;</span></span><br><span class="line">            <span class="meta">#include &quot;UnityUI.cginc&quot;</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_CLIP_RECT</span></span><br><span class="line">            <span class="meta">#pragma multi_compile_local _ UNITY_UI_ALPHACLIP</span></span><br><span class="line"></span><br><span class="line">            struct appdata_t</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : POSITION;</span><br><span class="line">                float4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                UNITY_VERTEX_INPUT_INSTANCE_ID</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            struct v2f</span><br><span class="line">            &#123;</span><br><span class="line">                float4 vertex : SV_POSITION;</span><br><span class="line">                fixed4 color : COLOR;</span><br><span class="line">                float2 texcoord : TEXCOORD0;</span><br><span class="line">                float4 worldPosition : TEXCOORD1;</span><br><span class="line">                float4 screen_pos : TEXCOORD2;</span><br><span class="line">                UNITY_VERTEX_OUTPUT_STEREO</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="type">sampler2D</span> _MainTex;</span><br><span class="line">            fixed4 _Color;</span><br><span class="line">            fixed4 _TextureSampleAdd;</span><br><span class="line">            float4 _ClipRect;</span><br><span class="line">            float4 _MainTex_ST;</span><br><span class="line">            float4 _GrabTexture_ST;</span><br><span class="line">            <span class="type">sampler2D</span> _GrabTexture;</span><br><span class="line"></span><br><span class="line">            v2f vert(appdata_t v)</span><br><span class="line">            &#123;</span><br><span class="line">                v2f OUT;</span><br><span class="line">                UNITY_SETUP_INSTANCE_ID(v);</span><br><span class="line">                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);</span><br><span class="line">                OUT.worldPosition = v.vertex;</span><br><span class="line">                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);</span><br><span class="line"></span><br><span class="line">                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);</span><br><span class="line"></span><br><span class="line">                OUT.color = v.color * _Color;</span><br><span class="line">                OUT.screen_pos = ComputeGrabScreenPos(OUT.worldPosition);</span><br><span class="line">                OUT.screen_pos /= OUT.screen_pos.w;</span><br><span class="line">                <span class="keyword">return</span> OUT;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            fixed4 frag(v2f IN) : SV_Target</span><br><span class="line">            &#123;</span><br><span class="line">                half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;</span><br><span class="line">                float2 screenPos = IN.screen_pos.xy;</span><br><span class="line">                screenPos.xy *= <span class="number">2</span>;</span><br><span class="line">                screenPos.xy /= float2(<span class="number">2560</span>, <span class="number">1440</span>);</span><br><span class="line">                screenPos.xy += <span class="number">0.5</span>;</span><br><span class="line">                half3 screenColor = tex2D(_GrabTexture, screenPos).rgb;</span><br><span class="line">                half3 invertScreenColor = fixed3(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) - screenColor;</span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_CLIP_RECT</span></span><br><span class="line">                color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="meta">#ifdef UNITY_UI_ALPHACLIP</span></span><br><span class="line">                clip (color.a - <span class="number">0.001</span>);</span><br><span class="line">                <span class="meta">#endif</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> fixed4(invertScreenColor, color.a);</span><br><span class="line">            &#125;</span><br><span class="line">            ENDCG</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>Shader</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to use Hexo to build your self blog</title>
-    <url>/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/</url>
-    <content><![CDATA[<p>本文介绍如何使用<code>Github</code>和<code>Hexo</code>框架搭建自己的博客，纯新手教程</p>
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ol>
-<li>安装<code>Git</code></li>
-<li>有<code>Github</code>账号</li>
-<li>有安装了<code>NodeJS</code></li>
-</ol>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>Github</code>提供了<code>Github Page</code>的功能，只要我们传输网页文件到某个自己的特定的仓库，<code>Github</code>就可以免费帮助自己部署。但是前提是这个网站是静态的，也就是只能用来看网站的数据，也就是没有服务器处理数据，最多的用途就是用来写一些自己的博客。</p>
-<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="创建一个特定的Github仓库"><a href="#创建一个特定的Github仓库" class="headerlink" title="创建一个特定的Github仓库"></a>创建一个特定的Github仓库</h2><p>在<code>Github</code>网站创建一个<code>username.github.io</code>的仓库，也就是说，如果你的用户名是xxx，就创建一个xxx.github.io</p>
-<p>就比如我的账户名是<code>lisery454</code>，仓库名字就是<code>lisery454.github.io</code></p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/create_github_repo.png" class>
-
-
-
-<h2 id="安装Hexo与配置"><a href="#安装Hexo与配置" class="headerlink" title="安装Hexo与配置"></a>安装<code>Hexo</code>与配置</h2><p><code>hexo</code>是一个将markdown文档转换成HTML网页的框架，方便我们用markdown写，然后自动转换成html</p>
-<p>命令行输入，安装<code>hexo</code></p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
-
-<p>创建hexo项目文件夹，并构建。这里的hexo-blog可以换名字，就是创建的文件夹名字</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo init hexo-blog</span><br><span class="line">cd hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
-
-<p>本地将markdown生成网页</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
-
-<p>本地运行网页</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
-
-<p>之后打开<code>localhost:4000</code>，就可以看到hexo默认的界面</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/default_page.png" class>
-
-<h3 id="安装Hexo主题"><a href="#安装Hexo主题" class="headerlink" title="安装Hexo主题"></a>安装Hexo主题</h3><p>这里我用了<code>Hexo</code>的<code>Fluid</code>主题，可以帮助我们更好配置博客，以及个人认为更好看的界面。</p>
-<p>这是它的github地址：<a class="link" href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>这里直接下载，并把它放入创建的博客文件夹的<code>theme</code>文件夹下，重命名为<code>fluid</code></p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo-blog</span><br><span class="line">----</span><br><span class="line">----themes</span><br><span class="line">--------fluid</span><br><span class="line">------------下载的放这里</span><br><span class="line">----</span><br></pre></td></tr></table></figure></div>
-
-<p>然后是指定安装的主题和语言</p>
-<p>修改根目录下的<code>_config.yaml</code></p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">fluid</span>  <span class="comment"># 指定主题</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span>  <span class="comment"># 指定语言</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="创建-关于-页面"><a href="#创建-关于-页面" class="headerlink" title="创建 关于 页面"></a>创建 关于 页面</h3><p>命令行输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure></div>
-
-<p>编辑根目录下<code>/source/about/index.md</code></p>
-<div class="highlight-container" data-rel="Markdown"><figure class="iseeu highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2023-06-21 17:18:14</span><br><span class="line"><span class="section">layout: about</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">你好！hello！这里可以写你要写的东西</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="个性化配置"><a href="#个性化配置" class="headerlink" title="个性化配置"></a>个性化配置</h3><p>修改根目录下的<code>_config.yaml</code>，常见的有：</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Lisery&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">&#x27;what are you doing?&#x27;</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Lisery</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://lisery454.github.io</span></span><br></pre></td></tr></table></figure></div>
-
-<p>修改<code>sources/fluid/_config.yaml</code>，常见的有：</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">index:</span></span><br><span class="line">  <span class="attr">banner_img:</span> <span class="string">/img/default.png</span></span><br><span class="line">  <span class="attr">slogan:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">text:</span> <span class="string">&quot;Lisery&#x27;s Blog&quot;</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">  <span class="attr">math:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 开启后就可以使用math公式</span></span><br><span class="line">    <span class="attr">specific:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">engine:</span> <span class="string">mathjax</span></span><br></pre></td></tr></table></figure></div>
-
-<p>更多的配置可以自行查看这两个<code>config</code>文件中的注释</p>
-<h3 id="添加阅读量统计"><a href="#添加阅读量统计" class="headerlink" title="添加阅读量统计"></a>添加阅读量统计</h3><p>这里是使用<code>Leancloud</code> 的免费服务来统计。</p>
-<p>去<code>Leancloud</code>的官网注册并实名，然后点击创建应用，免费的就可以了。然后打开该应用的<code>设置/应用凭证</code>查看<code>AppID</code>、<code>AppKey</code></p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/leanClound_example.png" class>
-
-
-
-<p>之后打开 <code>themes\fluid</code>下的 <code>_config.yml</code> 文件进行修改</p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">web_analytics:</span>  <span class="comment"># 网页访问统计</span></span><br><span class="line">	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    	<span class="attr">leancloud:</span></span><br><span class="line">		    <span class="attr">app_id:</span> <span class="comment">#填自己的</span></span><br><span class="line">    		<span class="attr">app_key:</span> <span class="comment">#填自己的</span></span><br><span class="line"><span class="attr">post:</span></span><br><span class="line">	<span class="attr">meta:</span></span><br><span class="line">		<span class="comment"># 浏览量计数</span></span><br><span class="line">    	<span class="attr">views:</span></span><br><span class="line">	      <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	      <span class="comment"># 统计数据来源</span></span><br><span class="line">	      <span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br><span class="line"><span class="attr">footer:</span></span><br><span class="line">	<span class="comment"># 展示网站的 PV、UV 统计数</span></span><br><span class="line">	<span class="attr">statistics:</span></span><br><span class="line">    	<span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">	    <span class="comment"># 统计数据来源，使用 leancloud 需要设置 `web_analytics: leancloud` 中的参数；</span></span><br><span class="line">    	<span class="attr">source:</span> <span class="string">&quot;leancloud&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-
-
-<p>更多配置查看<code>Fluid</code>的 官网：<a class="link" href="https://hexo.fluid-dev.com/docs/guide/">https://hexo.fluid-dev.com/docs/guide/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>安装</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
-
-<p>配置根目录下的<code>_config.yaml</code></p>
-<div class="highlight-container" data-rel="Yaml"><figure class="iseeu highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="comment"># 刚开始创建的git仓库地址</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br><span class="line">  <span class="attr">token:</span> <span class="comment"># GitHub Personal access tokens，具体获取可以查阅网上</span></span><br></pre></td></tr></table></figure></div>
-
-<p>之后直接输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></div>
-
-<p>就可以生成网页完直接上传到github仓库了</p>
-<p>之后就可以访问<code>username.github.io</code>就可以访问自己的网站了</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Typora插入图片路径重复问题"><a href="#Typora插入图片路径重复问题" class="headerlink" title="Typora插入图片路径重复问题"></a>Typora插入图片路径重复问题</h3><p>参见：<a class="link" href="https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md">https://github.com/deptno/hexo-typora-plugins/blob/master/packages/hexo-typora-image/README.md <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>安装</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">npm install --save-dev hexo-typora-image</span><br></pre></td></tr></table></figure></div>
-
-<p>然后在typora的最前面的yml配置区加入<code>typora-copy-images-to: &#123;&#123; title &#125;&#125;</code></p>
-<h3 id="绑定自己的域名"><a href="#绑定自己的域名" class="headerlink" title="绑定自己的域名"></a>绑定自己的域名</h3><p>先去一些云平台上购买域名，比如阿里云，腾讯云等</p>
-<p>然后在仓库根目录下创建CNAME文件，名字不能改，然后里面填上你买的域名，比如我的是<code>lisery.com</code></p>
-<p>然后控制台输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">ping yourname.github.io</span><br></pre></td></tr></table></figure></div>
-
-<p>获取你这个网站的ip</p>
-<p>然后在你购买域名的平台上面修改域名解析</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/dns.png" class>
-
-<p>之后就可以直接访问你自己的域名访问<code>github page</code>了</p>
-]]></content>
-      <categories>
-        <category>tutorial</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-        <tag>Github</tag>
-        <tag>NodeJS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AvaloniaUI Learn Notes</title>
-    <url>/2024/01/21/AvaloniaUI%20Learn%20Notes/</url>
-    <content><![CDATA[<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a><strong>基础知识</strong></h2><h3 id="MVVM-Binding"><a href="#MVVM-Binding" class="headerlink" title="MVVM &amp; Binding"></a>MVVM &amp; Binding</h3><img lazyload src="/images/loading.svg" data-src="/2024/01/21/AvaloniaUI%20Learn%20Notes/image-20230928203007995.png" class>
-
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;Window xmlns=&quot;https://github.com/avaloniaui&quot;</span><br><span class="line">        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span><br><span class="line">        xmlns:vm=&quot;using:BasicMvvmSample.ViewModels&quot;</span><br><span class="line">        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;</span><br><span class="line">        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;</span><br><span class="line">        mc:Ignorable=&quot;d&quot; d:DesignWidth=&quot;800&quot; d:DesignHeight=&quot;450&quot;</span><br><span class="line">        x:Class=&quot;BasicMvvmSample.Views.MainWindow&quot;</span><br><span class="line">        x:DataType=&quot;vm:MainWindowViewModel&quot;</span><br><span class="line">        x:CompileBindings=&quot;True&quot;</span><br><span class="line">        Icon=&quot;/Assets/avalonia-logo.ico&quot;</span><br><span class="line">        Title=&quot;BasicMvvmSample&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;Design.DataContext&gt;</span><br><span class="line">        &lt;!-- 声明全局VM --&gt;</span><br><span class="line">        &lt;vm:MainWindowViewModel /&gt;</span><br><span class="line">    &lt;/Design.DataContext&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- View结构和绑定 --&gt;</span><br><span class="line">    &lt;StackPanel DataContext=&quot;&#123;Binding SimpleViewModel&#125;&quot; Spacing=&quot;10&quot;&gt;</span><br><span class="line">        &lt;TextBlock&gt;Enter your Name:&lt;/TextBlock&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Name&#125;&quot; /&gt;</span><br><span class="line">        &lt;TextBox Text=&quot;&#123;Binding Greeting, Mode=OneWay&#125;&quot;</span><br><span class="line">                 IsReadOnly=&quot;True&quot;</span><br><span class="line">                 FontWeight=&quot;Bold&quot; /&gt;</span><br><span class="line">    &lt;/StackPanel&gt;</span><br><span class="line">&lt;/Window&gt;</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainWindowViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> SimpleViewModel SimpleViewModel &#123; <span class="keyword">get</span>; &#125; = <span class="keyword">new</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>这里默认使用了ReactiveUI的框架，可以调用<code>RaiseAndSetIfChanged</code>等已经定义好的方法。</p>
-<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> ReactiveUI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BasicMvvmSample.ViewModels</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SimpleViewModel</span> : <span class="title">ViewModelBase</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SimpleViewModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.WhenAnyValue(o =&gt; o.Name)</span><br><span class="line">            .Subscribe(o =&gt; <span class="keyword">this</span>.RaisePropertyChanged(<span class="keyword">nameof</span>(Greeting)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">string</span>? _name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span>? Name</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; _name;</span><br><span class="line">        <span class="keyword">set</span> =&gt; <span class="keyword">this</span>.RaiseAndSetIfChanged(<span class="keyword">ref</span> _name, <span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Greeting =&gt; <span class="built_in">string</span>.IsNullOrEmpty(Name) ? <span class="string">&quot;Hello World from Avalonia.Samples&quot;</span> : <span class="string">$&quot;Hello <span class="subst">&#123;Name&#125;</span>&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-
-
-<h4 id="this-RaiseAndSetIfChanged-ref-name-value"><a href="#this-RaiseAndSetIfChanged-ref-name-value" class="headerlink" title="this.RaiseAndSetIfChanged(ref _name, value);"></a>this.RaiseAndSetIfChanged(ref _name, value);</h4><p>修改属性值，并且通知UI</p>
-<h4 id="this-WhenAnyValue-o-o-Name-Subscribe-o-doSomething"><a href="#this-WhenAnyValue-o-o-Name-Subscribe-o-doSomething" class="headerlink" title="this.WhenAnyValue(o &#x3D;&gt; o.Name).Subscribe(o &#x3D;&gt; doSomething());"></a>this.WhenAnyValue(o &#x3D;&gt; o.Name).Subscribe(o &#x3D;&gt; doSomething());</h4><p>当某个属性值改变时做某事</p>
-<hr>
-<h3 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h3><p>命令包装了一层VM中的方法，传给View</p>
-<h4 id="普通Command"><a href="#普通Command" class="headerlink" title="普通Command"></a>普通Command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line">ReactiveCommand.Create(OpenThePodBayDoors)</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="有条件情况的command"><a href="#有条件情况的command" class="headerlink" title="有条件情况的command"></a>有条件情况的command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果RobotName 不为null或Empty</span></span><br><span class="line"><span class="keyword">var</span> canExecuteFellowRobotCommand =</span><br><span class="line">            <span class="keyword">this</span>.WhenAnyValue(vm =&gt; vm.RobotName, (name) =&gt; !<span class="built_in">string</span>.IsNullOrEmpty(name));</span><br><span class="line"><span class="comment">// 才能执行这个命令（比如不能执行时按钮是不可按的）</span></span><br><span class="line">ReactiveCommand.Create&lt;<span class="built_in">string</span>?&gt;(OpenThePodBayDoorsFellowRobot, canExecuteFellowRobotCommand);</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="异步Command"><a href="#异步Command" class="headerlink" title="异步Command"></a>异步Command</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 保证了command在执行过程中，触发command的按钮是不可按的</span></span><br><span class="line">ReactiveCommand.CreateFromTask(OpenThePodBayDoorsAsync);</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="ObservableCollection"><a href="#ObservableCollection" class="headerlink" title="ObservableCollection&lt;T&gt;"></a>ObservableCollection&lt;T&gt;</h4><p>可观察的列表</p>
-<hr>
-<h3 id="Value-Conversion"><a href="#Value-Conversion" class="headerlink" title="Value Conversion"></a>Value Conversion</h3><p>在converter中不要抛异常。如果转换不了，就return <code>BindingBotification</code> 或者 如果Converter什么都不做，就return <code>BindingOperations.DONothing</code></p>
-<h4 id="IValueConverter"><a href="#IValueConverter" class="headerlink" title="IValueConverter"></a>IValueConverter</h4><p>相当于一个给binding用的修饰</p>
-<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MathAddConverter</span> : <span class="title">IValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? Convert(<span class="built_in">object</span>? <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// For add this is simple. just return the sum of the value and the parameter.</span></span><br><span class="line">        <span class="comment">// You may want to validate value and parameter in a real world App</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">decimal</span>?)<span class="keyword">value</span> + (<span class="built_in">decimal</span>?)parameter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? ConvertBack(<span class="built_in">object</span>? <span class="keyword">value</span>, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// If we want to convert back, we need to subtract instead of add.</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">decimal</span>?)<span class="keyword">value</span> - (<span class="built_in">decimal</span>?)parameter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;NumericUpDown Value=&quot;&#123;Binding Number1, Converter=&#123;StaticResource MathAddConverter&#125;, ConverterParameter=&#123;StaticResource MyConverterParameter&#125;&#125;&quot; /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-<h4 id="静态资源导入"><a href="#静态资源导入" class="headerlink" title="静态资源导入"></a>静态资源导入</h4><p>ex.</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;Window.Resources&gt;</span><br><span class="line">    &lt;conv:MathAddConverter x:Key=&quot;MathAddConverter&quot; /&gt;</span><br><span class="line">    &lt;x:Decimal x:Key=&quot;MyConverterParameter&quot;&gt;2&lt;/x:Decimal&gt;</span><br><span class="line">&lt;/Window.Resources&gt;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="IMultiValueConverter"><a href="#IMultiValueConverter" class="headerlink" title="IMultiValueConverter"></a>IMultiValueConverter</h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> This converter can calculate any number of values.</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MathMultiConverter</span> : <span class="title">IMultiValueConverter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">object</span>? Convert(IList&lt;<span class="built_in">object</span>?&gt; values, Type targetType, <span class="built_in">object</span>? parameter, CultureInfo culture)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// We need to validate if the provided values are valid. We need at least 3 values.</span></span><br><span class="line">        <span class="comment">// The first value is the operator and the other two values should be a decimal.</span></span><br><span class="line">        <span class="keyword">if</span> (values.Count != <span class="number">3</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// We can write a message into the Trace if we want to inform the developer.</span></span><br><span class="line">            Trace.WriteLine(<span class="string">&quot;Exactly three values expected&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// return &quot;BindingOperations.DoNothing&quot; instead of throwing an Exception.</span></span><br><span class="line">            <span class="comment">// If you want, you can also return a BindingNotification with an Exception</span></span><br><span class="line">            <span class="keyword">return</span> BindingOperations.DoNothing;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The first item of values is the operation.</span></span><br><span class="line">        <span class="comment">// The operation to use is stored as a string.</span></span><br><span class="line">        <span class="built_in">string</span> operation = values[<span class="number">0</span>] <span class="keyword">as</span> <span class="built_in">string</span> ?? <span class="string">&quot;+&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create a variable result and assign the first value we have to if</span></span><br><span class="line">        <span class="built_in">decimal</span> value1 = values[<span class="number">1</span>] <span class="keyword">as</span> <span class="built_in">decimal</span>? ?? <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">decimal</span> value2 = values[<span class="number">2</span>] <span class="keyword">as</span> <span class="built_in">decimal</span>? ?? <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// depending on the operator calculate the result.</span></span><br><span class="line">        <span class="keyword">switch</span> (operation)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;+&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 + value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;-&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 - value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;*&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> value1 * value2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;/&quot;</span>:</span><br><span class="line">                <span class="comment">// We cannot divide by zero. If value2 is &#x27;0&#x27;, return an error.</span></span><br><span class="line">                <span class="keyword">if</span> (value2 == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> BindingNotification(<span class="keyword">new</span> DivideByZeroException(<span class="string">&quot;Don&#x27;t do this!&quot;</span>), BindingErrorType.Error);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> value1 / value2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// If we reach this line, something was wrong. So we return an error notification</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BindingNotification(<span class="keyword">new</span> InvalidOperationException(<span class="string">&quot;Something went wrong&quot;</span>), BindingErrorType.Error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;NumericUpDown Grid.Row=&quot;3&quot; Grid.Column=&quot;1&quot;</span><br><span class="line">                       IsReadOnly=&quot;True&quot;&gt;</span><br><span class="line">    &lt;NumericUpDown.Value&gt;</span><br><span class="line">        &lt;MultiBinding Converter=&quot;&#123;StaticResource MathMultiConverter&#125;&quot; Mode=&quot;OneWay&quot;&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Operator&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number1&quot; /&gt;</span><br><span class="line">            &lt;Binding Path=&quot;Number2&quot; /&gt;</span><br><span class="line">        &lt;/MultiBinding&gt;</span><br><span class="line">    &lt;/NumericUpDown.Value&gt;</span><br><span class="line">&lt;/NumericUpDown&gt;</span><br></pre></td></tr></table></figure></div>
-
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/AvaloniaUI%20Learn%20Notes/image-20230928213605606.png" class>
-
-<hr>
-<h3 id="x-DataType"><a href="#x-DataType" class="headerlink" title="x:DataType"></a>x:DataType</h3><p>指定View所对应的ViewModel，然后设置比如一个window的context绑定到一个ViewModel，系统根据ViewLocator去用这个ViewModel自动找到对应的View去展示</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content=&quot;&#123;Binding ContentViewModel&#125;&quot;</span><br><span class="line">---</span><br><span class="line">x:DataType=&quot;vm:ToDoListViewModel&quot;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="x-Class"><a href="#x-Class" class="headerlink" title="x:Class"></a>x:Class</h3><p>指定View对应的类</p>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-        <tag>Dotnet</tag>
-        <tag>Avalonia</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Use AutoHotKey to Configure Keys</title>
-    <url>/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/</url>
-    <content><![CDATA[<p>最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。</p>
-<h3 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1.官网下载"></a>1.官网下载</h3><p><a class="link" href="https://www.autohotkey.com/">https://www.autohotkey.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>这是官网，我下载的是v2。</p>
-<h3 id="2-创建映射配置"><a href="#2-创建映射配置" class="headerlink" title="2.创建映射配置"></a>2.创建映射配置</h3><p>创建一个后缀为<code>.ahk</code>的文件。根据官网上的教程简单的映射几个键位。</p>
-<p>比如我的是：</p>
-<div class="highlight-container" data-rel="Ahk"><figure class="iseeu highlight ahk"><table><tr><td class="code"><pre><span class="line"><span class="title">AppsKey &amp; D::</span>Right</span><br><span class="line"><span class="title">AppsKey &amp; W::</span>Up</span><br><span class="line"><span class="title">AppsKey &amp; A::</span>Left</span><br><span class="line"><span class="title">AppsKey &amp; S::</span>Down</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; .::</span>End</span><br><span class="line">AppsKey &amp; `;::Home</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; K::</span>Backspace</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; I::</span>Insert</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; Backspace::</span>Delete</span><br></pre></td></tr></table></figure></div>
-
-<p>比如第一句就是菜单键加D就是→键。</p>
-<p>直接双击<code>.ahk</code>的文件就可以直接运行了。</p>
-<h3 id="3-开机启动"><a href="#3-开机启动" class="headerlink" title="3.开机启动"></a>3.开机启动</h3><p>使用其的编译功能将其转换为exe文件</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png" class>
-
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png" class>
-
-<p>之后把生成的exe放到开机启动的文件夹下</p>
-<p>路径应该是：<code>C:\Users\&#123;username&#125;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
-<p>之后应该就可以开机启动了。</p>
-]]></content>
-      <categories>
-        <category>tutorial</category>
-      </categories>
-      <tags>
-        <tag>AutohotKey</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于游戏内数字的一些思考</title>
-    <url>/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[<h2 id="游戏内的数字"><a href="#游戏内的数字" class="headerlink" title="游戏内的数字"></a>游戏内的数字</h2><p>在游戏设计中，或者说在一场游戏中，经常或者说大多数游戏都会出现数字。就现实中的游戏不论，要说一款电子游戏中完全没有数字是不可能的。因为电子软件本身的底层就是数字，而玩家的输入输出都是也都是数字的具象化。而这里我要深入讨论的，不是这些数字，而是游戏策划中的数字。它们和游戏如何表现无关，而是和游戏如何给予玩家体验有关。简单来说，就是规则中的数字，而不是底层的数字。</p>
-<h2 id="数字有什么用"><a href="#数字有什么用" class="headerlink" title="数字有什么用"></a>数字有什么用</h2><p>数字作为一种公正的裁判，非常适合游戏这样一个对所有人都给予平等规则的娱乐形式。因为数字是说一不二的，两个人比赛谁跑的快，测一下时间比一下谁大就行了，输的那方也不会辩解说其实是我赢了。某电子游戏中，玩家的攻击力是10，那么它就可以给敌人造成10的伤害，这也是大家公认的。</p>
-<p>玩家也可以因此更好的判断自己的情况而做出相应的操作，也就是说具体的数字给予玩家良好的游戏反馈。比如生命值从20变成5了，玩家就知道生命值少了，需要补充生命值。</p>
-<p>数字也是一种方便策划修改和平衡游戏的方式。因为如果是浮点数，它相对于整数来说更加光滑（虽然底层并不连续&#x2F;(ㄒoㄒ)&#x2F;~~），也就是说，可以不断二分取一个中间值。相比于离散的设计，这种光滑的数值更加方便地修改游戏平衡。</p>
-<h2 id="我们需要这么多数字吗"><a href="#我们需要这么多数字吗" class="headerlink" title="我们需要这么多数字吗"></a>我们需要这么多数字吗</h2><p>虽然数字有它的好处，但是我的观点是游戏并不需要这么多的数字。数字像一种香料，往一盘游戏菜肴里面加一点可以增加香味，但是加多了就变成的全是香料，反而变得难吃了。或者换句话说，数字越多玩家越没有好的体验，少量数字优于大量数字。还有就是个位数优于整数优于浮点数。以下我就简要谈谈这两条。</p>
-<p>首先是少量数字优于大量数字。我举一个我心目中这方面做的很好的例子，植物大战僵尸。整个界面上数字只有阳光和植物所需要的阳光消耗量（左下角的钱数和游戏的关卡内内容无关，不再讨论）。并且很细节的一点是这些阳光量都是25的倍数，也就是说，其实25就是1单位，75是3单位，这样的话，其实这是一个广义来说的个位数的数字。这样做的好处是玩家对于这个的记忆量和计算量就会变少，而更加专注于如何利用有限的阳光处理场上的局面。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111190829627.png" class>
-
-<p>其次是冷却时间，游戏中把它做成了进度条，这是一种常见的把数字消失的方法，这种方式把一个数字形象地变成了进度条的长短。我的观念中，图形大于数字，永远是这样的（比如上学的时候的数学题能画图做就坚决不用解析做），图形带来的给玩家的反馈大于数字。</p>
-<p>紧接着是植物的生命值和攻击力，还有一些特殊的数值，比如土豆地雷几秒钟会钻出来，食人花要几秒才能吞一个怪。我们会发现，这些数值完全没有在游戏中出现，但是玩家的体验并没有消失，反而是变得更好了。这是因为合理的关卡设置和之前游戏给予的经验。比如这个植物被僵尸吃几口就没了，这在之前的游戏中会映入脑袋，玩家可能不会记得数值，因为有些比如坚果等植物要吃很多口，所以玩家只有一个大致经验，比如这个耐吃，这个不耐吃。游戏很好地把数值变成了玩家的大体印象，这是很好的把数字消失的方式。因为玩家专注于数值的话，游戏就会变成数学题，变成了一个如何在条件下创造最多优势的数学问题，这是我们不想看到的，玩家需要的是快乐，而不是研究数学（如果有人说研究数学使我快乐，那么请你去做数学题而不是玩游戏）。而如果玩家专注于一种印象，这样玩家就可以通过这种印象很轻松地做出当前对他更有利的操作，也许不是理论上最好的，但一定是玩家心中觉得最好的。这就是游戏应该让玩家做出的操作，然后根据游戏之后的反馈，逐渐修改玩家心中的印象，以致最后能不断地修改做出更好的操作。</p>
-<p>我再举一个例子，这是一个极度依赖数字的游戏，文明6。我对于这一类策略游戏的看法是不太积极的。我认为这种过多数值的设计反而让一个游戏变成了数学题目，不能让一个玩家享受其中。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/image-20231111213654868.png" class>
-
-<p>就上一张游戏截图而言，屏幕上的数字多到数不过来。我承认文明6确实在减少数字上下了很大功夫，也尽量把数字缩小，改成便于计算的整数。但是数字的多就意味着要考虑的多，要考虑的多意味着玩家需要思考的多。也许确实有人喜欢玩这种需要复杂计算的，但是我认为游戏应该是能让你玩的开心的，是可以随便玩的，应该是玩家随便的操作都能从中获取他们不一样的快乐。而这种过多数字的表现意味着决策上存在一定方向的较优解，这是我认为不可取的。</p>
-<p>其次，数字的多对于新手玩家而言，很难去上手。这是一个我不愿意看到的现象。</p>
-<h2 id="对于使用数字的想法和建议"><a href="#对于使用数字的想法和建议" class="headerlink" title="对于使用数字的想法和建议"></a>对于使用数字的想法和建议</h2><h3 id="不要让玩家看到过多数字"><a href="#不要让玩家看到过多数字" class="headerlink" title="不要让玩家看到过多数字"></a>不要让玩家看到过多数字</h3><p>尽量让UI界面上不要出现数字，在一定要出现数字的地方让数字尽量变小，从浮点数变成整数，从整数变成十位数，个位数。把数字变成一种感性的描述，比如攻击力增加了10点，变成攻击力小幅上涨。这样玩家可以自己尝试到底上升了多少，有了一种发现和体会的过程。</p>
-<h3 id="不要数值膨胀"><a href="#不要数值膨胀" class="headerlink" title="不要数值膨胀"></a>不要数值膨胀</h3><p>不要给玩家过大的数值，虽然大数值方便调整数值做平衡，但是它带来的玩家对游戏的决策影响很大，玩家需要花费很大的精力去记忆和计算，这反而得不偿失了。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>把数字去掉，这是我的决策。总而言之我认为这是一种用感性来取代理性的决策。虽然理性和感性两者都需要，但是我认为在游戏这种方式中，感性需要的更多。</p>
-<p>以上均为个人的观点。</p>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>GameDesign</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>godot像素黑白后处理shader</title>
-    <url>/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/</url>
-    <content><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png" class>
-
-<h2 id="shader"><a href="#shader" class="headerlink" title="shader"></a>shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="code"><pre><span class="line">shader_type canvas_item;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec2</span> size = <span class="type">vec2</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> threshold = <span class="number">0.5</span>;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> screen_texture : hint_screen_texture, repeat_disable, filter_nearest;</span><br><span class="line"></span><br><span class="line"><span class="type">vec4</span> to_one_bit(<span class="type">vec4</span> color) &#123;</span><br><span class="line">	<span class="type">float</span> sum = (color.r * <span class="number">0.299</span> + color.g * <span class="number">0.587</span> + color.b * <span class="number">0.114</span>);</span><br><span class="line">	<span class="type">float</span> f = <span class="built_in">ceil</span>(sum - threshold);</span><br><span class="line">	color = <span class="built_in">mix</span>(<span class="type">vec4</span>(<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">1</span>), <span class="type">vec4</span>(<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">1</span>), f);</span><br><span class="line">	<span class="keyword">return</span> color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">vec2</span> get_new_uv(<span class="type">vec2</span> uv, <span class="type">vec2</span> screen_pixel_size) &#123;</span><br><span class="line">	<span class="type">vec2</span> size_uv = screen_pixel_size * size;</span><br><span class="line">	<span class="type">vec2</span> new_uv = <span class="built_in">floor</span>(uv / size_uv) * size_uv;</span><br><span class="line">	<span class="keyword">return</span> new_uv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> fragment() &#123;</span><br><span class="line">		<span class="type">vec2</span> new_uv = get_new_uv(SCREEN_UV, SCREEN_PIXEL_SIZE);</span><br><span class="line">		<span class="type">vec4</span> color = <span class="built_in">textureLod</span>(screen_texture, new_uv, <span class="number">0.0</span>);</span><br><span class="line">		COLOR = to_one_bit(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png" class>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Godot</tag>
-        <tag>Shader</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity URP Shader Learn Note</title>
-    <url>/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/</url>
-    <content><![CDATA[<h2 id="初步使用URP-和-Shader-Graph"><a href="#初步使用URP-和-Shader-Graph" class="headerlink" title="初步使用URP 和 Shader Graph"></a>初步使用URP 和 Shader Graph</h2><h3 id="使用URP"><a href="#使用URP" class="headerlink" title="使用URP"></a>使用URP</h3><p>导入URP包然后创建在项目中创建<code>Universal Render Pipeline Asset</code>，名字可以自己取。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719190336106.png" class>
-
-<p>之后设置<code>Project Settings/Graphics/Scriptable Render Pipeline Settings</code>为自己刚刚创建的<code>asset</code>。</p>
-<p>这样这个项目就配置为URP管线而不是内置管线了。</p>
-<p>目前项目结构为</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719190652919.png" class>
-
-<h3 id="创建ShaderGraph"><a href="#创建ShaderGraph" class="headerlink" title="创建ShaderGraph"></a>创建ShaderGraph</h3><p>创建<code>Shader Graph/URP/Lit Shader Graph</code>名为<code>Test Shader Graph</code>，打开来如图所示。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719191438389.png" class>
-
-<p>并创建一个材质使用这个<code>shader graph</code>，并创建一个Cube并使用这个材质</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719192141645.png" class>
-
-<p>接下来给这个shader输入增加一个贴图输入，并设置默认贴图</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719192414662.png" class>
-
-<p>创建一个纹理采样节点，它使用MainTex作为输入，用第一套UV0作为采样的坐标，输出纹理上的颜色</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193348018.png" class>
-
-<p>记得点击左上角的保存按钮，不然shader不会保存，也就没有改变效果。效果如下</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193504200.png" class>
-
-<p>现在增加一个颜色输入，同上。并将其和上一步采样的颜色输出相乘返回输出。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719193811748.png" class>
-
-<p>这样的话就可以通过改Color的颜色来修改材质的颜色了。</p>
-<p>同理，可以加一个设置饱和度的输入，不再赘述</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719194213153.png" class>
-
-<h3 id="通过C-动态修改Material的属性"><a href="#通过C-动态修改Material的属性" class="headerlink" title="通过C#动态修改Material的属性"></a>通过C#动态修改Material的属性</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ChangeMaterial</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    [<span class="meta">SerializeField</span>] <span class="keyword">private</span> Material material;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Update</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (Input.GetKeyDown(KeyCode.T))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// material.SetColor(&quot;_Color&quot;, Color.green);</span></span><br><span class="line">            material.SetColor(Shader.PropertyToID(<span class="string">&quot;_Color&quot;</span>), Color.green);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>其中的字符串索引便是之前在<code>Shader Graph</code>中输入节点的<code>Reference</code>属性。</p>
-<p>注释中的代码也可以，就是字符串索引效率低，可以换成另一种。</p>
-<p>要注意这种修改材质的方式，是直接修改文件的，也就是说如果改变材质了，停止运行也不会变成原来的状态了。</p>
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=VsUK9K6UbY4">https://www.youtube.com/watch?v=VsUK9K6UbY4 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="Shader实现溶解动画"><a href="#Shader实现溶解动画" class="headerlink" title="Shader实现溶解动画"></a>Shader实现溶解动画</h2><p>原理：把一张图的通道值进行一个平滑插值，将其值作为透明度通道的值。</p>
-<p>其中Progress为0到1的值，作为插值的key；StepAmount是平滑插值中间的那段长度。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230719205236013.png" class>
-
-<p>代码修改Progress值，如下</p>
-<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line">[<span class="meta">RequireComponent(typeof(SpriteRenderer))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Transition</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Material material;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">readonly</span> <span class="built_in">int</span> ProgressID = Shader.PropertyToID(<span class="string">&quot;_Progress&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        material = GetComponent&lt;SpriteRenderer&gt;().material;</span><br><span class="line">        StartCoroutine(ProgressCoroutine());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IEnumerator <span class="title">ProgressCoroutine</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            material.SetFloat(ProgressID, Mathf.Abs(Time.time % <span class="number">2</span> - <span class="number">1f</span>));</span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>效果图：</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/1.gif" class>
-
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=tNrLowO5OOY">https://www.youtube.com/watch?v=tNrLowO5OOY <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="实现2D随风摇摆的效果"><a href="#实现2D随风摇摆的效果" class="headerlink" title="实现2D随风摇摆的效果"></a>实现2D随风摇摆的效果</h2><p>原理：修改物体坐标下的顶点位置，通过噪声使其产生x方向上的偏移</p>
-<p>产生噪声如图，根据时间和世界坐标对噪音图进行采样，之后把噪音映射到-0.5到0.5之间。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720102639400.png" class>
-
-<p>噪音还要乘上uv的y值，这样图片底部就不会动了</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103050771.png" class>
-
-<p>把原本的物体坐标的x加上噪音</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103011065.png" class>
-
-<p>全图：</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720103217809.png" class>
-
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/2.gif" class>
-
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=VcUiksxYT88">https://www.youtube.com/watch?v=VcUiksxYT88 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D构建动画"><a href="#2D构建动画" class="headerlink" title="2D构建动画"></a>2D构建动画</h2><p>原理：根据progress的值（0到1）决定是否这个物体被构建出来。然后根据这个值进行原图片的裁剪，也就是修改alpha值，达成部分构建的效果，具体就不阐述了。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720134816594.png" class>
-
-<p>然后是构建边缘发光的效果，就是用同一个方法，progress稍微快一点，然后两者做差，产生边缘。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720134936048.png" class>
-
-<p>最终效果：</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/3.gif" class>
-
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=OzyLWXTr3Io">https://www.youtube.com/watch?v=OzyLWXTr3Io <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D图形外轮廓实现"><a href="#2D图形外轮廓实现" class="headerlink" title="2D图形外轮廓实现"></a>2D图形外轮廓实现</h2><p>原理：通过原本图片的上下左右偏移一个距离，然后加起来拼出外轮廓，缺点是无法有很大的外轮廓。</p>
-<p>上下左右偏移并加起来，记住要saturate，不然会有问题。</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152307570.png" class>
-
-<p>拼接原来的图形和外轮廓</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152441981.png" class>
-
-<p>效果：</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720152229089.png" class>
-
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=FvQFhkS90nI">https://www.youtube.com/watch?v=FvQFhkS90nI <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-<h2 id="2D像素风格shader"><a href="#2D像素风格shader" class="headerlink" title="2D像素风格shader"></a>2D像素风格shader</h2><p>原理：把采样的UV离散化。UV本来是0到1连续的，把它变为阶梯一样的</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/image-20230720154304049.png" class>
-
-<p>参考：</p>
-<p><a class="link" href="https://www.youtube.com/watch?v=siiqnXA156Y">https://www.youtube.com/watch?v=siiqnXA156Y <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<hr>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>Shader</tag>
-        <tag>URP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何使用OhMyPosh定制化WindowTerminal</title>
-    <url>/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/</url>
-    <content><![CDATA[<p>具体如何操作参考 <a class="link" href="https://ohmyposh.dev/docs%EF%BC%8C%E6%9C%AC%E6%96%87%E5%8F%AA%E6%98%AF%E6%8A%8A%E8%87%AA%E5%B7%B1%E7%9A%84%E6%93%8D%E4%BD%9C%E5%8E%86%E7%A8%8B%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B">https://ohmyposh.dev/docs，本文只是把自己的操作历程记录一下 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="安装OhMyPosh"><a href="#安装OhMyPosh" class="headerlink" title="安装OhMyPosh"></a>安装OhMyPosh</h2><p>OhMyPosh是一个对终端外观定制化引擎</p>
-<p>在终端中输入进行安装</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(&#x27;https://ohmyposh.dev/install.ps1&#x27;))</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="安装一款Nerd字体"><a href="#安装一款Nerd字体" class="headerlink" title="安装一款Nerd字体"></a>安装一款Nerd字体</h2><p>因为这些主题大多需要显示一些图标字符，所以需要有一款可以显示这些图标的字体，也就是Nerd字体。</p>
-<p>我是在<a class="link" href="https://www.nerdfonts.com/font-downloads%E7%BD%91%E4%B8%8A%E4%B8%8B%E8%BD%BD%E4%BA%86%60FiraMono">https://www.nerdfonts.com/font-downloads网上下载了`FiraMono <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> Nerd Font&#96;字体，下载完之后安装字体到系统，然后再终端中选择显示的字体为这个就好了。</p>
-<h2 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h2><p>我是从官方网站 <a class="link" href="https://ohmyposh.dev/docs/themes">https://ohmyposh.dev/docs/themes <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> 上下载了主题文件，是一个json文件，例如我的是 <a class="link" href="https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E3%80%82">https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_macchiato.omp.json这个文件。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>然后是如何在Terminal启动时加载这个文件。</p>
-<p>把这个文件放到一个位置，比如C盘主文件夹下</p>
-<p>打开Terminal，打开<code>$PROFILE</code>对应的文件，比如我用<code>vscode</code>打开</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">code $PROFILE</span><br></pre></td></tr></table></figure></div>
-
-<p>在打开的文件中输入</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh --config &#x27;&#123;your_file&#125;.omp.json&#x27; | Invoke-Expression</span><br></pre></td></tr></table></figure></div>
-
-<p>然后重新打开Terminal就可以看到成功了</p>
-<blockquote>
-<p>这里官网还提供了直接使用http地址的形式加载，但是我尝试后一直报错，所以不得已采用这种本地加载的方式。</p>
-</blockquote>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/image-20240126201140656.png" class title="image-20240126201140656">
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>tutorial</category>
-      </categories>
-      <tags>
-        <tag>Terminal</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>日语初级笔记</title>
-    <url>/2024/01/27/%E6%97%A5%E8%AF%AD%E5%88%9D%E7%BA%A7%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h2 id="五十音"><a href="#五十音" class="headerlink" title="五十音"></a>五十音</h2><table>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Lisery">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://lisery454.github.io/2024/01/27/日语初级笔记/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="一些单词和语法的简单汇总">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日语初级笔记">
+<meta property="og:url" content="https://lisery454.github.io/2024/01/27/%E6%97%A5%E8%AF%AD%E5%88%9D%E7%BA%A7%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="一些单词和语法的简单汇总">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-27T14:32:39.968Z">
+<meta property="article:modified_time" content="2024-01-27T15:22:25.689Z">
+<meta property="article:author" content="Lisery">
+<meta property="article:tag" content="Japanese">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            日语初级笔记 -
+        
+        Lisery&#39;s Blogs
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Lisery&#39;s Blogs
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"lisery454.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"草木温柔择青赤，淋漓染作一罥诗","subtitle":{"text":[],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/lisery454","instagram":null,"zhihu":null,"twitter":null,"email":"lixinlin1945@gmail.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"生而为匠","artist":"慕寒，银临...","url":"./audios/生而为匠.mp3","cover":"./audios/生而为匠.webp"}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":4,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/fontawesome/light.min.css">
+
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Lisery&#39;s Blogs
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/tags/"
+                                        >
+                                    <i class="fa-solid fa-tags fa-fw"></i>
+                                    标签
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/"
+                                        >
+                                    <i class="fa-solid fa-folder fa-fw"></i>
+                                    分类
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/tags/"
+                        >
+                            <span>
+                                标签
+                            </span>
+                            
+                                <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/"
+                        >
+                            <span>
+                                分类
+                            </span>
+                            
+                                <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">2</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">10</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">日语初级笔记</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-27 22:32:39</span>
+        <span class="mobile">2024-01-27 22:32:39</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-01-27 23:22:25</span>
+            <span class="mobile">2024-01-27 23:22:25</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/notes/">notes</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Japanese/">Japanese</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="五十音"><a href="#五十音" class="headerlink" title="五十音"></a>五十音</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -15067,12 +15176,330 @@
 <li>この問題は　難し過ぎます</li>
 </ul>
 <h4 id="３．【部分一类形】-い-さ"><a href="#３．【部分一类形】-い-さ" class="headerlink" title="３．【部分一类形】 -い +さ"></a>３．【部分一类形】 -い +さ</h4><p>形容词名词化，可以看这一课的单词。</p>
-]]></content>
-      <categories>
-        <category>notes</category>
-      </categories>
-      <tags>
-        <tag>Japanese</tag>
-      </tags>
-  </entry>
-</search>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Japanese/">#Japanese</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">如何使用OhMyPosh定制化WindowTerminal</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">日语初级笔记</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E5%8D%81%E9%9F%B3"><span class="nav-text">五十音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E8%AF%AD%E5%A3%B0%E8%B0%83"><span class="nav-text">日语声调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8A%E9%9F%B3"><span class="nav-text">浊音</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8A%E6%B5%8A%E9%9F%B3"><span class="nav-text">半浊音</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%BF%E9%9F%B3"><span class="nav-text">长音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%83%E9%9F%B3"><span class="nav-text">促音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%97%E9%9F%B3"><span class="nav-text">拗音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E8%AF%BE"><span class="nav-text">第一课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%A5%E5%BC%8F"><span class="nav-text">句式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E7%A7%B0"><span class="nav-text">人称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%81%E7%95%A5"><span class="nav-text">省略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E8%AF%BE"><span class="nav-text">第二课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-1"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E8%AF%BE"><span class="nav-text">第三课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-2"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E8%AF%BE"><span class="nav-text">第四课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-3"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-2"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E8%AF%8D%E4%B8%89%E5%88%86%E7%B1%BB"><span class="nav-text">动词三分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%B1%BB%E5%8A%A8%E8%AF%8D%EF%BC%88%E4%BA%94%E6%AE%B5%E5%8A%A8%E8%AF%8D%EF%BC%89"><span class="nav-text">一类动词（五段动词）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%B1%BB%E5%8A%A8%E8%AF%8D%EF%BC%88%E4%B8%8A%E4%B8%80%E6%AE%B5%E5%8A%A8%E8%AF%8D%EF%BC%8C%E4%B8%8B%E4%B8%80%E6%AE%B5%E5%8A%A8%E8%AF%8D%EF%BC%89"><span class="nav-text">二类动词（上一段动词，下一段动词）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E5%8A%A8%E8%AF%8D%EF%BC%88%E3%82%AB%E5%8F%98-%E3%82%B5%E5%8F%98%EF%BC%89"><span class="nav-text">三类动词（カ变　サ变）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E8%AF%8D%E5%8F%98%E3%81%BE%E3%81%99%E5%BD%A2"><span class="nav-text">动词变ます形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%B1%BB%E5%8A%A8%E8%AF%8D"><span class="nav-text">一类动词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%B1%BB%E5%8A%A8%E8%AF%8D"><span class="nav-text">二类动词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E5%8A%A8%E8%AF%8D"><span class="nav-text">三类动词</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E8%AF%BE"><span class="nav-text">第五课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-4"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%EF%BC%88%E6%97%B6%EF%BC%8C%E5%88%86%EF%BC%89"><span class="nav-text">时间（时，分）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-3"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E8%AF%BE"><span class="nav-text">第六课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-5"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4-%EF%BC%88%E6%9C%88%EF%BC%8C%E6%97%A5%EF%BC%89"><span class="nav-text">时间 （月，日）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-4"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E8%AF%BE"><span class="nav-text">第七课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-6"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-5"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E8%AF%8D%E8%A1%A5%E5%85%85"><span class="nav-text">动词补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E8%AF%BE"><span class="nav-text">第八课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-7"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-6"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A2%E5%AE%B9%E8%AF%8D"><span class="nav-text">形容词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-text">分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E5%BD%A2"><span class="nav-text">变形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E8%AF%BE"><span class="nav-text">第九课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-8"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-7"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E8%AF%BE"><span class="nav-text">第十课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-9"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-8"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AF%BE"><span class="nav-text">第十一课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-10"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-9"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AF%BE"><span class="nav-text">第十二课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-11"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-10"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E8%AF%BE"><span class="nav-text">第十三课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-12"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-11"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E8%AF%8D%E5%8F%98%E5%BD%A2%EF%BC%9A%E3%81%A6%EF%BC%8F%E3%81%9F"><span class="nav-text">动词变形：て／た</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%B1%BB%E5%8A%A8%E8%AF%8D-1"><span class="nav-text">一类动词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%B1%BB%E5%8A%A8%E8%AF%8D-1"><span class="nav-text">二类动词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E5%8A%A8%E8%AF%8D-%EF%BC%88%E3%82%AB%E3%80%81%E3%82%B5%EF%BC%89"><span class="nav-text">三类动词 （カ、サ）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%AF%BE"><span class="nav-text">第十四课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-13"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-12"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%94%E8%AF%BE"><span class="nav-text">第十五课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-14"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-13"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE"><span class="nav-text">第十六课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-15"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-14"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%83%E8%AF%BE"><span class="nav-text">第十七课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-16"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-15"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AB%E8%AF%BE"><span class="nav-text">第十八课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-17"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-16"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E8%AF%BE"><span class="nav-text">第十九课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-18"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-17"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E8%AF%BE"><span class="nav-text">第二十课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-19"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-18"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%80%E8%AF%BE"><span class="nav-text">第二十一课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-20"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-19"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E8%AF%BE"><span class="nav-text">第二十二课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-21"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-20"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%89%E8%AF%BE"><span class="nav-text">第二十三课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-22"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-21"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%9B%9B%E8%AF%BE"><span class="nav-text">第二十四课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-23"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-22"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%94%E8%AF%BE"><span class="nav-text">第二十五课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-24"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-23"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%85%AD%E8%AF%BE"><span class="nav-text">第二十六课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-25"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-24"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%83%E8%AF%BE"><span class="nav-text">第二十七课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-26"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-25"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E5%85%AB%E8%AF%BE"><span class="nav-text">第二十八课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-27"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-26"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B9%9D%E8%AF%BE"><span class="nav-text">第二十九课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-28"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-27"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E8%AF%BE"><span class="nav-text">第三十课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-29"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-28"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B8%80%E8%AF%BE"><span class="nav-text">第三十一课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-30"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-29"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%BA%8C%E8%AF%BE"><span class="nav-text">第三十二课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-31"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-30"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B8%89%E8%AF%BE"><span class="nav-text">第三十三课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-32"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-31"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E5%9B%9B%E8%AF%BE"><span class="nav-text">第三十四课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-33"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-32"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%BA%94%E8%AF%BE"><span class="nav-text">第三十五课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-34"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-33"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E5%85%AD%E8%AF%BE"><span class="nav-text">第三十六课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-35"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-34"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B8%83%E8%AF%BE"><span class="nav-text">第三十七课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-36"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-35"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E5%85%AB%E8%AF%BE"><span class="nav-text">第三十八课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-37"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-36"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E5%8D%81%E4%B9%9D%E8%AF%BE"><span class="nav-text">第三十九课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-38"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-37"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%81%E8%AF%BE"><span class="nav-text">第四十课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-39"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-38"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%81%E4%B8%80%E8%AF%BE"><span class="nav-text">第四十一课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-40"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-39"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%81%E4%BA%8C%E8%AF%BE"><span class="nav-text">第四十二课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-41"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-40"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%81%E4%B8%89%E8%AF%BE"><span class="nav-text">第四十三课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-42"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-41"><span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E5%8D%81%E5%9B%9B%E8%AF%BE"><span class="nav-text">第四十四课</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%AF%8D-43"><span class="nav-text">单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-42"><span class="nav-text">语法</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Lisery</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+    <div id="aplayer"></div>
+
+<script src="/js/libs/APlayer.min.js"></script>
+
+
+<script src="/js/plugins/aplayer.js"></script>
+
+
+</body>
+</html>
