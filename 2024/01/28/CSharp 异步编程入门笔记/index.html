@@ -13,26 +13,23 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/use autohotkey to configure keys/"/>
+    <link rel="canonical" href="https://lisery454.github.io/2024/01/28/csharp 异步编程入门笔记/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。 1.官网下载https:&#x2F;&#x2F;www.autohotkey.com&#x2F;  这是官网，我下载的是v2。 2.创建映射配置创建一个后缀为.ahk的文件。根据官网上的教程简单的映射几个键位。 比如我的是： 12345678910111213App">
+        <meta name="description" content="async&#x2F;await等用法解释">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Use AutoHotKey to Configure Keys">
-<meta property="og:url" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/index.html">
+<meta property="og:title" content="C#异步编程入门笔记">
+<meta property="og:url" content="https://lisery454.github.io/2024/01/28/CSharp%20%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
-<meta property="og:description" content="最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。 1.官网下载https:&#x2F;&#x2F;www.autohotkey.com&#x2F;  这是官网，我下载的是v2。 2.创建映射配置创建一个后缀为.ahk的文件。根据官网上的教程简单的映射几个键位。 比如我的是： 12345678910111213App">
+<meta property="og:description" content="async&#x2F;await等用法解释">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png">
-<meta property="article:published_time" content="2024-01-21T08:47:15.941Z">
-<meta property="article:modified_time" content="2024-01-21T10:38:53.622Z">
+<meta property="article:published_time" content="2024-01-28T10:51:09.538Z">
+<meta property="article:modified_time" content="2024-02-01T06:54:41.451Z">
 <meta property="article:author" content="Lisery">
-<meta property="article:tag" content="AutohotKey">
+<meta property="article:tag" content="C#">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png">
     
     
     <!--- Icon Part-->
@@ -44,7 +41,7 @@
     
     <title>
         
-            Use AutoHotKey to Configure Keys -
+            C#异步编程入门笔记 -
         
         Lisery&#39;s Blogs
     </title>
@@ -470,7 +467,7 @@
         <div class="article-title relative w-full">
             
                 <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">Use AutoHotKey to Configure Keys</h1>
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">C#异步编程入门笔记</h1>
                 </div>
             
             </div>
@@ -489,15 +486,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-21 16:47:15</span>
-        <span class="mobile">2024-01-21 16:47:15</span>
+        <span class="desktop">2024-01-28 18:51:09</span>
+        <span class="mobile">2024-01-28 18:51:09</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 18:38:53</span>
-            <span class="mobile">2024-01-21 18:38:53</span>
+            <span class="desktop">2024-02-01 14:54:41</span>
+            <span class="mobile">2024-02-01 14:54:41</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -511,7 +508,7 @@
                     
                         
                         <li>
-                            <a href="/categories/tutorial/">tutorial</a>&nbsp;
+                            <a href="/categories/notes/">notes</a>&nbsp;
                         </li>
                     
                     
@@ -525,7 +522,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/AutohotKey/">AutohotKey</a>&nbsp;
+                        <a href="/tags/C/">C#</a>&nbsp;
                     </li>
                 
             </ul>
@@ -551,23 +548,67 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。</p>
-<h3 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1.官网下载"></a>1.官网下载</h3><p><a class="link" target="_blank" rel="noopener" href="https://www.autohotkey.com/">https://www.autohotkey.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>这是官网，我下载的是v2。</p>
-<h3 id="2-创建映射配置"><a href="#2-创建映射配置" class="headerlink" title="2.创建映射配置"></a>2.创建映射配置</h3><p>创建一个后缀为<code>.ahk</code>的文件。根据官网上的教程简单的映射几个键位。</p>
-<p>比如我的是：</p>
-<div class="highlight-container" data-rel="Ahk"><figure class="iseeu highlight ahk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">AppsKey &amp; D::</span>Right</span><br><span class="line"><span class="title">AppsKey &amp; W::</span>Up</span><br><span class="line"><span class="title">AppsKey &amp; A::</span>Left</span><br><span class="line"><span class="title">AppsKey &amp; S::</span>Down</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; .::</span>End</span><br><span class="line">AppsKey &amp; `;::Home</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; K::</span>Backspace</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; I::</span>Insert</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; Backspace::</span>Delete</span><br></pre></td></tr></table></figure></div>
+            <h2 id="为什么需要异步？"><a href="#为什么需要异步？" class="headerlink" title="为什么需要异步？"></a>为什么需要异步？</h2><p>一个程序，内部有很多线程在分别做不同的事，但是CPU一次只跑一个线程，相当于轮流运行多个线程。如果不是异步的，那么假如一个线程中需要耗时操作，程序就会阻塞在这个线程，其他线程就运行不了了。而异步就可以处理这个问题。</p>
+<p>比如WPF中，如果在处理一个耗时操作，如果不用异步，UI线程就不会更新界面。</p>
+<p><code>await</code>就相当于释放掉当前线程，即CPU干这个线程的活干到一半，你跟他说这里要再忙一会，你先干别的吧。</p>
+<p>所以异步核心思想就是不要阻塞</p>
+<h3 id="多线程与异步之间的异同"><a href="#多线程与异步之间的异同" class="headerlink" title="多线程与异步之间的异同"></a>多线程与异步之间的异同</h3><p>多线程<code>Thread</code>和异步<code>async/await</code>都是C#提供的同时处理多个任务的方法</p>
+<p>多线程适合CPU密集型操作，适合长期运行的任务，也提供一些更加底层的操作，比如锁，信号量。</p>
+<p>异步是C#对于多线程的一次封装（也可以不是多线程，而使用CPU时间片轮转），适合IO密集型操作，适合短暂的小任务，可以避免线程阻塞，提高系统响应能力。</p>
+<h2 id="一些名词解释"><a href="#一些名词解释" class="headerlink" title="一些名词解释"></a>一些名词解释</h2><p><code>Task</code>是对一个异步任务其所有状态的包装</p>
+<p>标记一个函数为<code>async</code>，唯一作用是让这个函数里面可以调用<code>await</code>。<code>await</code>关键字后面必须跟一个返回<code>Task</code>的表达式。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">async</span> <span class="keyword">void</span> <span class="title">FooAsync</span>()</span>&#123;</span><br><span class="line">    <span class="keyword">await</span> Task.Delay(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<p>比如第一句就是菜单键加D就是→键。</p>
-<p>直接双击<code>.ahk</code>的文件就可以直接运行了。</p>
-<h3 id="3-开机启动"><a href="#3-开机启动" class="headerlink" title="3.开机启动"></a>3.开机启动</h3><p>使用其的编译功能将其转换为exe文件</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png" class>
+<h3 id="常见的阻塞"><a href="#常见的阻塞" class="headerlink" title="常见的阻塞"></a>常见的阻塞</h3><ul>
+<li><code>Thread.Delay()</code></li>
+<li><code>Task.Wait()</code> <code>Task.Result</code>如果任务没有完成的话，就是阻塞的</li>
+<li><code>IO</code>等操作的同步方法</li>
+<li>其他耗时操作</li>
+</ul>
+<h3 id="同步上下文"><a href="#同步上下文" class="headerlink" title="同步上下文"></a>同步上下文</h3><p>一种管理和协调线程的机制，允许开发者将自己的代码执行切换到特定的线程。</p>
+<p>WPF中的UI线程就是同步上下文。控制台应用中默认没有同步上下文</p>
+<p>可以配置 <code>ConfigureAwait(false)</code>来配置<code>Task</code>结束后是否会回到原来的线程，默认是<code>true</code>，一般是只有UI线程会用，为了异步结束之后可以立刻更新UI。但是很容易产生死锁</p>
+<h2 id="简单异步任务的使用"><a href="#简单异步任务的使用" class="headerlink" title="简单异步任务的使用"></a>简单异步任务的使用</h2><h3 id="创建和运行"><a href="#创建和运行" class="headerlink" title="创建和运行"></a>创建和运行</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Task.Run() <span class="comment">// 把一个同步方法包装成异步运行的Task</span></span><br><span class="line">Task.Factory.StartNew() <span class="comment">// Task.Run()的复杂版</span></span><br></pre></td></tr></table></figure></div>
 
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png" class>
+<h3 id="多个任务的同时进行"><a href="#多个任务的同时进行" class="headerlink" title="多个任务的同时进行"></a>多个任务的同时进行</h3><p>创建一个task数组进行管理多个任务</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> inputs = Enumerable.Range(<span class="number">1</span>, <span class="number">10</span>).ToList();</span><br><span class="line"><span class="keyword">var</span> tasks = inputs.Select(HeavyJob).ToList();</span><br><span class="line"><span class="keyword">await</span> Task.WhenAll(tasks);</span><br><span class="line"><span class="keyword">var</span> outputs = tasks.Select(x =&gt; x.Result).ToList();</span><br><span class="line">outputs.ForEach(Console.WriteLine);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">HeavyJob</span>(<span class="params"><span class="built_in">int</span> input</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">await</span> Task.Delay(<span class="number">1000</span>); <span class="comment">// wait</span></span><br><span class="line">    <span class="keyword">return</span> input * input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<p>之后把生成的exe放到开机启动的文件夹下</p>
-<p>路径应该是：<code>C:\Users\&#123;username&#125;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
-<p>之后应该就可以开机启动了。</p>
+<h3 id="任务的取消"><a href="#任务的取消" class="headerlink" title="任务的取消"></a>任务的取消</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cts = <span class="keyword">new</span> CancellationTokenSource();</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> Task.Delay(<span class="number">10000</span>, cts.Token);</span><br><span class="line"></span><br><span class="line">cts.Cancel(); <span class="comment">// 取消任务</span></span><br><span class="line"></span><br><span class="line">cts.Dispose(); <span class="comment">// 释放内存</span></span><br></pre></td></tr></table></figure></div>
+
+<p>最好每个异步方法都带上<code>CancellationToken</code>这个参数</p>
+<h4 id="在自己的方法里使用-CancellationToken"><a href="#在自己的方法里使用-CancellationToken" class="headerlink" title="在自己的方法里使用 CancellationToken"></a>在自己的方法里使用 <code>CancellationToken</code></h4><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">async</span> Task&lt;<span class="built_in">int</span>&gt; <span class="title">HeavyJob</span>(<span class="params"><span class="built_in">int</span> input, CancellationToken cancellationToken</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 1. 调用其他API的cancellationToken版本</span></span><br><span class="line">    <span class="keyword">await</span> Task.Delay(<span class="number">1000</span>, cancellationToken);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 使用这一段code来取消任务</span></span><br><span class="line">    cancellationToken.ThrowIfCancellationRequested();</span><br><span class="line">    <span class="comment">// or</span></span><br><span class="line">    <span class="keyword">if</span> (cancellationToken.IsCancellationRequested)</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> input * input;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="任务取消时的对策"><a href="#任务取消时的对策" class="headerlink" title="任务取消时的对策"></a>任务取消时的对策</h4><ul>
+<li>抛异常<ul>
+<li><code>OperationCanceledException</code></li>
+<li><code>TaskCanceledException</code></li>
+</ul>
+</li>
+<li>提前返回<ul>
+<li><code>Task.FromCancelled</code></li>
+</ul>
+</li>
+<li>善后<ul>
+<li><code>try catch finally</code></li>
+<li><code>Token.Register</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="异步任务超时处理"><a href="#异步任务超时处理" class="headerlink" title="异步任务超时处理"></a>异步任务超时处理</h2><p>使用 <code>WaitAsync</code> 来追加一个异步任务的处理时间限制</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cts = <span class="keyword">new</span> CancellationTokenSource();</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">await</span> FooAsync(cts.Token).WaitAsync(TimeSpan.FromSeconds(<span class="number">2</span>));</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;Success!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (TimeoutException)</span><br><span class="line">&#123;</span><br><span class="line">	cts.Cancel();</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;Timeout!&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">    cts.Dispose();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">&quot;Done&quot;</span>);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="同步方法里调用异步方法"><a href="#同步方法里调用异步方法" class="headerlink" title="同步方法里调用异步方法"></a>同步方法里调用异步方法</h2><h3 id="阻塞"><a href="#阻塞" class="headerlink" title="阻塞"></a>阻塞</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FooAsync().Wait() <span class="comment">// 阻塞，如果异步方法抛异常，抛出的是AggregateException</span></span><br><span class="line"></span><br><span class="line">FooAsync().GetAwaiter().GetResult() <span class="comment">// 阻塞，如果异步方法抛异常，抛出的是内部本身的异常</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="一发即忘"><a href="#一发即忘" class="headerlink" title="一发即忘"></a>一发即忘</h3><div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_ = FooAsync();</span><br><span class="line"></span><br><span class="line">VoidFooAsync();</span><br></pre></td></tr></table></figure></div>
+
+<p>这种情况的话，<code>FooAsync</code>里面抛出的异常无法捕获，程序也不会挂。</p>
+<p><code>VoidFooAsync</code>里面抛出异常也无法捕获，但是会直接挂掉程序。</p>
+<hr>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">TaskExtensions</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">Await</span> (<span class="params"><span class="keyword">this</span> Task task, </span></span></span><br><span class="line"><span class="params"><span class="function">         Action? onCompleted = <span class="literal">null</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">         Action&lt;Exception&gt;? onError = <span class="literal">null</span></span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">await</span> task;</span><br><span class="line">            onCompleted?.Invoke();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            onError?.Invoke(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这种方法可以处理一发即忘的异常。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>非常感谢这位up主做的这一系列视频，受益匪浅</p>
+<p><a class="link" target="_blank" rel="noopener" href="https://space.bilibili.com/600592/channel/collectiondetail?sid=2053170">https://space.bilibili.com/600592/channel/collectiondetail?sid=2053170 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
         </div>
 
@@ -577,7 +618,7 @@
             <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/AutohotKey/">#AutohotKey</a>&nbsp;
+                        <a href="/tags/C/">#C#</a>&nbsp;
                     </li>
                 
             </ul>
@@ -591,13 +632,13 @@
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
+                        href="/2024/02/01/WPF%E4%BE%9D%E8%B5%96%E5%B1%9E%E6%80%A7%E5%92%8C%E9%99%84%E5%8A%A0%E5%B1%9E%E6%80%A7/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">关于游戏内数字的一些思考</span>
+                                <span class="post-nav-title-item">WPF依赖属性和附加属性</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -607,10 +648,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/"
+                        href="/2024/01/27/%E6%97%A5%E8%AF%AD%E5%88%9D%E7%BA%A7%E7%AC%94%E8%AE%B0/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">Unity URP Shader Learn Note</span>
+                                <span class="post-nav-title-item">日语初级笔记</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -631,8 +672,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">Use AutoHotKey to Configure Keys</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD"><span class="nav-text">1.官网下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E6%98%A0%E5%B0%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.创建映射配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-text">3.开机启动</span></a></li></ol>
+        <div class="page-title">C#异步编程入门笔记</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%BC%82%E6%AD%A5%EF%BC%9F"><span class="nav-text">为什么需要异步？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B9%8B%E9%97%B4%E7%9A%84%E5%BC%82%E5%90%8C"><span class="nav-text">多线程与异步之间的异同</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="nav-text">一些名词解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%98%BB%E5%A1%9E"><span class="nav-text">常见的阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">同步上下文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">简单异步任务的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E8%BF%90%E8%A1%8C"><span class="nav-text">创建和运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%90%8C%E6%97%B6%E8%BF%9B%E8%A1%8C"><span class="nav-text">多个任务的同时进行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%8F%96%E6%B6%88"><span class="nav-text">任务的取消</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E8%B6%85%E6%97%B6%E5%A4%84%E7%90%86"><span class="nav-text">异步任务超时处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95%E9%87%8C%E8%B0%83%E7%94%A8%E5%BC%82%E6%AD%A5%E6%96%B9%E6%B3%95"><span class="nav-text">同步方法里调用异步方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E"><span class="nav-text">阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8F%91%E5%8D%B3%E5%BF%98"><span class="nav-text">一发即忘</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
 
     </div>
 </div>

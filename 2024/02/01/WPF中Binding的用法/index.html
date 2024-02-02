@@ -13,26 +13,24 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/use autohotkey to configure keys/"/>
+    <link rel="canonical" href="https://lisery454.github.io/2024/02/01/wpf中binding的用法/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。 1.官网下载https:&#x2F;&#x2F;www.autohotkey.com&#x2F;  这是官网，我下载的是v2。 2.创建映射配置创建一个后缀为.ahk的文件。根据官网上的教程简单的映射几个键位。 比如我的是： 12345678910111213App">
+        <meta name="description" content="Binding的使用，包括Path，Mode，RelativeSource等用法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Use AutoHotKey to Configure Keys">
-<meta property="og:url" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/index.html">
+<meta property="og:title" content="WPF中Binding的用法">
+<meta property="og:url" content="https://lisery454.github.io/2024/02/01/WPF%E4%B8%ADBinding%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
-<meta property="og:description" content="最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。 1.官网下载https:&#x2F;&#x2F;www.autohotkey.com&#x2F;  这是官网，我下载的是v2。 2.创建映射配置创建一个后缀为.ahk的文件。根据官网上的教程简单的映射几个键位。 比如我的是： 12345678910111213App">
+<meta property="og:description" content="Binding的使用，包括Path，Mode，RelativeSource等用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png">
-<meta property="article:published_time" content="2024-01-21T08:47:15.941Z">
-<meta property="article:modified_time" content="2024-01-21T10:38:53.622Z">
+<meta property="article:published_time" content="2024-02-01T06:57:02.784Z">
+<meta property="article:modified_time" content="2024-02-02T03:07:16.296Z">
 <meta property="article:author" content="Lisery">
-<meta property="article:tag" content="AutohotKey">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="WPF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lisery454.github.io/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png">
     
     
     <!--- Icon Part-->
@@ -44,7 +42,7 @@
     
     <title>
         
-            Use AutoHotKey to Configure Keys -
+            WPF中Binding的用法 -
         
         Lisery&#39;s Blogs
     </title>
@@ -470,7 +468,7 @@
         <div class="article-title relative w-full">
             
                 <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">Use AutoHotKey to Configure Keys</h1>
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">WPF中Binding的用法</h1>
                 </div>
             
             </div>
@@ -489,15 +487,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-21 16:47:15</span>
-        <span class="mobile">2024-01-21 16:47:15</span>
+        <span class="desktop">2024-02-01 14:57:02</span>
+        <span class="mobile">2024-02-01 14:57:02</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 18:38:53</span>
-            <span class="mobile">2024-01-21 18:38:53</span>
+            <span class="desktop">2024-02-02 11:07:16</span>
+            <span class="mobile">2024-02-02 11:07:16</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -511,7 +509,7 @@
                     
                         
                         <li>
-                            <a href="/categories/tutorial/">tutorial</a>&nbsp;
+                            <a href="/categories/notes/">notes</a>&nbsp;
                         </li>
                     
                     
@@ -525,7 +523,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/AutohotKey/">AutohotKey</a>&nbsp;
+                        <a href="/tags/C/">C#</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/WPF/">WPF</a>&nbsp;
                     </li>
                 
             </ul>
@@ -551,23 +553,90 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>最近需要换一个键盘，键位不太习惯，之间的键盘Fn键我挺喜欢的，但是新键盘没有这些键位，因此网上找到了AutoHotKey这个软件来配置一下键位，以达到相同的效果。</p>
-<h3 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1.官网下载"></a>1.官网下载</h3><p><a class="link" target="_blank" rel="noopener" href="https://www.autohotkey.com/">https://www.autohotkey.com/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<p>这是官网，我下载的是v2。</p>
-<h3 id="2-创建映射配置"><a href="#2-创建映射配置" class="headerlink" title="2.创建映射配置"></a>2.创建映射配置</h3><p>创建一个后缀为<code>.ahk</code>的文件。根据官网上的教程简单的映射几个键位。</p>
-<p>比如我的是：</p>
-<div class="highlight-container" data-rel="Ahk"><figure class="iseeu highlight ahk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">AppsKey &amp; D::</span>Right</span><br><span class="line"><span class="title">AppsKey &amp; W::</span>Up</span><br><span class="line"><span class="title">AppsKey &amp; A::</span>Left</span><br><span class="line"><span class="title">AppsKey &amp; S::</span>Down</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; .::</span>End</span><br><span class="line">AppsKey &amp; `;::Home</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; K::</span>Backspace</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; I::</span>Insert</span><br><span class="line"></span><br><span class="line"><span class="title">AppsKey &amp; Backspace::</span>Delete</span><br></pre></td></tr></table></figure></div>
+            <h2 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h2><p>最基础用法如下，相当于创建一个<code>Binding</code>和<code>Text</code>相关联。这里没有填写<code>Path</code>，所以默认就是当前的<code>DataContext</code>。比如当前的<code>DataContext</code>是一个<code>ViewModel</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Name=&quot;tb&quot; Text=&quot;&#123;Binding&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
 
-<p>比如第一句就是菜单键加D就是→键。</p>
-<p>直接双击<code>.ahk</code>的文件就可以直接运行了。</p>
-<h3 id="3-开机启动"><a href="#3-开机启动" class="headerlink" title="3.开机启动"></a>3.开机启动</h3><p>使用其的编译功能将其转换为exe文件</p>
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144244936.png" class>
+<p>如果要访问这个<code>DataContext</code>中的某个字段，就使用<code>Path</code>。<code>Path</code>名字就是指这个<code>DataContext</code>类中的哪个字段</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Name=&quot;tb&quot; Text=&quot;&#123;Binding Path=Message&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
 
-<img lazyload src="/images/loading.svg" data-src="/2024/01/21/Use%20AutoHotKey%20to%20Configure%20Keys/image-20230912144402683.png" class>
+<p>除了这种最常见的方法，还可以使用下面的方式来绑定</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Name=&quot;tb&quot;&gt;</span><br><span class="line">    &lt;TextBlock.Text&gt;</span><br><span class="line">        &lt;Binding Path=&quot;Message&quot; /&gt;</span><br><span class="line">    &lt;/TextBlock.Text&gt;</span><br><span class="line">&lt;/TextBlock&gt;</span><br></pre></td></tr></table></figure></div>
 
-<p>之后把生成的exe放到开机启动的文件夹下</p>
-<p>路径应该是：<code>C:\Users\&#123;username&#125;\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code></p>
-<p>之后应该就可以开机启动了。</p>
+<p>或者使用代码来绑定</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> binding = <span class="keyword">new</span> Binding</span><br><span class="line">&#123;</span><br><span class="line">    Path = <span class="keyword">new</span> PropertyPath(<span class="string">&quot;Message&quot;</span>);</span><br><span class="line">    <span class="comment">// Mode = ...</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明哪个控件，哪个DependencyProperty，哪个binding</span></span><br><span class="line">BindingOperations.SetBinding(tb, TextBlock.TextProperty, binding);</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Mode"><a href="#Mode" class="headerlink" title="Mode"></a>Mode</h2><h3 id="OneWay"><a href="#OneWay" class="headerlink" title="OneWay"></a>OneWay</h3><p>比如<code>Text</code>绑定到了<code>VM</code>中的<code>Message</code>，如果<code>Message</code>更新，就会驱动<code>Text</code>变化，反之不会。</p>
+<h3 id="OneWayToSource"><a href="#OneWayToSource" class="headerlink" title="OneWayToSource"></a>OneWayToSource</h3><p>与<code>OneWay</code>相反，UI中的数据更新会驱动<code>VM</code>的数据变化，反之不会。</p>
+<h3 id="TwoWay"><a href="#TwoWay" class="headerlink" title="TwoWay"></a>TwoWay</h3><p><code>OneWay</code>和<code>OneWayToSource</code>结合</p>
+<h3 id="OneTime"><a href="#OneTime" class="headerlink" title="OneTime"></a>OneTime</h3><p>功能上等价于<code>OneWay</code>，但是只会驱动更新UI一次。</p>
+<h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p>有些时候不想要绑定固定的<code>DataContext</code>，而是其他的数据，这时候我们需要换绑定的数据源。</p>
+<h3 id="Source-1"><a href="#Source-1" class="headerlink" title="Source"></a>Source</h3><p>比如某个在<code>Resources</code>中的数据。那我们就需要用<code>Source</code></p>
+<p>例如下面这个数据类</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">MyResource</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> Message &#123; <span class="keyword">get</span>; &#125; = <span class="string">&quot;Public Property&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> StaticString = <span class="string">&quot;Static String&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">const</span> <span class="built_in">string</span> ConstString = <span class="string">&quot;Const String&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>并且在<code>Resources</code>中初始化这个类和系统自带的类</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Window.Resources&gt;</span><br><span class="line">    &lt;sys:String x:Key=&quot;str&quot;&gt;Hello, World&lt;/sys:String&gt;</span><br><span class="line">    &lt;local:MyResource x:Key=&quot;myres&quot; /&gt;</span><br><span class="line">&lt;/Window.Resources&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>然后进行绑定，注意这里绑定静态变量或者枚举类型使用<code>x:Static</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Source=&#123;StaticResource str&#125;&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Source=&#123;StaticResource myres&#125;, Path=Message&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Source=&#123;x:Static local:MyResource.StaticString&#125;&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Source=&#123;x:Static local:MyResource.ConstString&#125;&#125;&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Source=&#123;x:Static HorizontalAlignment.Stretch&#125;&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="ElementName"><a href="#ElementName" class="headerlink" title="ElementName"></a>ElementName</h3><p>有时候我们需要绑定另一个UI元素的数据，这时候使用<code>ElementName</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBox Name=&quot;txt&quot; /&gt;</span><br><span class="line">&lt;TextBlock Text=&quot;&#123;Binding ElementName=txt, Path=Text&#125;&quot; /&gt; </span><br></pre></td></tr></table></figure></div>
+
+<p>相当于后者绑定了前者的<code>Text</code>属性</p>
+<p>但是有两种情况使用<code>ElementName</code>是绑定不了的</p>
+<ul>
+<li><p>绑定的对象不在同一棵可视化树中。</p>
+<p>  比如<code>Textblock.Tooltip</code>，它在运行时是不在<code>Window</code>这棵UI树上的，而是在一个<code>PopUpRoot</code>的树上，因此下面的绑定无效</p>
+  <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock&gt;</span><br><span class="line">    &lt;TextBlock.Tooltip&gt;</span><br><span class="line">        &lt;TextBlock Text=&quot;&#123;Binding ElementName=txt, Path=Text&#125;&quot; /&gt;</span><br><span class="line">    &lt;/TextBlock.Tooltip&gt;</span><br><span class="line">&lt;/TextBlock&gt;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>绑定的对象根本不在可视化树中。</p>
+<p>  比如<code>DataGridTextColumn</code>，它在运行时根本不存在，而是转化成了其他的组件，所以绑定也是不行的。</p>
+  <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;DataGrid&gt;</span><br><span class="line">    &lt;DataGrid.Columns&gt;</span><br><span class="line">        &lt;DataGridTextColumn Header=&quot;&#123;Binding ElementName=txt, Path=Text&#125;&quot; /&gt;</span><br><span class="line">    &lt;/DataGrid.Columns&gt;</span><br><span class="line">&lt;/DataGrid&gt;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>这种两种情况有一种解决方案是使用<code>Source</code>和<code>x:Reference</code></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock&gt;</span><br><span class="line">    &lt;TextBlock.Tooltip&gt;</span><br><span class="line">        &lt;TextBlock Text=&quot;&#123;Binding Source=&#123;x:Reference Name=txt&#125;, Path=Text&#125;&quot; /&gt;</span><br><span class="line">    &lt;/TextBlock.Tooltip&gt;</span><br><span class="line">&lt;/TextBlock&gt;</span><br><span class="line"></span><br><span class="line">&lt;DataGrid&gt;</span><br><span class="line">    &lt;DataGrid.Columns&gt;</span><br><span class="line">        &lt;DataGridTextColumn Header=&quot;&#123;Binding Source=&#123;x:Reference Name=txt&#125;, Path=Text&#125;&quot; /&gt;</span><br><span class="line">    &lt;/DataGrid.Columns&gt;</span><br><span class="line">&lt;/DataGrid&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="RelativeSource"><a href="#RelativeSource" class="headerlink" title="RelativeSource"></a>RelativeSource</h3><p>有些时候可以根据相对自己的位置去找数据源</p>
+<h4 id="FindAncestor"><a href="#FindAncestor" class="headerlink" title="FindAncestor"></a>FindAncestor</h4><p><code>FindAncestor</code>的意思是从自己在可视化树的位置往上找，直到找到符合条件的元素</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=FindAncestor, AncestorType=Window&#125;, Path=Top&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>这段代码就是找到自己所在的<code>Window</code>，然后获取<code>Window</code>的<code>Top</code>属性</p>
+<p>如果符合条件的父级很多怎么办？这时候可以使用<code>AncestorLevel</code>来限制自己要找的是第几个符合条件的元素。默认是1，1代表第一个，2代表第二个，以此类推。</p>
+<p><code>FindAncestor</code>有些时候也可以用来绑定同级的元素，虽然会有些不够鲁棒。原理是找上一个父级，并且访问它的子元素。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;StackPanel&gt;</span><br><span class="line">	&lt;TextBox /&gt;</span><br><span class="line">	&lt;TextBlock Text=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=FindAncestor, AncestorType=StackPanel&#125;, Path=Children[0].Text&#125;&quot; /&gt;</span><br><span class="line">&lt;/StackPanel&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="Self"><a href="#Self" class="headerlink" title="Self"></a>Self</h4><p>这个<code>Mode</code>可以用来绑定自己</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=Self&#125;, Path=ActualWidth&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>或者</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding RelativeSource=&#123;x:Static RelativeSource.Self&#125;, Path=ActualWidth&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="TemplatedParent"><a href="#TemplatedParent" class="headerlink" title="TemplatedParent"></a>TemplatedParent</h4><p>这种只存在于<code>Template</code>中</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=TEmplatedParent&#125;, Path=Padding, Mode=OneWay&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>等价于</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;TemplateBinding Padding&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc."></a>Misc.</h2><h3 id="StringFormat"><a href="#StringFormat" class="headerlink" title="StringFormat"></a>StringFormat</h3><p>对于绑定的数据的呈现进行字符串格式化</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding ElementName=window, Path=Top, StringFormat=&#x27;Top: &#123;0:F3&#125;&#x27;&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>对于有<code>Content</code>属性的控件，要使用<code>ContentStringFormat</code></p>
+<h3 id="MultiBinding"><a href="#MultiBinding" class="headerlink" title="MultiBinding"></a>MultiBinding</h3><p>绑定多个元素</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock&gt;</span><br><span class="line">    &lt;TextBlock.Text&gt;</span><br><span class="line">    	&lt;MultiBinding StringFormat=&quot;Pos: &#123;0&#125;, &#123;1&#125;&quot;&gt;</span><br><span class="line">            &lt;Binding ElementName=&quot;window&quot; Path=&quot;Top&quot; /&gt;</span><br><span class="line">            &lt;Binding ElementName=&quot;window&quot; Path=&quot;Left&quot; /&gt;</span><br><span class="line">        &lt;/MultiBinding&gt;    </span><br><span class="line">    &lt;/TextBlock.Text&gt;</span><br><span class="line">&lt;/TextBlock&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="UpdateSourceTrigger"><a href="#UpdateSourceTrigger" class="headerlink" title="UpdateSourceTrigger"></a>UpdateSourceTrigger</h3><p>决定了什么时候会更新其他绑定的数据</p>
+<p>有<code>Default</code>，<code>Explicit</code>，<code>LostFocus</code>，<code>PropertyChanged</code>四种</p>
+<h3 id="TargetNullValue"><a href="#TargetNullValue" class="headerlink" title="TargetNullValue"></a>TargetNullValue</h3><p>决定绑定对象数据为空时的数据</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Path=Message, TargetNullValue=EmptyLaLaLa&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="FallbackValue"><a href="#FallbackValue" class="headerlink" title="FallbackValue"></a>FallbackValue</h3><p>当绑定失败的时候的默认值</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding Path=Message, FallbackValue=EmptyLaLaLa&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a class="link" target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xm4y1E7WT/">https://www.bilibili.com/video/BV1xm4y1E7WT/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2305179/what-are-the-various-wpf-binding-modes">https://stackoverflow.com/questions/2305179/what-are-the-various-wpf-binding-modes <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
         </div>
 
@@ -577,7 +646,11 @@
             <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/AutohotKey/">#AutohotKey</a>&nbsp;
+                        <a href="/tags/C/">#C#</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/WPF/">#WPF</a>&nbsp;
                     </li>
                 
             </ul>
@@ -588,29 +661,14 @@
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">关于游戏内数字的一些思考</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/01/21/Unity%20URP%20Shader%20Learn%20Note/"
+                        href="/2024/02/01/WPF%E4%BE%9D%E8%B5%96%E5%B1%9E%E6%80%A7%E5%92%8C%E9%99%84%E5%8A%A0%E5%B1%9E%E6%80%A7/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">Unity URP Shader Learn Note</span>
+                                <span class="post-nav-title-item">WPF依赖属性和附加属性</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -631,8 +689,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">Use AutoHotKey to Configure Keys</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD"><span class="nav-text">1.官网下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E6%98%A0%E5%B0%84%E9%85%8D%E7%BD%AE"><span class="nav-text">2.创建映射配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="nav-text">3.开机启动</span></a></li></ol>
+        <div class="page-title">WPF中Binding的用法</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path"><span class="nav-text">Path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mode"><span class="nav-text">Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OneWay"><span class="nav-text">OneWay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OneWayToSource"><span class="nav-text">OneWayToSource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TwoWay"><span class="nav-text">TwoWay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OneTime"><span class="nav-text">OneTime</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Source"><span class="nav-text">Source</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-1"><span class="nav-text">Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElementName"><span class="nav-text">ElementName</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RelativeSource"><span class="nav-text">RelativeSource</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Misc"><span class="nav-text">Misc.</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#StringFormat"><span class="nav-text">StringFormat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MultiBinding"><span class="nav-text">MultiBinding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UpdateSourceTrigger"><span class="nav-text">UpdateSourceTrigger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TargetNullValue"><span class="nav-text">TargetNullValue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FallbackValue"><span class="nav-text">FallbackValue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
 
     </div>
 </div>
