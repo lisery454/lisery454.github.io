@@ -13,27 +13,18 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/godot像素黑白后处理shader/"/>
+    <link rel="canonical" href="https://lisery454.github.io/categories/notes/page/2/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="记录了shader的源码和效果">
-<meta property="og:type" content="article">
-<meta property="og:title" content="godot像素黑白后处理shader">
-<meta property="og:url" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/index.html">
+        <meta property="og:type" content="website">
+<meta property="og:title" content="Lisery&#39;s Blog">
+<meta property="og:url" content="https://lisery454.github.io/categories/notes/page/2/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
-<meta property="og:description" content="记录了shader的源码和效果">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png">
-<meta property="article:published_time" content="2024-01-21T08:47:16.060Z">
-<meta property="article:modified_time" content="2024-01-21T10:35:38.894Z">
 <meta property="article:author" content="Lisery">
-<meta property="article:tag" content="Godot">
-<meta property="article:tag" content="Shader">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png">
     
     
     <!--- Icon Part-->
@@ -45,7 +36,7 @@
     
     <title>
         
-            godot像素黑白后处理shader -
+            分类: notes -
         
         Lisery&#39;s Blogs
     </title>
@@ -337,7 +328,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class=""
+                                <a class="active"
                                    href="/categories/"
                                         >
                                     <i class="fa-solid fa-folder fa-fw"></i>
@@ -418,7 +409,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
                            href="/categories/"
                         >
                             <span>
@@ -465,176 +456,44 @@
             <div class="main-content">
 
                 
-                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
-    <div class="article-content-container">
-
-        <div class="article-title relative w-full">
-            
-                <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">godot像素黑白后处理shader</h1>
-                </div>
-            
-            </div>
-
+                    <div class="category-container">
+    <div class="category-name">
+        <i class="fa-solid fa-folder"></i>&nbsp;notes
+    </div>
+    <div class="category-post-list">
         
-            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
-                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
-                    <img src="/images/redefine-avatar.svg">
-                </div>
-                <div class="info flex flex-col justify-between">
-                    <div class="author flex items-center">
-                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
-                        
-                    </div>
-                    <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-21 16:47:16</span>
-        <span class="mobile">2024-01-21 16:47:16</span>
-        <span class="hover-info">创建</span>
-    </span>
-    
-        <span class="article-date article-meta-item">
-            <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 18:35:38</span>
-            <span class="mobile">2024-01-21 18:35:38</span>
-            <span class="hover-info">更新</span>
-        </span>
-    
 
+<div class="archive-list-container">
     
-        <span class="article-categories article-meta-item">
-            <i class="fa-regular fa-folders"></i>&nbsp;
-            <ul>
-                
+        <section class="archive-item">
+            <div class="archive-item-header flex flex-row items-center mb-2">
+                <span class="archive-year font-semibold text-3xl mr-2">2024</span>
+                <span class="archive-year-post-count text-xs md:text-sm font-bold rounded-small bg-third-background-color py-[2px] px-[10px] border border-border-color">1</span>
+            </div>
+            <ul class="article-list pl-8 text-lg leading-[1.5]">
+              
                 
                     
-                        
-                        <li>
-                            <a href="/categories/notes/">notes</a>&nbsp;
-                        </li>
-                    
-                    
+                    <li class="article-item" date-is='01-21'>
                 
+                
+                    <a href="/2024/01/21/AvaloniaUI%20Learn%20Notes/" class="block overflow-hidden">
+                        <span class="article-title mb-0.5 text-2xl">AvaloniaUI Learn Notes</span>
+                    </a>
+                
+              
             </ul>
-        </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fa-regular fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/Godot/">Godot</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/Shader/">Shader</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-
-    
-    
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
+        </section>
     
 </div>
 
-                    </div>
-                </div>
-            </div>
-        
-
-        
-
-
-        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png" class>
-
-<h2 id="shader"><a href="#shader" class="headerlink" title="shader"></a>shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">shader_type canvas_item;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec2</span> size = <span class="type">vec2</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> threshold = <span class="number">0.5</span>;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> screen_texture : hint_screen_texture, repeat_disable, filter_nearest;</span><br><span class="line"></span><br><span class="line"><span class="type">vec4</span> to_one_bit(<span class="type">vec4</span> color) &#123;</span><br><span class="line">	<span class="type">float</span> sum = (color.r * <span class="number">0.299</span> + color.g * <span class="number">0.587</span> + color.b * <span class="number">0.114</span>);</span><br><span class="line">	<span class="type">float</span> f = <span class="built_in">ceil</span>(sum - threshold);</span><br><span class="line">	color = <span class="built_in">mix</span>(<span class="type">vec4</span>(<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">1</span>), <span class="type">vec4</span>(<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">1</span>), f);</span><br><span class="line">	<span class="keyword">return</span> color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">vec2</span> get_new_uv(<span class="type">vec2</span> uv, <span class="type">vec2</span> screen_pixel_size) &#123;</span><br><span class="line">	<span class="type">vec2</span> size_uv = screen_pixel_size * size;</span><br><span class="line">	<span class="type">vec2</span> new_uv = <span class="built_in">floor</span>(uv / size_uv) * size_uv;</span><br><span class="line">	<span class="keyword">return</span> new_uv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> fragment() &#123;</span><br><span class="line">		<span class="type">vec2</span> new_uv = get_new_uv(SCREEN_UV, SCREEN_PIXEL_SIZE);</span><br><span class="line">		<span class="type">vec4</span> color = <span class="built_in">textureLod</span>(screen_texture, new_uv, <span class="number">0.0</span>);</span><br><span class="line">		COLOR = to_one_bit(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png" class>
-
-        </div>
-
-        
-
-        
-            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
-                
-                    <li class="tag-item mx-0.5">
-                        <a href="/tags/Godot/">#Godot</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item mx-0.5">
-                        <a href="/tags/Shader/">#Shader</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
-
-        
-
-        
-            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
-                
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">如何使用OhMyPosh定制化WindowTerminal</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
-                
-                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="next"
-                        rel="next"
-                        href="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
-                        >
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">关于游戏内数字的一些思考</span>
-                                <span class="post-nav-item">下一篇</span>
-                            </span>
-                            <span class="right arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
-                
-            </div>
-        
-
-
-        
-    </div>
-
-    
-        <div class="toc-content-container">
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <div class="toc-title">此页目录</div>
-        <div class="page-title">godot像素黑白后处理shader</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shader"><span class="nav-text">shader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol>
-
     </div>
 </div>
-        </div>
-    
+<div class="category-paginator">
+    <div class="paginator">
+    <a class="extend prev" rel="prev" href="/categories/notes/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/categories/notes/">1</a><span class="page-number current">2</span>
+</div>
+
 </div>
 
 
@@ -690,23 +549,6 @@
         </div>
     </div>
 
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="article-tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="right-bottom-tools page-aside-toggle">
-                <i class="fa-regular fa-outdent"></i>
-            </li>
-        
-
-        <!-- go comment -->
-        
-    </ul>
-</div>
-
-        </div>
     
 
     <div class="right-side-tools-container">
