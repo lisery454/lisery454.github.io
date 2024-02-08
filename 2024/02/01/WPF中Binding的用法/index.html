@@ -26,7 +26,7 @@
 <meta property="og:description" content="Binding的使用，包括Path，Mode，RelativeSource等用法">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-01T06:57:02.784Z">
-<meta property="article:modified_time" content="2024-02-02T03:07:16.296Z">
+<meta property="article:modified_time" content="2024-02-04T06:11:45.101Z">
 <meta property="article:author" content="Lisery">
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="WPF">
@@ -434,7 +434,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
         <div class="label text-third-text-color text-sm">标签</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -442,7 +442,7 @@
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -494,8 +494,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-02-02 11:07:16</span>
-            <span class="mobile">2024-02-02 11:07:16</span>
+            <span class="desktop">2024-02-04 14:11:45</span>
+            <span class="mobile">2024-02-04 14:11:45</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -613,10 +613,13 @@
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding RelativeSource=&#123;x:Static RelativeSource.Self&#125;, Path=ActualWidth&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
 
 <h4 id="TemplatedParent"><a href="#TemplatedParent" class="headerlink" title="TemplatedParent"></a>TemplatedParent</h4><p>这种只存在于<code>Template</code>中</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=TEmplatedParent&#125;, Path=Padding, Mode=OneWay&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=TemplatedParent&#125;, Path=Padding, Mode=OneWay&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
 
 <p>等价于</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;TemplateBinding Padding&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>当要绑定的属性是附加属性时，只能用上一种，如</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;ContentPresenter Margin=&quot;&#123;Binding RelativeSource=&#123;RelativeSource Mode=TemplatedParent&#125;, Path=(local:IconHelper.Icon)&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc."></a>Misc.</h2><h3 id="StringFormat"><a href="#StringFormat" class="headerlink" title="StringFormat"></a>StringFormat</h3><p>对于绑定的数据的呈现进行字符串格式化</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextBlock Text=&quot;&#123;Binding ElementName=window, Path=Top, StringFormat=&#x27;Top: &#123;0:F3&#125;&#x27;&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
