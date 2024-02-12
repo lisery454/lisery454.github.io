@@ -13,17 +13,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/tags/nodejs/"/>
+    <link rel="canonical" href="https://lisery454.github.io/2024/02/11/lua面向对象的简单模拟实现/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Lisery&#39;s Blog">
-<meta property="og:url" content="https://lisery454.github.io/tags/NodeJS/index.html">
+        <meta name="description" content="众所周知，Lua中是没有语言层面上的OOP实现的，但是Lua却提供了很多语法以及语法糖来让我们可以模拟OOP的实现。 首先面向对象有多个特性，分别是封装，继承，多态。接下来我们来分析以下如何在Lua中实现这几项特征，以实现面向对象。 封装封装的意思是将数据和对应的方法放在一起，隐藏内部细节，使其他调用者只需要了解接口就可以使用，符合高内聚低耦合的设计原则。 Lua提供table这个类型，只要我们把">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua面向对象的简单模拟实现">
+<meta property="og:url" content="https://lisery454.github.io/2024/02/11/Lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%AE%80%E5%8D%95%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="众所周知，Lua中是没有语言层面上的OOP实现的，但是Lua却提供了很多语法以及语法糖来让我们可以模拟OOP的实现。 首先面向对象有多个特性，分别是封装，继承，多态。接下来我们来分析以下如何在Lua中实现这几项特征，以实现面向对象。 封装封装的意思是将数据和对应的方法放在一起，隐藏内部细节，使其他调用者只需要了解接口就可以使用，符合高内聚低耦合的设计原则。 Lua提供table这个类型，只要我们把">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-02-11T09:20:16.351Z">
+<meta property="article:modified_time" content="2024-02-12T03:10:24.758Z">
 <meta property="article:author" content="Lisery">
+<meta property="article:tag" content="Lua">
 <meta name="twitter:card" content="summary">
     
     
@@ -36,7 +41,7 @@
     
     <title>
         
-            标签: NodeJS -
+            Lua面向对象的简单模拟实现 -
         
         Lisery&#39;s Blogs
     </title>
@@ -311,7 +316,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active"
+                                <a class=""
                                    href="/tags/"
                                         >
                                     <i class="fa-solid fa-tags fa-fw"></i>
@@ -389,7 +394,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
                            href="/tags/"
                         >
                             <span>
@@ -456,46 +461,188 @@
             <div class="main-content">
 
                 
-                    <div class="tag-container">
-	<div class="tag-name">
-		<i class="fa-solid fa-tag"></i>&nbsp;NodeJS
-	</div>
-	<div class="tag-post-list">
-		
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
 
-<div class="archive-list-container">
-    
-        <section class="archive-item">
-            <div class="archive-item-header flex flex-row items-center mb-2">
-                <span class="archive-year font-semibold text-3xl mr-2">2024</span>
-                <span class="archive-year-post-count text-xs md:text-sm font-bold rounded-small bg-third-background-color py-[2px] px-[10px] border border-border-color">1</span>
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">Lua面向对象的简单模拟实现</h1>
+                </div>
+            
             </div>
-            <ul class="article-list pl-8 text-lg leading-[1.5]">
-              
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Lisery</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-02-11 17:20:16</span>
+        <span class="mobile">2024-02-11 17:20:16</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-02-12 11:10:24</span>
+            <span class="mobile">2024-02-12 11:10:24</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
                 
                     
-                    <li class="article-item" date-is='01-21'>
+                        
+                        <li>
+                            <a href="/categories/notes/">notes</a>&nbsp;
+                        </li>
+                    
+                    
                 
-                
-                    <a href="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/" class="block overflow-hidden">
-                        <span class="article-title mb-0.5 text-2xl">How to use Hexo to build your self blog</span>
-                    </a>
-                
-              
             </ul>
-        </section>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Lua/">Lua</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
-	</div>
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>众所周知，Lua中是没有语言层面上的OOP实现的，但是Lua却提供了很多语法以及语法糖来让我们可以模拟OOP的实现。</p>
+<p>首先面向对象有多个特性，分别是封装，继承，多态。接下来我们来分析以下如何在Lua中实现这几项特征，以实现面向对象。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>封装的意思是将数据和对应的方法放在一起，隐藏内部细节，使其他调用者只需要了解接口就可以使用，符合高内聚低耦合的设计原则。</p>
+<p>Lua提供table这个类型，只要我们把数据和方法都放到一个table中，这也算得上封装了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> duck = &#123;&#125;</span><br><span class="line"></span><br><span class="line">duck.name = <span class="string">&quot;duck&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">duck:quack</span><span class="params">()</span></span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">self</span>.name .. <span class="string">&quot;: gagaga&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>比如说上面这个鸭子类，我定义了<code>name</code>这个公开变量，以及<code>quack</code>这个公开方法。</p>
+<p>Lua这里提供了<code>duck:quack()</code>这样的调用函数和声明函数方法，默认是传递<code>duck</code>自身这个表为参数，参数名为<code>self</code>。也就是说这里方法里的<code>self</code>指的就是<code>duck</code>自身。</p>
+<p>有意思的是这里把<code>duck</code>作为了一个变量来对待，而不是像其他OOP语言中把类作为一种抽象定义。</p>
+<p>但是这里有个缺陷，如果我们需要多个鸭子怎么办，这里始终只有一个鸭子。于是我们需要一个<code>new</code>方法。</p>
+<p>思考一下，<code>new</code>方法需要复制一份<code>duck</code>实例，不像其他OOP语言中是根据类的定义来初始化，而是更类似于复制原型的原理。所以我们还需要一个<code>copy</code>方法来复制实例。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span><span class="params">(t)</span></span></span><br><span class="line">    <span class="keyword">local</span> u = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> t <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span>(v) == <span class="string">&#x27;table&#x27;</span> <span class="keyword">then</span></span><br><span class="line">                u[k] = copy(v)</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                u[k] = v</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">setmetatable</span>(u, copy(<span class="built_in">getmetatable</span>(t)))</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>以上是我简单写的<code>copy</code>方法，原理就是一个一个复制到新的表。接下来就是<code>new</code>方法了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">duck:new</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> instance = copy(duck)</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p> 在这个<code>new</code>方法中，直接<code>copy</code>初始化一个新的<code>table</code>，再返回出去，这样就可以实现多个实例了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">duck1 = duck:new()</span><br><span class="line">duck1.name = <span class="string">&quot;duck1&quot;</span></span><br><span class="line">duck1:quack() <span class="comment">-- duck1: gagaga</span></span><br><span class="line"></span><br><span class="line">duck2 = duck:new()</span><br><span class="line">duck2.name = <span class="string">&quot;duck2&quot;</span></span><br><span class="line">duck2:quack() <span class="comment">-- duck2: gagaga</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>首先继承是什么？继承指自己子类中也能享受父类中的方法。Lua中也有类似的语法，就是元表。</p>
+<p>元表提供了一些可以修改表的行为的接口，比如<code>__index</code>，如果表中找不到某个元素，就会去找这个表元表中的<code>__index</code>。所以我们只要把子类方法放在表中，把父类方法放在元表的<code>__index</code>中就可以了。这样当访问子类方法时，访问的是表中的方法。访问父类方法时，访问的是元表中的<code>__index</code>。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> mallard_duck = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mallard_duck:new</span><span class="params">(name)</span></span></span><br><span class="line">    <span class="keyword">local</span> instance = copy(mallard_duck)</span><br><span class="line">    <span class="keyword">local</span> parent = duck:new()</span><br><span class="line">    <span class="built_in">setmetatable</span>(instance, parent)</span><br><span class="line">    parent.<span class="built_in">__index</span> = parent</span><br><span class="line">    instance.name = name</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这里我定义了一个<code>mallard_duck</code>类，在它的<code>new</code>方法中，我传入了一个<code>name</code>参数，先复制初始化了一个新的实例<code>instance</code>，之后初始化一个父类实例<code>parent</code>，之后设置元表关系。最关键的一步，把<code>parent</code>的<code>__index</code>设置为了它自己。这代表这当<code>instance</code>中，也就是子类中找不到方法时，它会去<code>parent</code>的<code>__index</code>中，也就是父类它自身的表去找。之后设置实例的名字，返回这个实例</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态的指同一操作作用于不同的对象，对象的行为也不一样。借由上文的继承的方法，我们来重写鸭子类中的<code>quack</code>方法。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mallard_duck:quack</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;mallard_duck &quot;</span> .. <span class="built_in">self</span>.name .. <span class="string">&quot;: ra ra ra&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">model_duck:quack</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;model_duck &quot;</span> .. <span class="built_in">self</span>.name .. <span class="string">&quot;: I can&#x27;t quark&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>然后调用</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> ducks = &#123;&#125;</span><br><span class="line">ducks[<span class="string">&quot;duck1&quot;</span>] = mallard_duck:new(<span class="string">&quot;mallard_duck&quot;</span>)</span><br><span class="line">ducks[<span class="string">&quot;duck2&quot;</span>] = model_duck:new(<span class="string">&quot;model_duck&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(ducks) <span class="keyword">do</span></span><br><span class="line">    v:quack()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- mallard_duck mallard_duck: ra ra ra</span></span><br><span class="line"><span class="comment">-- model_duck model_duck: I can&#x27;t quark</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Lua/">#Lua</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/02/08/CSharp%20XML%E4%BB%A3%E7%A0%81%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A%E7%AC%94%E8%AE%B0/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">CSharp XML代码文档注释笔记</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">Lua面向对象的简单模拟实现</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-text">封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-text">多态</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
 </div>
 
-<div class="tag-paginator">
-	<div class="paginator">
-    <span class="page-number current">1</span>
-</div>
-
-</div>
 
 
                 
@@ -549,6 +696,23 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">

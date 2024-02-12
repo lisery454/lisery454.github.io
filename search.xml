@@ -16420,4 +16420,53 @@
         <tag>C#</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Lua面向对象的简单模拟实现</title>
+    <url>/2024/02/11/Lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%AE%80%E5%8D%95%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<p>众所周知，Lua中是没有语言层面上的OOP实现的，但是Lua却提供了很多语法以及语法糖来让我们可以模拟OOP的实现。</p>
+<p>首先面向对象有多个特性，分别是封装，继承，多态。接下来我们来分析以下如何在Lua中实现这几项特征，以实现面向对象。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>封装的意思是将数据和对应的方法放在一起，隐藏内部细节，使其他调用者只需要了解接口就可以使用，符合高内聚低耦合的设计原则。</p>
+<p>Lua提供table这个类型，只要我们把数据和方法都放到一个table中，这也算得上封装了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> duck = &#123;&#125;</span><br><span class="line"></span><br><span class="line">duck.name = <span class="string">&quot;duck&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">duck:quack</span><span class="params">()</span></span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">self</span>.name .. <span class="string">&quot;: gagaga&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>比如说上面这个鸭子类，我定义了<code>name</code>这个公开变量，以及<code>quack</code>这个公开方法。</p>
+<p>Lua这里提供了<code>duck:quack()</code>这样的调用函数和声明函数方法，默认是传递<code>duck</code>自身这个表为参数，参数名为<code>self</code>。也就是说这里方法里的<code>self</code>指的就是<code>duck</code>自身。</p>
+<p>有意思的是这里把<code>duck</code>作为了一个变量来对待，而不是像其他OOP语言中把类作为一种抽象定义。</p>
+<p>但是这里有个缺陷，如果我们需要多个鸭子怎么办，这里始终只有一个鸭子。于是我们需要一个<code>new</code>方法。</p>
+<p>思考一下，<code>new</code>方法需要复制一份<code>duck</code>实例，不像其他OOP语言中是根据类的定义来初始化，而是更类似于复制原型的原理。所以我们还需要一个<code>copy</code>方法来复制实例。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span><span class="params">(t)</span></span></span><br><span class="line">    <span class="keyword">local</span> u = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> t <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span>(v) == <span class="string">&#x27;table&#x27;</span> <span class="keyword">then</span></span><br><span class="line">                u[k] = copy(v)</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                u[k] = v</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">setmetatable</span>(u, copy(<span class="built_in">getmetatable</span>(t)))</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>以上是我简单写的<code>copy</code>方法，原理就是一个一个复制到新的表。接下来就是<code>new</code>方法了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">duck:new</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> instance = copy(duck)</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p> 在这个<code>new</code>方法中，直接<code>copy</code>初始化一个新的<code>table</code>，再返回出去，这样就可以实现多个实例了。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line">duck1 = duck:new()</span><br><span class="line">duck1.name = <span class="string">&quot;duck1&quot;</span></span><br><span class="line">duck1:quack() <span class="comment">-- duck1: gagaga</span></span><br><span class="line"></span><br><span class="line">duck2 = duck:new()</span><br><span class="line">duck2.name = <span class="string">&quot;duck2&quot;</span></span><br><span class="line">duck2:quack() <span class="comment">-- duck2: gagaga</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>首先继承是什么？继承指自己子类中也能享受父类中的方法。Lua中也有类似的语法，就是元表。</p>
+<p>元表提供了一些可以修改表的行为的接口，比如<code>__index</code>，如果表中找不到某个元素，就会去找这个表元表中的<code>__index</code>。所以我们只要把子类方法放在表中，把父类方法放在元表的<code>__index</code>中就可以了。这样当访问子类方法时，访问的是表中的方法。访问父类方法时，访问的是元表中的<code>__index</code>。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> mallard_duck = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mallard_duck:new</span><span class="params">(name)</span></span></span><br><span class="line">    <span class="keyword">local</span> instance = copy(mallard_duck)</span><br><span class="line">    <span class="keyword">local</span> parent = duck:new()</span><br><span class="line">    <span class="built_in">setmetatable</span>(instance, parent)</span><br><span class="line">    parent.<span class="built_in">__index</span> = parent</span><br><span class="line">    instance.name = name</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这里我定义了一个<code>mallard_duck</code>类，在它的<code>new</code>方法中，我传入了一个<code>name</code>参数，先复制初始化了一个新的实例<code>instance</code>，之后初始化一个父类实例<code>parent</code>，之后设置元表关系。最关键的一步，把<code>parent</code>的<code>__index</code>设置为了它自己。这代表这当<code>instance</code>中，也就是子类中找不到方法时，它会去<code>parent</code>的<code>__index</code>中，也就是父类它自身的表去找。之后设置实例的名字，返回这个实例</p>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><p>多态的指同一操作作用于不同的对象，对象的行为也不一样。借由上文的继承的方法，我们来重写鸭子类中的<code>quack</code>方法。</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mallard_duck:quack</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;mallard_duck &quot;</span> .. <span class="built_in">self</span>.name .. <span class="string">&quot;: ra ra ra&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">model_duck:quack</span><span class="params">()</span></span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;model_duck &quot;</span> .. <span class="built_in">self</span>.name .. <span class="string">&quot;: I can&#x27;t quark&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<p>然后调用</p>
+<div class="highlight-container" data-rel="Lua"><figure class="iseeu highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> ducks = &#123;&#125;</span><br><span class="line">ducks[<span class="string">&quot;duck1&quot;</span>] = mallard_duck:new(<span class="string">&quot;mallard_duck&quot;</span>)</span><br><span class="line">ducks[<span class="string">&quot;duck2&quot;</span>] = model_duck:new(<span class="string">&quot;model_duck&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(ducks) <span class="keyword">do</span></span><br><span class="line">    v:quack()</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- mallard_duck mallard_duck: ra ra ra</span></span><br><span class="line"><span class="comment">-- model_duck model_duck: I can&#x27;t quark</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>Lua</tag>
+      </tags>
+  </entry>
 </search>
