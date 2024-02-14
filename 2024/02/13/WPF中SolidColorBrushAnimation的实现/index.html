@@ -13,27 +13,26 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/2024/01/21/godot像素黑白后处理shader/"/>
+    <link rel="canonical" href="https://lisery454.github.io/2024/02/13/wpf中solidcolorbrushanimation的实现/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="记录了shader的源码和效果">
+        <meta name="description" content="在WPF中有时需要自定义一个动画类型，因为本身动画支持的类型有限，比如SolidColorBrushAnimation就是没有原生的。所以记录一下从网上学到的如何自定义一个SolidColorBrushAnimation。 定义SolidColorBrushAnimation类首先是要继承自AnimationTimeline类，然后实现To，From两个属性，以及TargetPropertyTyp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="godot像素黑白后处理shader">
-<meta property="og:url" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/index.html">
+<meta property="og:title" content="WPF中SolidColorBrushAnimation的实现">
+<meta property="og:url" content="https://lisery454.github.io/2024/02/13/WPF%E4%B8%ADSolidColorBrushAnimation%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
-<meta property="og:description" content="记录了shader的源码和效果">
+<meta property="og:description" content="在WPF中有时需要自定义一个动画类型，因为本身动画支持的类型有限，比如SolidColorBrushAnimation就是没有原生的。所以记录一下从网上学到的如何自定义一个SolidColorBrushAnimation。 定义SolidColorBrushAnimation类首先是要继承自AnimationTimeline类，然后实现To，From两个属性，以及TargetPropertyTyp">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png">
-<meta property="og:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png">
-<meta property="article:published_time" content="2024-01-21T08:47:16.060Z">
-<meta property="article:modified_time" content="2024-01-21T10:35:38.894Z">
+<meta property="og:image" content="https://lisery454.github.io/2024/02/13/WPF%E4%B8%ADSolidColorBrushAnimation%E7%9A%84%E5%AE%9E%E7%8E%B0/a3.gif">
+<meta property="article:published_time" content="2024-02-13T09:32:21.998Z">
+<meta property="article:modified_time" content="2024-02-13T09:51:08.043Z">
 <meta property="article:author" content="Lisery">
-<meta property="article:tag" content="Godot">
-<meta property="article:tag" content="Shader">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="WPF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lisery454.github.io/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png">
+<meta name="twitter:image" content="https://lisery454.github.io/2024/02/13/WPF%E4%B8%ADSolidColorBrushAnimation%E7%9A%84%E5%AE%9E%E7%8E%B0/a3.gif">
     
     
     <!--- Icon Part-->
@@ -45,7 +44,7 @@
     
     <title>
         
-            godot像素黑白后处理shader -
+            WPF中SolidColorBrushAnimation的实现 -
         
         Lisery&#39;s Blogs
     </title>
@@ -471,7 +470,7 @@
         <div class="article-title relative w-full">
             
                 <div class="w-full flex items-center pt-6 justify-start">
-                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">godot像素黑白后处理shader</h1>
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">WPF中SolidColorBrushAnimation的实现</h1>
                 </div>
             
             </div>
@@ -490,15 +489,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-01-21 16:47:16</span>
-        <span class="mobile">2024-01-21 16:47:16</span>
+        <span class="desktop">2024-02-13 17:32:21</span>
+        <span class="mobile">2024-02-13 17:32:21</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-21 18:35:38</span>
-            <span class="mobile">2024-01-21 18:35:38</span>
+            <span class="desktop">2024-02-13 17:51:08</span>
+            <span class="mobile">2024-02-13 17:51:08</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -526,11 +525,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Godot/">Godot</a>&nbsp;
+                        <a href="/tags/C/">C#</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/Shader/">Shader</a>&nbsp;
+                        | <a href="/tags/WPF/">WPF</a>&nbsp;
                     </li>
                 
             </ul>
@@ -556,11 +555,20 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111155623847.png" class>
+            <p>在WPF中有时需要自定义一个动画类型，因为本身动画支持的类型有限，比如SolidColorBrushAnimation就是没有原生的。所以记录一下从网上学到的如何自定义一个SolidColorBrushAnimation。</p>
+<h2 id="定义SolidColorBrushAnimation类"><a href="#定义SolidColorBrushAnimation类" class="headerlink" title="定义SolidColorBrushAnimation类"></a>定义SolidColorBrushAnimation类</h2><p>首先是要继承自<code>AnimationTimeline</code>类，然后实现<code>To</code>，<code>From</code>两个属性，以及<code>TargetPropertyType</code>，<code>GetCurrentValue</code>，<code>CreateInstanceCore</code>这几个重载。中间的颜色插值很简单就不说了。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SolidColorBrushAnimation</span> : <span class="title">AnimationTimeline</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">override</span> Type TargetPropertyType =&gt; <span class="keyword">typeof</span>(SolidColorBrush);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">object</span> <span class="title">GetCurrentValue</span>(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">object</span> defaultOriginValue,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="built_in">object</span> defaultDestinationValue,</span></span></span><br><span class="line"><span class="params"><span class="function">        AnimationClock animationClock</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> GetCurrentValue((defaultOriginValue <span class="keyword">as</span> SolidColorBrush)!,</span><br><span class="line">            (defaultDestinationValue <span class="keyword">as</span> SolidColorBrush)!,</span><br><span class="line">            animationClock);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="built_in">object</span> <span class="title">GetCurrentValue</span>(<span class="params">SolidColorBrush defaultOriginValue,</span></span></span><br><span class="line"><span class="params"><span class="function">        SolidColorBrush defaultDestinationValue,</span></span></span><br><span class="line"><span class="params"><span class="function">        AnimationClock animationClock</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!animationClock.CurrentProgress.HasValue)</span><br><span class="line">            <span class="keyword">return</span> Brushes.Transparent;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> originValue = From ?? defaultOriginValue;</span><br><span class="line">        <span class="keyword">var</span> destinationValue = To ?? defaultDestinationValue;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (animationClock.CurrentProgress.Value == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> originValue;</span><br><span class="line">        <span class="keyword">if</span> (Math.Abs(animationClock.CurrentProgress.Value - <span class="number">1</span>) &lt; <span class="number">0.001</span>d)</span><br><span class="line">            <span class="keyword">return</span> destinationValue;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> originColor = originValue.Color;</span><br><span class="line">        <span class="keyword">var</span> destinationColor = destinationValue.Color;</span><br><span class="line">        <span class="keyword">var</span> progress = (<span class="built_in">float</span>)animationClock.CurrentProgress.Value;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> finalColor = Interpolation(originColor, destinationColor, progress);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SolidColorBrush</span><br><span class="line">        &#123;</span><br><span class="line">            Color = finalColor</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Color <span class="title">Interpolation</span>(<span class="params">Color color0, Color color1, <span class="built_in">float</span> progress</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> scA = color0.ScA * (<span class="number">1</span> - progress) + color1.ScA * progress;</span><br><span class="line">        <span class="keyword">var</span> scR = color0.ScR * (<span class="number">1</span> - progress) + color1.ScR * progress;</span><br><span class="line">        <span class="keyword">var</span> scG = color0.ScG * (<span class="number">1</span> - progress) + color1.ScG * progress;</span><br><span class="line">        <span class="keyword">var</span> scB = color0.ScB * (<span class="number">1</span> - progress) + color1.ScB * progress;</span><br><span class="line">        <span class="keyword">return</span> Color.FromScRgb(scA, scR, scG, scB);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> Freezable <span class="title">CreateInstanceCore</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SolidColorBrushAnimation();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> SolidColorBrush? From</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; (SolidColorBrush)GetValue(FromProperty);</span><br><span class="line">        <span class="keyword">set</span> =&gt; SetValue(FromProperty, <span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> SolidColorBrush? To</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> =&gt; (SolidColorBrush)GetValue(ToProperty);</span><br><span class="line">        <span class="keyword">set</span> =&gt; SetValue(ToProperty, <span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> DependencyProperty FromProperty =</span><br><span class="line">        DependencyProperty.Register(<span class="keyword">nameof</span>(From), <span class="keyword">typeof</span>(SolidColorBrush), <span class="keyword">typeof</span>(SolidColorBrushAnimation));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">readonly</span> DependencyProperty ToProperty =</span><br><span class="line">        DependencyProperty.Register(<span class="keyword">nameof</span>(To), <span class="keyword">typeof</span>(SolidColorBrush), <span class="keyword">typeof</span>(SolidColorBrushAnimation));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="shader"><a href="#shader" class="headerlink" title="shader"></a>shader</h2><div class="highlight-container" data-rel="Glsl"><figure class="iseeu highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">shader_type canvas_item;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec2</span> size = <span class="type">vec2</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">float</span> threshold = <span class="number">0.5</span>;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> screen_texture : hint_screen_texture, repeat_disable, filter_nearest;</span><br><span class="line"></span><br><span class="line"><span class="type">vec4</span> to_one_bit(<span class="type">vec4</span> color) &#123;</span><br><span class="line">	<span class="type">float</span> sum = (color.r * <span class="number">0.299</span> + color.g * <span class="number">0.587</span> + color.b * <span class="number">0.114</span>);</span><br><span class="line">	<span class="type">float</span> f = <span class="built_in">ceil</span>(sum - threshold);</span><br><span class="line">	color = <span class="built_in">mix</span>(<span class="type">vec4</span>(<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">1</span>), <span class="type">vec4</span>(<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">0.8</span>,<span class="number">1</span>), f);</span><br><span class="line">	<span class="keyword">return</span> color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">vec2</span> get_new_uv(<span class="type">vec2</span> uv, <span class="type">vec2</span> screen_pixel_size) &#123;</span><br><span class="line">	<span class="type">vec2</span> size_uv = screen_pixel_size * size;</span><br><span class="line">	<span class="type">vec2</span> new_uv = <span class="built_in">floor</span>(uv / size_uv) * size_uv;</span><br><span class="line">	<span class="keyword">return</span> new_uv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> fragment() &#123;</span><br><span class="line">		<span class="type">vec2</span> new_uv = get_new_uv(SCREEN_UV, SCREEN_PIXEL_SIZE);</span><br><span class="line">		<span class="type">vec4</span> color = <span class="built_in">textureLod</span>(screen_texture, new_uv, <span class="number">0.0</span>);</span><br><span class="line">		COLOR = to_one_bit(color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>定义这样一个<code>Style</code>，让<code>Border</code>在鼠标放上去的时候会改变颜色</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;Storyboard x:Key=&quot;EnterStoryboard&quot;&gt;</span><br><span class="line">  &lt;Storyboard&gt;</span><br><span class="line">    &lt;local:SolidColorBrushAnimation Storyboard.Target=&quot;&#123;Binding RelativeSource=&#123;RelativeSource AncestorType=Border&#125;&#125;&quot;</span><br><span class="line">                                    Storyboard.TargetProperty=&quot;Background&quot; Duration=&quot;0:0:0.300&quot;&gt;</span><br><span class="line">      &lt;local:SolidColorBrushAnimation.To&gt;</span><br><span class="line">        &lt;SolidColorBrush Color=&quot;Pink&quot; /&gt;</span><br><span class="line">      &lt;/local:SolidColorBrushAnimation.To&gt;</span><br><span class="line">    &lt;/local:SolidColorBrushAnimation&gt;</span><br><span class="line">  &lt;/Storyboard&gt;</span><br><span class="line">&lt;/Storyboard&gt;</span><br><span class="line"></span><br><span class="line">&lt;Storyboard x:Key=&quot;ExitStoryboard&quot;&gt;</span><br><span class="line">  &lt;local:SolidColorBrushAnimation Storyboard.Target=&quot;&#123;Binding RelativeSource=&#123;RelativeSource AncestorType=Border&#125;&#125;&quot;</span><br><span class="line">                                  Storyboard.TargetProperty=&quot;Background&quot; Duration=&quot;0:0:0.300&quot;&gt;</span><br><span class="line">    &lt;local:SolidColorBrushAnimation.To&gt;</span><br><span class="line">      &lt;SolidColorBrush Color=&quot;Aquamarine&quot; /&gt;</span><br><span class="line">    &lt;/local:SolidColorBrushAnimation.To&gt;</span><br><span class="line">  &lt;/local:SolidColorBrushAnimation&gt;</span><br><span class="line">&lt;/Storyboard&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;Style TargetType=&quot;Border&quot; x:Key=&quot;BorderStyle&quot;&gt;</span><br><span class="line">  &lt;Setter Property=&quot;Margin&quot; Value=&quot;40&quot; /&gt;</span><br><span class="line">  &lt;Setter Property=&quot;Background&quot; Value=&quot;Aquamarine&quot; /&gt;</span><br><span class="line">  &lt;Style.Triggers&gt;</span><br><span class="line">    &lt;Trigger Property=&quot;IsMouseOver&quot; Value=&quot;True&quot;&gt;</span><br><span class="line">      &lt;Trigger.EnterActions&gt;</span><br><span class="line">        &lt;BeginStoryboard Storyboard=&quot;&#123;StaticResource EnterStoryboard&#125;&quot; /&gt;</span><br><span class="line">      &lt;/Trigger.EnterActions&gt;</span><br><span class="line">      &lt;Trigger.ExitActions&gt;</span><br><span class="line">        &lt;BeginStoryboard Storyboard=&quot;&#123;StaticResource ExitStoryboard&#125;&quot; /&gt;</span><br><span class="line">      &lt;/Trigger.ExitActions&gt;</span><br><span class="line">    &lt;/Trigger&gt;</span><br><span class="line">  &lt;/Style.Triggers&gt;</span><br><span class="line">&lt;/Style&gt;</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><img lazyload src="/images/loading.svg" data-src="/2024/01/21/godot%E5%83%8F%E7%B4%A0%E9%BB%91%E7%99%BD%E5%90%8E%E5%A4%84%E7%90%86shader/image-20231111161115338.png" class>
+<p>最后应用到一个<code>Border</code>上</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Border Style=&quot;&#123;StaticResource BorderStyle&#125;&quot; /&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>最后的效果是这样</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/13/WPF%E4%B8%ADSolidColorBrushAnimation%E7%9A%84%E5%AE%9E%E7%8E%B0/a3.gif" class>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a class="link" target="_blank" rel="noopener" href="https://stackoverflow.com/questions/8096852/brush-to-brush-animation">https://stackoverflow.com/questions/8096852/brush-to-brush-animation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
         </div>
 
@@ -570,11 +578,11 @@
             <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/Godot/">#Godot</a>&nbsp;
+                        <a href="/tags/C/">#C#</a>&nbsp;
                     </li>
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/Shader/">#Shader</a>&nbsp;
+                        <a href="/tags/WPF/">#WPF</a>&nbsp;
                     </li>
                 
             </ul>
@@ -588,13 +596,13 @@
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/"
+                        href="/2024/02/13/WPF%E4%B8%AD%E7%BB%91%E5%AE%9A%E5%88%B0%E5%8A%A8%E7%94%BB%E5%B1%9E%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">如何使用OhMyPosh定制化WindowTerminal</span>
+                                <span class="post-nav-title-item">WPF中绑定到动画属性的问题解决</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -604,10 +612,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/01/21/%5BGame%20Design%5D%E5%85%B3%E4%BA%8E%E6%B8%B8%E6%88%8F%E5%86%85%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
+                        href="/2024/02/11/Lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%AE%80%E5%8D%95%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">关于游戏内数字的一些思考</span>
+                                <span class="post-nav-title-item">Lua面向对象的简单模拟实现</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -628,8 +636,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">godot像素黑白后处理shader</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shader"><span class="nav-text">shader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-text">效果</span></a></li></ol>
+        <div class="page-title">WPF中SolidColorBrushAnimation的实现</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89SolidColorBrushAnimation%E7%B1%BB"><span class="nav-text">定义SolidColorBrushAnimation类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
 
     </div>
 </div>
