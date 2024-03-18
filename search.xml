@@ -416,9 +416,8 @@
 </blockquote>
 <img lazyload src="/images/loading.svg" data-src="/2024/01/26/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8OhMyPosh%E5%AE%9A%E5%88%B6%E5%8C%96WindowTerminal/image-20240126201140656.png" class title="image-20240126201140656">
 
-
-
-
+<p>以下是我自己修改过的一个主题：</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;palette&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;os&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#ACB0BE&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;closer&quot;</span><span class="punctuation">:</span> <span class="string">&quot;p:os&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pink&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#F5BDE6&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lavender&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#B7BDF8&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;blue&quot;</span><span class="punctuation">:</span> <span class="string">&quot;#8AADF4&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;blocks&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;alignment&quot;</span><span class="punctuation">:</span> <span class="string">&quot;left&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;segments&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;p:blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;plain&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;template&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&#123;&#123; .UserName &#125;&#125;@&#123;&#123; .HostName &#125;&#125; &quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;session&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;p:pink&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;folder_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;..&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;home_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;agnoster_short&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;plain&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;template&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&#123;&#123; .Path &#125;&#125; &quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;path&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;p:lavender&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;properties&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;branch_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\ue725 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cherry_pick_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\ue29b &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;commit_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\uf417 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;fetch_status&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;fetch_upstream_icon&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;merge_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\ue727 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;no_commits_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\uf0c3 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;rebase_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\ue728 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;revert_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\uf0e2 &quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;tag_icon&quot;</span><span class="punctuation">:</span> <span class="string">&quot;\uf412 &quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;template&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&#123;&#123; .HEAD &#125;&#125; &quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;plain&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;git&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;plain&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;foreground&quot;</span><span class="punctuation">:</span> <span class="string">&quot;p:closer&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;template&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;prompt&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;final_space&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">2</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
 
 
 
@@ -16543,6 +16542,394 @@
       <tags>
         <tag>C#</tag>
         <tag>WPF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git的简单命令用法</title>
+    <url>/2024/03/09/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>Git作为经常使用的版本管理系统，有很多的指令需要学习，这里就特别整理一下简单的命令，方便以后使用。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>设置用户名和邮箱</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;Lisery&quot; </span><br><span class="line">git config --global user.email &quot;1143765064@qq.com&quot; </span><br></pre></td></tr></table></figure></div>
+
+<p>查看全局配置</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global --list</span><br></pre></td></tr></table></figure></div>
+
+<p>如果想直接编辑配置文件可以这样</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global --edit</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>在当前目录初始化仓库</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Initialized empty Git repository <span class="keyword">in</span> C:/Users/lxl11/learn-git/.git/</span></span><br></pre></td></tr></table></figure></div>
+
+<p>查看当前仓库信息，比如在哪个分支，有没有要提交的文件等</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git status</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">On branch master</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">No commits yet</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nothing to commit (create/copy files and use <span class="string">&quot;git add&quot;</span> to track)</span></span><br></pre></td></tr></table></figure></div>
+
+<p> 如果需要将新创建的文件，也就是untracked文件保存到暂存区，就使用add命令</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git add file1.txt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Changes to be committed:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  (use <span class="string">&quot;git rm --cached &lt;file&gt;...&quot;</span> to unstage)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">        new file:   file1.txt</span></span><br></pre></td></tr></table></figure></div>
+
+<p>而取消暂存，也就是重新回到untracked状态，就是用rm命令</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"> git rm --cached .\file1.txt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> Untracked files:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  (use <span class="string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="keyword">in</span> what will be committed)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">        file1.txt</span></span><br></pre></td></tr></table></figure></div>
+
+<p>如果需要将暂存区中的文件提交到本地仓库，就需要用到commit命令。这里<code>-m</code>后面加的是这个commit对应的信息。记住commit只会提交暂存区中的文件。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">[master (root-commit) 6950f6d] first commit</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> 1 file changed, 0 insertions(+), 0 deletions(-)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> create mode 100644 file1.txt</span></span><br></pre></td></tr></table></figure></div>
+
+<p>有些时候需要add所有文件，或者某一类文件，可以使用如下指令</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git add .  # 添加当前路径下的所有untracked文件</span><br><span class="line"></span><br><span class="line">git add *.txt # 田间当前路径下所有untracked的txt文件</span><br></pre></td></tr></table></figure></div>
+
+<p>查看commit记录</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git log # 详细信息</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">commit 6950f6d5fd03fccf426886c0a337d2154b5b3058 (HEAD -&gt; master)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Author: Lisery &lt;1143765064@qq.com&gt;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Date:   Sat Mar 9 13:07:06 2024 +0800</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment">#     first commit</span></span></span><br><span class="line"></span><br><span class="line">git log --oneline # 简略信息</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">6950f6d (HEAD -&gt; master) first commit</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="回退版本"><a href="#回退版本" class="headerlink" title="回退版本"></a>回退版本</h3><p>使用reset指令来回退版本，一般有三种方式，为soft，hard，mixed</p>
+<h4 id="soft"><a href="#soft" class="headerlink" title="soft"></a>soft</h4><p>即回退到某个版本，并且保留当前工作区（untracked）中和暂存区（add后）中的文件修改。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git reset --soft 6950f6d </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里是版本<span class="built_in">id</span>，即使用git <span class="built_in">log</span>后显示的commit后的数字</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="hard"><a href="#hard" class="headerlink" title="hard"></a>hard</h4><p>回退到某个版本，并且不保留当前工作区（untracked）中和暂存区（add后）中的文件修改。一般是想要撤销的所有文件操作的时候用</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里的HEAD^表示上一个版本</span></span><br></pre></td></tr></table></figure></div>
+
+<h4 id="mixed"><a href="#mixed" class="headerlink" title="mixed"></a>mixed</h4><p>回退到某个版本，并且保留当前工作区（untracked）中，但是不保留暂存区（add后）中的文件修改。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git reset --mixed HEAD^</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p><code>git ls-files</code> 查看暂存区中内容</p>
+</blockquote>
+<p>如果reset错了也可以撤销，使用reflog指令找到所有操作的历史记录，然后回退到某个历史记录版本就行了。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="比较差异"><a href="#比较差异" class="headerlink" title="比较差异"></a>比较差异</h3><p> 使用diff命令查询当前的工作区和暂存区的差异</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git diff # 工作区和暂存区的差异</span><br><span class="line"></span><br><span class="line">git diff HEAD # 工作区和版本库，即本地仓库的差异</span><br><span class="line"></span><br><span class="line">git diff --cached # 暂存区和版本库之间的差异</span><br><span class="line"></span><br><span class="line">git diff id1 id2 # 填写两个版本id，就可以比较版本的差异了</span><br><span class="line"></span><br><span class="line">git diff HEAD HEAD^ file3.txt # 表示两个版本之间 file3.txt这个文件的差异内容</span><br><span class="line"></span><br><span class="line">git diff branch_name branch_name # 表示两个分支之间的差异</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>HEAD表示当前版本</p>
+<p>HEAD^ 或 HEAD~ 表示上一个版本</p>
+<p>HEAD~2 表示上两个版本</p>
+</blockquote>
+<h3 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h3><h4 id="直接删除"><a href="#直接删除" class="headerlink" title="直接删除"></a>直接删除</h4><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">rm file.txt</span><br><span class="line">git add .  # 更新暂存区</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="使用git-rm"><a href="#使用git-rm" class="headerlink" title="使用git rm"></a>使用<code>git rm</code></h4><div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git rm file.txt # 这样删除的话是自动更新了暂存区和工作区的，之后直接commit就行了</span><br><span class="line"></span><br><span class="line">git rm --cached file.txt # 把文件从暂存区中删除，但是保留在当前工作区中。</span><br><span class="line"></span><br><span class="line">git rm -r dir  #递归删除某个目录下的所有文件和目录，更新了暂存区和工作区</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a>.gitignore</h3><p>这个文件可以让我们在使用git时忽略一些工作区中的文件，比如自动生成的文件，日志文件，编译文件等。</p>
+<blockquote>
+<p><code>.gitignore</code>只能管理没有添加到版本库中的文件，如果要重新管理添加到版本中的文件，使用</p>
+<p><code>git rm --cached file.txt</code>先删除暂存区中的这个文件，再之后<code>commit</code>。</p>
+</blockquote>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">file.txt # 忽略某个文件</span><br><span class="line"></span><br><span class="line">*.log # 忽略某个后缀的所有文件</span><br><span class="line"></span><br><span class="line">dir/ # 忽略某个文件夹</span><br><span class="line"></span><br><span class="line">/file.txt # 忽略当前目录下的某个文件</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h3><p>创建和切换分支</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git branch # 查看当前所有分支</span><br><span class="line"></span><br><span class="line">git branch branch_name # 创建分支</span><br><span class="line"></span><br><span class="line">git switch branch_name # 切换分支</span><br></pre></td></tr></table></figure></div>
+
+<p>合并分支</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git merge branch_name # 把branch_name合并到当前分支，相当于要一次commit</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">分支合并后不会自动删除</span></span><br></pre></td></tr></table></figure></div>
+
+<p>删除分支</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git branch -d branch_name # 删除已经合并后的分支</span><br><span class="line"></span><br><span class="line">git branch -D branch_name # 删除没有合并后的分支</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h4><p>手动修改冲突文件，之后add，commit</p>
+<p>如果不想合并就使用<code>git merge --abort</code>来中止合并</p>
+<h4 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h4><p>把两个分支的公共开始节点到某个分支的HEAD节点位置的所有内容都移植到另一个分支的HEAD节点后面</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">git switch dev # 当前的分支为dev</span><br><span class="line">git rebase main # 把dev的分支全部移动到main后面</span><br></pre></td></tr></table></figure></div>
+
+<p>执行后两条分支会变成一条</p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LaTex的入门使用</title>
+    <url>/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我这里采用的是TexLive加Vscode的使用方式。</p>
+<p>TexLive是Tex的其中一个分支版本，官网为 <a class="link" href="https://www.tug.org/texlive/">https://www.tug.org/texlive/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>按官网上所说的进行安装即可，可能需要一点时间，我大概装了1小时。</p>
+<p>然后在vscode安装LaTex-Workshop插件</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="新建Tex文件"><a href="#新建Tex文件" class="headerlink" title="新建Tex文件"></a>新建Tex文件</h3><p>新建一个.Tex文件，在文件中输入</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\documentclass</span>&#123;article&#125; <span class="comment">% 文件的格式，一般就是article</span></span><br><span class="line"><span class="keyword">\usepackage</span>[UTF8]&#123;ctex&#125; <span class="comment">% 设置中文，没有这一行中文会编译不了</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\title</span>&#123;LaTex笔记&#125; <span class="comment">% 设置标题</span></span><br><span class="line"><span class="keyword">\author</span>&#123;Lisery&#125; <span class="comment">% 设置作者</span></span><br><span class="line"><span class="keyword">\date</span>&#123;2024/3/15&#125; <span class="comment">% 设置时间</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\begin</span>&#123;document&#125; <span class="comment">% 开始写文本</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\maketitle</span> <span class="comment">% 把之前设置的标题显示出来</span></span><br><span class="line">你好 <span class="comment">% 正文内容</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">\end</span>&#123;document&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>以上就是一个简单的Tex文件了。使用Vscode插件自带的<code>Build LaTex project</code>命令，直接一键编译，并使用<code>View LaTex PDF</code>来看生成结果。</p>
+<p>编译后根目录下会有很多生成文件，不用管</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315130204007.png" class>
+
+<p>pdf中大概是这样</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315130241340.png" class>
+
+<h3 id="粗体，斜体，下划线"><a href="#粗体，斜体，下划线" class="headerlink" title="粗体，斜体，下划线"></a>粗体，斜体，下划线</h3><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\textbf</span>&#123;这是粗体, Bold&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\underline</span>&#123;这是下划线, underline&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\textit</span>&#123;这是斜体, Italics&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\textit</span>&#123;<span class="keyword">\underline</span>&#123;<span class="keyword">\textbf</span>&#123;一起使用可以叠加,together&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315130845508.png" class>
+
+<p><code>\emph</code>的效果是在普通文本下是斜体，在斜体文本下是普通体</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line">这是一句话, lala <span class="keyword">\emph</span>&#123;这是重点, lala&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\textit</span>&#123;这是一句话, lala <span class="keyword">\emph</span>&#123;这是重点, lala&#125;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315131214870.png" class>
+
+<h3 id="使用图片"><a href="#使用图片" class="headerlink" title="使用图片"></a>使用图片</h3><p>先在开头导入包</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\usepackage</span>&#123;graphicx&#125; <span class="comment">% 使用图片的包</span></span><br><span class="line"><span class="keyword">\graphicspath</span>&#123;&#123;images/&#125;&#125; <span class="comment">% 设置图片的存储文件夹</span></span><br></pre></td></tr></table></figure></div>
+
+<p>然后在文本中使用即可</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\includegraphics</span>&#123;latex-icon.png&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315132307450.png" class>
+
+<h4 id="图片标题排版"><a href="#图片标题排版" class="headerlink" title="图片标题排版"></a>图片标题排版</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;figure&#125;[h]</span><br><span class="line">    <span class="keyword">\centering</span> </span><br><span class="line">    <span class="keyword">\includegraphics</span>[width=0.75<span class="keyword">\textwidth</span>]&#123;latex-icon.png&#125;</span><br><span class="line">    <span class="keyword">\caption</span>&#123;A LaTex Icon&#125;</span><br><span class="line">    <span class="keyword">\label</span>&#123;fig:icon&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;figure&#125;</span><br><span class="line"></span><br><span class="line">这是对图片的引用编号：<span class="keyword">\ref</span>&#123;fig:icon&#125;</span><br><span class="line"></span><br><span class="line">这是对图片所在页面的编号：<span class="keyword">\pageref</span>&#123;fig:icon&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><code>centering</code>表示居中显示，<code>[width=0.75\textwidth]</code>表示图片宽度为文本页面宽度的75%，<code>caption</code>表示图片下方的文本标题，<code>label</code>表示这个图片的标签，方便之后在文本中引用。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315132856277.png" class>
+
+<h3 id="使用列表"><a href="#使用列表" class="headerlink" title="使用列表"></a>使用列表</h3><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;itemize&#125;</span><br><span class="line">    <span class="keyword">\item</span> 这是第一条</span><br><span class="line">    <span class="keyword">\item</span> 这是第二条</span><br><span class="line"><span class="keyword">\end</span>&#123;itemize&#125;	</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315133049519.png" class>
+
+<h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;enumerate&#125;</span><br><span class="line">    <span class="keyword">\item</span> 这是第一条</span><br><span class="line">    <span class="keyword">\item</span> 这是第二条</span><br><span class="line"><span class="keyword">\end</span>&#123;enumerate&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315133110159.png" class>
+
+<h3 id="使用数学公式"><a href="#使用数学公式" class="headerlink" title="使用数学公式"></a>使用数学公式</h3><h4 id="内联公式，显示在文本中"><a href="#内联公式，显示在文本中" class="headerlink" title="内联公式，显示在文本中"></a>内联公式，显示在文本中</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line">这是数学公式:</span><br><span class="line"><span class="keyword">\begin</span>&#123;math&#125;</span><br><span class="line">    E=mc<span class="built_in">^</span>2</span><br><span class="line"><span class="keyword">\end</span>&#123;math&#125; 。这样也可以: <span class="built_in">$</span>E=mc<span class="built_in">^</span>2<span class="built_in">$</span>。这样也可以: <span class="keyword">\(</span>E=mc<span class="built_in">^</span>2<span class="keyword">\)</span>.</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315133453330.png" class>
+
+<h4 id="单独一行显示公式"><a href="#单独一行显示公式" class="headerlink" title="单独一行显示公式"></a>单独一行显示公式</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line">单独一行显示公式，比如<span class="keyword">\[</span>E=mc<span class="built_in">^</span>2<span class="keyword">\]</span>或者说需要序号的话，</span><br><span class="line"><span class="keyword">\begin</span>&#123;equation&#125;</span><br><span class="line">    E=mc<span class="built_in">^</span>2</span><br><span class="line"><span class="keyword">\end</span>&#123;equation&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315133850593.png" class title="image-20240315133850593">
+
+<p>数学公式中需要用到的一些特殊符号这里就不再赘述了，有需要可以上网搜索。</p>
+<p>然后如果需要对齐公式，则使用下面这个包</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\usepackage</span>&#123;amsmath&#125;<span class="comment">% For the equation* environment</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="管理文章结构"><a href="#管理文章结构" class="headerlink" title="管理文章结构"></a>管理文章结构</h3><h4 id="层级结构"><a href="#层级结构" class="headerlink" title="层级结构"></a>层级结构</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\section</span>&#123;lalala&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\section</span>&#123;lalala&#125;</span><br><span class="line"><span class="keyword">\subsection</span>*&#123;title&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\paragraph</span>&#123;1&#125;</span><br><span class="line"><span class="keyword">\subparagraph</span>*&#123;title&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">\section</span>*&#123;lalala&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315162141392.png" class>
+
+<p>常见的有：</p>
+<ul>
+<li><code>\part&#123;part&#125;</code></li>
+<li><code>\chapter&#123;chapter&#125;</code></li>
+<li><code>\section&#123;section&#125;</code></li>
+<li><code>\subsection&#123;subsection&#125;</code></li>
+<li><code>\subsubsection&#123;subsubsection&#125;</code></li>
+<li><code>\paragraph&#123;paragraph&#125;</code></li>
+<li><code>\subparagraph&#123;subparagraph&#125;</code></li>
+</ul>
+<h4 id="表格结构"><a href="#表格结构" class="headerlink" title="表格结构"></a>表格结构</h4><div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;center&#125;</span><br><span class="line">    <span class="keyword">\begin</span>&#123;tabular&#125;&#123;c c c&#125;</span><br><span class="line">        cell1 <span class="built_in">&amp;</span> cell2 <span class="built_in">&amp;</span> cell3 <span class="keyword">\\</span></span><br><span class="line">        cell4 <span class="built_in">&amp;</span> cell5 <span class="built_in">&amp;</span> cell6 <span class="keyword">\\</span></span><br><span class="line">        cell7 <span class="built_in">&amp;</span> cell8 <span class="built_in">&amp;</span> cell9</span><br><span class="line">    <span class="keyword">\end</span>&#123;tabular&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;center&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315231423737.png" class>
+
+<p>增加图表的格式</p>
+<div class="highlight-container" data-rel="Latex"><figure class="iseeu highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\begin</span>&#123;center&#125;</span><br><span class="line">    <span class="keyword">\begin</span>&#123;tabular&#125;&#123;||c c c c||&#125;</span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">        Col1 <span class="built_in">&amp;</span> Col2 <span class="built_in">&amp;</span> Col2  <span class="built_in">&amp;</span> Col3 <span class="keyword">\\</span> [0.5ex]</span><br><span class="line">        <span class="keyword">\hline</span><span class="keyword">\hline</span></span><br><span class="line">        1    <span class="built_in">&amp;</span> 6    <span class="built_in">&amp;</span> 87837 <span class="built_in">&amp;</span> 787  <span class="keyword">\\</span></span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">        2    <span class="built_in">&amp;</span> 7    <span class="built_in">&amp;</span> 78    <span class="built_in">&amp;</span> 5415 <span class="keyword">\\</span></span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">        3    <span class="built_in">&amp;</span> 545  <span class="built_in">&amp;</span> 778   <span class="built_in">&amp;</span> 7507 <span class="keyword">\\</span></span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">        4    <span class="built_in">&amp;</span> 545  <span class="built_in">&amp;</span> 18744 <span class="built_in">&amp;</span> 7560 <span class="keyword">\\</span></span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">        5    <span class="built_in">&amp;</span> 88   <span class="built_in">&amp;</span> 788   <span class="built_in">&amp;</span> 6344 <span class="keyword">\\</span> [1ex]</span><br><span class="line">        <span class="keyword">\hline</span></span><br><span class="line">    <span class="keyword">\end</span>&#123;tabular&#125;</span><br><span class="line"><span class="keyword">\end</span>&#123;center&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/15/LaTex%E7%9A%84%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/image-20240315231531638.png" class>
+
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>LaTex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>manim的学习使用</title>
+    <url>/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p><code>manim</code>是一个python库，是用来制作数学图形类的演示视频。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>我本人直接在<code>conda</code>中使用<code>pip</code>安装（因为我之前安装过FFmpeg和LaTex了，这里就直接安装本体就好了）。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">pip install manim</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>创建一个<code>python</code>文件，比如我这里叫<code>main.py</code>，输入</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> manim <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SquareToCircle</span>(<span class="title class_ inherited__">Scene</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>):</span><br><span class="line">        circle = Circle()</span><br><span class="line">        circle.set_fill(PINK, opacity=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">        square = Square()</span><br><span class="line">        square.rotate(PI / <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">        self.play(Create(square))</span><br><span class="line">        self.play(Transform(square, circle))</span><br><span class="line">        self.play(FadeOut(square))</span><br><span class="line">        </span><br></pre></td></tr></table></figure></div>
+
+<p>然后在终端输入</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">manim main.py -qh SquareToCircle</span><br></pre></td></tr></table></figure></div>
+
+<p>这里的qh代表高质量的意思，即2560*1440 (60fps)。</p>
+<p>第一个参数是<code>python</code>文件，最后是这个类名</p>
+<p>输出会是：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/image-20240317145618696.png" class>
+
+<p>然后在<code>media/videos/main/2160p60/SquareToCircle.mp4</code>这个相对路径下会有视频生成。效果如下：</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/SquareToCircle_ManimCE_v0.18.0.gif" class>
+
+<h3 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h3><p>这里的qh即为命令参数，代表<code>high quality</code></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line">manim main.py -qh SquareToCircle</span><br></pre></td></tr></table></figure></div>
+
+<p>以下为一些简单的命令参数</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>预览，生成完自动播放</td>
+</tr>
+<tr>
+<td>-r HEIGHT WIDTH</td>
+<td>设置视频长宽</td>
+</tr>
+<tr>
+<td>–format&#x3D;gif</td>
+<td>生成gif而不是MP4</td>
+</tr>
+</tbody></table>
+<h2 id="动画对象"><a href="#动画对象" class="headerlink" title="动画对象"></a>动画对象</h2><h3 id="mobjects"><a href="#mobjects" class="headerlink" title="mobjects"></a>mobjects</h3><p><code>mobjects</code>是<code>manim</code>中所有动画的组成元素。如上个例子所示，通常是在一个Scene类的构造函数中初始化并使用的，比如上文的<code>Square</code>和<code>Circle</code></p>
+<h3 id="创建和显示对象"><a href="#创建和显示对象" class="headerlink" title="创建和显示对象"></a>创建和显示对象</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CreatingMobjects</span>(<span class="title class_ inherited__">Scene</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">construct</span>(<span class="params">self</span>):</span><br><span class="line">        circle = Circle() <span class="comment"># 创建</span></span><br><span class="line">        self.add(circle) <span class="comment"># 添加这个object到场景</span></span><br><span class="line">        self.wait(<span class="number">1</span>) <span class="comment"># 等一秒</span></span><br><span class="line">        self.remove(circle) <span class="comment"># 移除这个object</span></span><br><span class="line">        self.wait(<span class="number">1</span>) <span class="comment"># 等一秒</span></span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/CreatingMobjects_ManimCE_v0.18.0.gif" class>
+
+<h3 id="改变位置"><a href="#改变位置" class="headerlink" title="改变位置"></a>改变位置</h3><p>默认位置是在屏幕中心，即（0，0）坐标的位置。</p>
+<p>通过shift可以向四个方向移动一个单位。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">circle = Circle()</span><br><span class="line">square = Square()</span><br><span class="line">triangle = Triangle()</span><br><span class="line"></span><br><span class="line">circle.shift(LEFT)</span><br><span class="line">square.shift(UP)</span><br><span class="line">triangle.shift(RIGHT)</span><br><span class="line"></span><br><span class="line">self.add(circle, square, triangle)</span><br><span class="line">self.wait(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>或者一些其他方法</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 把circle移动到原点左边2格</span></span><br><span class="line">circle.move_to(LEFT * <span class="number">2</span>) </span><br><span class="line"><span class="comment"># 把square放到circle的左边</span></span><br><span class="line">square.next_to(circle, LEFT)</span><br><span class="line"><span class="comment"># 对齐triangle和circle的左边界</span></span><br><span class="line">triangle.align_to(circle, LEFT)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="修改对象样式"><a href="#修改对象样式" class="headerlink" title="修改对象样式"></a>修改对象样式</h3><p>使用<code>set_stroke</code>修改边界颜色和宽度，使用<code>set_fill</code>修改填充的颜色和透明度。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">circle = Circle().shift(LEFT) <span class="comment"># 大多数方法会返回mobject本身</span></span><br><span class="line">square = Square().shift(UP)</span><br><span class="line">triangle = Triangle().shift(RIGHT)</span><br><span class="line"></span><br><span class="line">circle.set_stroke(color=GREEN, width=<span class="number">20</span>)</span><br><span class="line">square.set_fill(YELLOW, opacity=<span class="number">1.0</span>)</span><br><span class="line">triangle.set_fill(PINK, opacity=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">self.add(circle, square, triangle)</span><br><span class="line">self.wait(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/MobjectStyling_ManimCE_v0.18.0.gif" class>
+
+<h3 id="对象层级关系"><a href="#对象层级关系" class="headerlink" title="对象层级关系"></a>对象层级关系</h3><p>通过修改<code>add</code>中的顺序来改变层级顺序，最后添加的在最上层。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">self.add(triangle, square, circle)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="创建动画"><a href="#创建动画" class="headerlink" title="创建动画"></a>创建动画</h2><p>第一种创建动画的方式，使用一些特殊的动画类来创建。通常需要传入<code>mobject</code>和需要的参数。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">self.play(FadeIn(square)) <span class="comment"># 渐入</span></span><br><span class="line">self.play(Rotate(square, PI / <span class="number">4</span>)) <span class="comment"># 旋转</span></span><br><span class="line">self.play(FadeOut(square)) <span class="comment"># 渐出</span></span><br></pre></td></tr></table></figure></div>
+
+<p>第二种创建动画，使用<code>mobject</code>的<code>animate</code>属性，将本身的属性变化用动画来表现。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">square = Square().set_fill(RED, opacity=<span class="number">1.0</span>)</span><br><span class="line">self.add(square)</span><br><span class="line"></span><br><span class="line">self.play(square.animate.set_fill(WHITE))</span><br><span class="line">self.play(square.animate.shift(UP).rotate(PI / <span class="number">3</span>))</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/SomeAnimations_ManimCE_v0.18.0.gif" class>
+
+<h3 id="修改动画运行时间"><a href="#修改动画运行时间" class="headerlink" title="修改动画运行时间"></a>修改动画运行时间</h3><p>修改<code>play</code>中的<code>run_time</code>参数，默认是1，单位是秒。</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">self.play(square.animate.shift(UP), run_time=<span class="number">3</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="自定义动画"><a href="#自定义动画" class="headerlink" title="自定义动画"></a>自定义动画</h3><blockquote>
+<p>以后有机会再写</p>
+</blockquote>
+<h3 id="mobject的各个点位置"><a href="#mobject的各个点位置" class="headerlink" title="mobject的各个点位置"></a>mobject的各个点位置</h3><p><code>mobject</code>是由边界上一圈点组成的，然后根据这些组成的点，会有一些其他衍生的点（类似于三角形的内心外心之类的点）</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">p1 = (-<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">p2 = (<span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">p3 = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">p4 = (-<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">a = Line(p1, p2).append_points(Line(p2, p3).points).append_points(Line(p3, p4).points)</span><br><span class="line">point_start = a.get_start()</span><br><span class="line">point_end = a.get_end()</span><br><span class="line">point_center = a.get_center()</span><br><span class="line">self.add(</span><br><span class="line">    Text(<span class="string">f&quot;a.get_start() = <span class="subst">&#123;np.<span class="built_in">round</span>(point_start, <span class="number">2</span>).tolist()&#125;</span>&quot;</span>, font_size=<span class="number">24</span>)</span><br><span class="line">    .to_edge(UR)</span><br><span class="line">    .set_color(YELLOW))</span><br><span class="line">self.add(</span><br><span class="line">    Text(<span class="string">f&quot;a.get_end() = <span class="subst">&#123;np.<span class="built_in">round</span>(point_end, <span class="number">2</span>).tolist()&#125;</span>&quot;</span>, font_size=<span class="number">24</span>)</span><br><span class="line">    .next_to(self.mobjects[-<span class="number">1</span>], DOWN)</span><br><span class="line">    .set_color(RED))</span><br><span class="line">self.add(</span><br><span class="line">    Text(<span class="string">f&quot;a.get_center() = <span class="subst">&#123;np.<span class="built_in">round</span>(point_center, <span class="number">2</span>).tolist()&#125;</span>&quot;</span>, font_size=<span class="number">24</span>)</span><br><span class="line">    .next_to(self.mobjects[-<span class="number">1</span>], DOWN)</span><br><span class="line">    .set_color(BLUE))</span><br><span class="line"></span><br><span class="line">self.add(Dot(a.get_start()).set_color(YELLOW).scale(<span class="number">2</span>))</span><br><span class="line">self.add(Dot(a.get_end()).set_color(RED).scale(<span class="number">2</span>))</span><br><span class="line">self.add(Dot(a.get_top()).set_color(GREEN_A).scale(<span class="number">2</span>))</span><br><span class="line">self.add(Dot(a.get_bottom()).set_color(GREEN_D).scale(<span class="number">2</span>))</span><br><span class="line">self.add(Dot(a.get_center()).set_color(BLUE).scale(<span class="number">2</span>))</span><br><span class="line">self.add(Dot(a.point_from_proportion(<span class="number">0.5</span>)).set_color(ORANGE).scale(<span class="number">2</span>))</span><br><span class="line">self.add(*[Dot(x) <span class="keyword">for</span> x <span class="keyword">in</span> a.points])</span><br><span class="line">self.add(a)</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/image-20240318123017948.png" class>
+
+<h3 id="将一个Object转换成另一个"><a href="#将一个Object转换成另一个" class="headerlink" title="将一个Object转换成另一个"></a>将一个Object转换成另一个</h3><p>使用<code>Transform</code>方法来进行转换动画</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">self.camera.background_color = WHITE <span class="comment"># 修改背景颜色</span></span><br><span class="line">m1 = Square().set_color(RED)</span><br><span class="line">m2 = Rectangle().set_color(RED).rotate(<span class="number">0.2</span>)</span><br><span class="line">self.play(Transform(m1,m2))</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/ExampleTransform_ManimCE_v0.18.0.gif" class>
+
+<h2 id="使用文本"><a href="#使用文本" class="headerlink" title="使用文本"></a>使用文本</h2><h3 id="使用text-mobject"><a href="#使用text-mobject" class="headerlink" title="使用text_mobject"></a>使用text_mobject</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">text = Text(<span class="string">&quot;Hello world&quot;</span>, font_size=<span class="number">144</span>)</span><br><span class="line">self.add(text)</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/image-20240318124602547.png" class>
+
+<h4 id="改变字体"><a href="#改变字体" class="headerlink" title="改变字体"></a>改变字体</h4><p>使用Text中的font参数进行修改</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">text = Text(<span class="string">&quot;Hello world&quot;</span>, font_size=<span class="number">144</span>, font=<span class="string">&quot;Chill Round Gothic Normal&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="使用Tex-mobject"><a href="#使用Tex-mobject" class="headerlink" title="使用Tex_mobject"></a>使用Tex_mobject</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">tex = Tex(<span class="string">r&quot;\LaTeX&quot;</span>, font_size=<span class="number">144</span>)</span><br><span class="line">self.add(tex)</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/image-20240318125157820.png" class>
+
+<p>复杂一点的例子，Tex添加引用包，以及使用公式</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">myTemplate = TexTemplate()</span><br><span class="line">myTemplate.add_to_preamble(<span class="string">r&quot;\usepackage&#123;mathrsfs&#125;&quot;</span>)</span><br><span class="line">tex = Tex(</span><br><span class="line">    <span class="string">r&quot;$\mathscr&#123;H&#125; \rightarrow \mathbb&#123;H&#125;$&quot;</span>,</span><br><span class="line">    tex_template=myTemplate,</span><br><span class="line">    font_size=<span class="number">144</span>,</span><br><span class="line">)</span><br><span class="line">self.add(tex)</span><br></pre></td></tr></table></figure></div>
+
+<img lazyload src="/images/loading.svg" data-src="/2024/03/16/manim%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/image-20240318125419960.png" class>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>官方文档： <a class="link" href="https://docs.manim.community/en/stable/index.html">https://docs.manim.community/en/stable/index.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>manim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图解设计模式</title>
+    <url>/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<p>设计模式就是如何组织代码的艺术，类似一个房间里面摆放东西，如何才能把东西放得方便使用和效率。</p>
+<p>(本文只是为了自己复习，如果要深入了解可以参考：<a class="link" href="https://refactoringguru.cn/design-patterns">https://refactoringguru.cn/design-patterns <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>)</p>
+<p>在gof的书中，分为三大类，即创建型模式，结构型模式，行为模式。</p>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="工厂方法-Factory-Method"><a href="#工厂方法-Factory-Method" class="headerlink" title="工厂方法 Factory Method"></a>工厂方法 Factory Method</h3><p>对某个接口的类的创建的封装，方便在创建的时候进行某些操作。</p>
+<p>工厂方法将创建产品的代码与实际使用产品的代码分离， 从而能在不影响其他代码的情况下扩展产品创建部分代码。</p>
+<p>对象池也算一种特殊的工厂模式。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure.png" class title="工厂方法模式结构">
+
+<h3 id="抽象工厂-Abstract-Factory"><a href="#抽象工厂-Abstract-Factory" class="headerlink" title="抽象工厂 Abstract Factory"></a>抽象工厂 Abstract Factory</h3><p>抽象工厂为你提供了一个接口， 可用于创建每个系列产品的对象。 只要代码通过该接口创建对象， 那么你就不会生成与应用程序已生成的产品类型不一致的产品。</p>
+<p>类似于工厂方法，只是把很多需要一起用的产品放到一个工厂来使用</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708752990055-3.png" class title="抽象工厂设计模式">
+
+<h3 id="生成器-Builder"><a href="#生成器-Builder" class="headerlink" title="生成器 Builder"></a>生成器 Builder</h3><p>封装构造函数，方便用户构造。因为有些类构造很复杂，要先怎样后怎样。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708753113967-6.png" class title="生成器设计模式结构">
+
+<h3 id="原型模式-Prototype"><a href="#原型模式-Prototype" class="headerlink" title="原型模式 Prototype"></a>原型模式 Prototype</h3><p>很多语言都内置的<code>Clone</code>接口，方便复制</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708753184045-9.png" class title="原型设计模式的结构">
+
+<h3 id="单例模式-Singleton"><a href="#单例模式-Singleton" class="headerlink" title="单例模式 Singleton"></a>单例模式 Singleton</h3><p>方便全局访问，一般游戏中用到很多。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-zh.png" class title="单例模式结构">
+
+<h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><h3 id="适配器模式-Adapter"><a href="#适配器模式-Adapter" class="headerlink" title="适配器模式 Adapter"></a>适配器模式 Adapter</h3><p>封装接口，方便自己使用。同时也隔离了依赖</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-object-adapter.png" class title="适配器设计模式的结构（对象适配器）">
+
+<h3 id="桥接模式-Bridge"><a href="#桥接模式-Bridge" class="headerlink" title="桥接模式 Bridge"></a>桥接模式 Bridge</h3><p>将调用行为分为两层函数，最普遍的就是springboot中Controller调Service类似的。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-zh-1708753647831-16.png" class title="桥接设计模式">
+
+<h3 id="组合模式-Composite"><a href="#组合模式-Composite" class="headerlink" title="组合模式 Composite"></a>组合模式 Composite</h3><p>组合模式为你提供了两种共享公共接口的基本元素类型： 简单叶节点和复杂容器。 容器中可以包含叶节点和其他容器。 这使得你可以构建树状嵌套递归对象结构。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-zh-1708753701757-19.png" class title="组合设计模式的结构">
+
+<h3 id="装饰模式-Decorator"><a href="#装饰模式-Decorator" class="headerlink" title="装饰模式 Decorator"></a>装饰模式 Decorator</h3><p>用类来修饰另一个类</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708753764653-22.png" class title="装饰设计模式的结构">
+
+<h3 id="外观模式-Facade"><a href="#外观模式-Facade" class="headerlink" title="外观模式 Facade"></a>外观模式 Facade</h3><p>为复杂的API提供一个公开接口</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708753854359-25.png" class title="外观设计模式的结构">
+
+<h3 id="享元模式-Flyweight"><a href="#享元模式-Flyweight" class="headerlink" title="享元模式 Flyweight"></a>享元模式 Flyweight</h3><p>同一个数据在内存中存储过多就可以使用这个模式</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708753939431-28.png" class title="享元设计模式的结构">
+
+<h3 id="代理模式-Proxy"><a href="#代理模式-Proxy" class="headerlink" title="代理模式 Proxy"></a>代理模式 Proxy</h3><p>代理类对被代理类的一些接口进行自己的优化和处理。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754214312-31.png" class title="代理设计模式的结构">
+
+<h2 id="行为模式"><a href="#行为模式" class="headerlink" title="行为模式"></a>行为模式</h2><h3 id="责任链模式-Chain-of-Responsibility"><a href="#责任链模式-Chain-of-Responsibility" class="headerlink" title="责任链模式 Chain of Responsibility"></a>责任链模式 Chain of Responsibility</h3><p>对一个行为的分步处理</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754302159-34.png" class title="责任链设计模式的结构">
+
+<h3 id="命令模式-Command"><a href="#命令模式-Command" class="headerlink" title="命令模式 Command"></a>命令模式 Command</h3><p>把具体的行为封装成类</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754363910-37.png" class title="命令设计模式的结构">
+
+<h3 id="迭代器模式-Iterator"><a href="#迭代器模式-Iterator" class="headerlink" title="迭代器模式 Iterator"></a>迭代器模式 Iterator</h3><p>将集合的遍历行为抽取为单独的迭代器对象。</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754455319-40.png" class title="迭代器设计模式的结构">
+
+<h3 id="中介者模式-Mediator"><a href="#中介者模式-Mediator" class="headerlink" title="中介者模式 Mediator"></a>中介者模式 Mediator</h3><p>把多个类之间的交互行为变成多个类对一个类的交互行为</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754551125-43.png" class title="中介者设计模式的结构">
+
+<h3 id="备忘录模式-Memento"><a href="#备忘录模式-Memento" class="headerlink" title="备忘录模式 Memento"></a>备忘录模式 Memento</h3><p>允许在不暴露对象实现细节的情况下保存和恢复对象之前的状态</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/solution-zh.png" class>
+
+<h3 id="观察者模式-Observer"><a href="#观察者模式-Observer" class="headerlink" title="观察者模式 Observer"></a>观察者模式 Observer</h3><p>观察状态变化，自动触发行为</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708754891676-48.png" class title="观察者设计模式的结构">
+
+<h3 id="状态模式-State"><a href="#状态模式-State" class="headerlink" title="状态模式 State"></a>状态模式 State</h3><p>有限状态机</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-zh-1708754924410-51.png" class title="状态设计模式的结构">
+
+<h3 id="策略模式-Strategy"><a href="#策略模式-Strategy" class="headerlink" title="策略模式 Strategy"></a>策略模式 Strategy</h3><p> 类似命令模式，但是目的不同</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708755004971-54.png" class title="策略设计模式的结构">
+
+<h3 id="模板方法模式-Template-Method"><a href="#模板方法模式-Template-Method" class="headerlink" title="模板方法模式  Template Method"></a>模板方法模式  Template Method</h3><p>抽象类中声明接口和默认实现，子类中可以修改默认实现</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-1708755097255-57.png" class>
+
+<h3 id="访问者模式-Visitor"><a href="#访问者模式-Visitor" class="headerlink" title="访问者模式 Visitor"></a>访问者模式 Visitor</h3><p>将算法与其所作用的对象隔离开来</p>
+<img lazyload src="/images/loading.svg" data-src="/2024/02/24/%E5%9B%BE%E8%A7%A3%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/structure-zh-1708755212550-60.png" class>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>Design Patterns</tag>
       </tags>
   </entry>
 </search>
