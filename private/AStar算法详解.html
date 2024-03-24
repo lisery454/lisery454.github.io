@@ -13,17 +13,23 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://lisery454.github.io/tags/nodejs/"/>
+    <link rel="canonical" href="https://lisery454.github.io/private/astar算法详解.html"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Lisery&#39;s Blog">
-<meta property="og:url" content="https://lisery454.github.io/tags/NodeJS/index.html">
+        <meta name="description" content="很多情况下需要找到图上一个点到另一个点的最短距离，或者说最佳移动路线，比如说游戏中ai寻路。为了找到这条最佳移动路线，我们可以使用很多算法，所以这篇文章将讲解一下如何使用各种算法来进行寻路，最终扩展到A*算法。 我们要解决的问题是：图上一个点到另一个点的最佳路径。 准备：图的表示这里不使用复杂的图表示，而是使用简单的2维数组来表示图。 123const int gridRow &#x3D; 20;const">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A* 算法详解">
+<meta property="og:url" content="https://lisery454.github.io/private/AStar%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3.html">
 <meta property="og:site_name" content="Lisery&#39;s Blog">
+<meta property="og:description" content="很多情况下需要找到图上一个点到另一个点的最短距离，或者说最佳移动路线，比如说游戏中ai寻路。为了找到这条最佳移动路线，我们可以使用很多算法，所以这篇文章将讲解一下如何使用各种算法来进行寻路，最终扩展到A*算法。 我们要解决的问题是：图上一个点到另一个点的最佳路径。 准备：图的表示这里不使用复杂的图表示，而是使用简单的2维数组来表示图。 123const int gridRow &#x3D; 20;const">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-24T19:00:21.610Z">
+<meta property="article:modified_time" content="2024-03-18T06:54:37.603Z">
 <meta property="article:author" content="Lisery">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="C#">
 <meta name="twitter:card" content="summary">
     
     
@@ -36,7 +42,7 @@
     
     <title>
         
-            标签: NodeJS -
+            A* 算法详解 -
         
         Lisery&#39;s Blogs
     </title>
@@ -311,7 +317,7 @@
 
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active"
+                                <a class=""
                                    href="/tags/"
                                         >
                                     <i class="fa-solid fa-tags fa-fw"></i>
@@ -389,7 +395,7 @@
 
                     <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
                         
-                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
                            href="/tags/"
                         >
                             <span>
@@ -456,46 +462,142 @@
             <div class="main-content">
 
                 
-                    <div class="tag-container">
-	<div class="tag-name">
-		<i class="fa-solid fa-tag"></i>&nbsp;NodeJS
-	</div>
-	<div class="tag-post-list">
-		
+                    $friend-link-item-height = 82px
+$friend-link-item-height-tablet = 68px
+$friend-link-item-interval = 16px
+$friend-link-item-border-radius = 9px
 
-<div class="archive-list-container">
-    
-        <section class="archive-item">
-            <div class="archive-item-header flex flex-row items-center mb-2">
-                <span class="archive-year font-semibold text-3xl mr-2">2024</span>
-                <span class="archive-year-post-count text-xs md:text-sm font-bold rounded-small bg-third-background-color py-[2px] px-[10px] border border-border-color">1</span>
-            </div>
-            <ul class="article-list pl-8 text-lg leading-[1.5]">
-              
-                
-                    
-                    <li class="article-item" date-is='01-21'>
-                
-                
-                    <a href="/2024/01/21/How%20to%20use%20Hexo%20to%20build%20your%20self%20blog/" class="block overflow-hidden">
-                        <span class="article-title mb-0.5 text-2xl">How to use Hexo to build your self blog</span>
-                    </a>
-                
-              
-            </ul>
-        </section>
-    
-</div>
+@import '../../common/variables'
 
-	</div>
-</div>
+.page-template-container
+  redefine-container(
+    false,
+    0,
+    0,
+    30px,
+    30px
+  )
 
-<div class="tag-paginator">
-	<div class="paginator">
-    <span class="page-number current">1</span>
-</div>
+  +redefine-mobile()
+    padding 1.2rem 0.2rem
+    box-shadow none
 
-</div>
+    &:hover
+      box-shadow none
+
+  .page-template-content
+    color var(--default-text-color)
+
+    h1, h2, h3, h4, h5, h6
+      &:first-child
+        margin 6px 0 36px 0
+        border-bottom none
+        line-height 1
+
+  #shuoshuo-content
+    img:hover
+      cursor zoom-in
+
+
+  #masonry-container
+    position relative
+    display none
+    opacity 0
+    transition opacity 0.1s ease-in
+
+    .masonry-item
+      position absolute
+      box-sizing border-box
+
+      &:hover
+        img
+          box-shadow var(--redefine-box-shadow)
+
+      img
+        width 100%
+        border-radius $redefine-border-radius-medium
+        box-shadow var(--redefine-box-shadow-flat)
+        cursor zoom-in
+
+  /* Loading */
+  .loading-placeholder
+    display block
+    justify-content center
+    align-items center
+    opacity 1
+    transition opacity 0.1s ease-out
+
+  .loading
+    -webkit-animation gradient-slide 1.1s ease infinite
+    animation gradient-slide 1.1s ease infinite
+    background 0 0 / 300% 300% linear-gradient(120deg, #9c9c9c20 40%, #83838325 50%, #9c9c9c20 60%)
+
+  .flex-grid
+    display grid
+    grid-template-columns repeat(auto-fill, minmax(150px, 1fr))
+    gap 10px
+
+    @media screen and (min-width: 768px)
+      grid-template-columns repeat(auto-fill, minmax(255px, 1fr))
+
+  .card
+    border 1px solid var(--border-color)
+    border-radius $redefine-border-radius-medium
+    box-sizing border-box
+    min-height 80vh
+    padding 30px
+
+  @keyframes gradient-slide
+    0%
+      background-position 100% 50%
+
+    to
+      background-position 0% 50%
+
+  /* Images */
+  .image-container
+    position relative
+
+  .image-title
+    position absolute
+    top 5px
+    left 5px
+    color var(--default-text-color)
+    background-color var(--background-color-transparent-40)
+    padding 5px 10px
+    font-size 14px
+    opacity 0
+    backdrop-filter blur(10px)
+    -webkit-backdrop-filter blur(10px)
+    border-radius $redefine-border-radius-small
+    transition opacity 0.2s ease-out
+
+  .image-description
+    position absolute
+    bottom 11px
+    right 5px
+    color var(--default-text-color)
+    background-color var(--background-color-transparent-40)
+    padding 5px 10px
+    font-size 14px
+    opacity 0
+    max-width 80%
+    backdrop-filter blur(10px)
+    -webkit-backdrop-filter blur(10px)
+    border-radius $redefine-border-radius-small
+    transition opacity 0.2s ease-out
+
+  .image-container:hover .image-title, .image-container:hover .image-description
+    opacity 1
+
+  .image-container img
+    width 100%
+    height auto
+    transition box-shadow 0.3s ease-in-out
+    overflow hidden
+
+  .image-container:hover img
+    box-shadow var(--redefine-box-shadow-hover)
 
 
                 
