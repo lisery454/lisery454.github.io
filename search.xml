@@ -16068,7 +16068,7 @@
 <p>一般日语固有词前加お，汉字词前加ご</p>
 ]]></content>
       <categories>
-        <category>notes</category>
+        <category>summary</category>
       </categories>
       <tags>
         <tag>Japanese</tag>
@@ -16926,11 +16926,109 @@
 
 ]]></content>
       <categories>
-        <category>notes</category>
+        <category>summary</category>
       </categories>
       <tags>
         <tag>C#</tag>
         <tag>Design Patterns</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A* 算法解释</title>
+    <url>/2024/03/18/AStar%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>很多情况下需要找到图上一个点到另一个点的最短距离，或者说最佳移动路线，比如说游戏中ai寻路。为了找到这条最佳移动路线，我们可以使用很多算法，所以这篇文章将讲解一下如何使用各种算法来进行寻路，最终扩展到A*算法。</p>
+<p>我们要解决的问题是：图上一个点到另一个点的最佳路径。</p>
+<h2 id="准备：图的表示"><a href="#准备：图的表示" class="headerlink" title="准备：图的表示"></a>准备：图的表示</h2><p>这里不使用复杂的图表示，而是尽量从简。使用<code>string</code>来表示某个点，<code>Graph</code>类记录了每个点在2维平面上的坐标，也就是<code>_vertex</code>这个字段中存储的数据；还有就是连接点的边的数据，在<code>_edges</code>中存储。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Graph</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> Dictionary&lt;<span class="built_in">string</span>, List&lt;(<span class="built_in">string</span>, <span class="built_in">double</span>)&gt;&gt; _edges = <span class="keyword">new</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> Dictionary&lt;<span class="built_in">string</span>, (<span class="built_in">double</span>, <span class="built_in">double</span>)&gt; _vertex = <span class="keyword">new</span>();</span><br><span class="line">    </span><br><span class="line"><span class="comment">//    ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>很自然而然的想到的是从起始点往周围的点走，然后每次走完记录一下之后可以往哪里走，然后不停的找下一个走的点，直到找到终点。可以想象成玩一个RPG游戏，地图上有很多场景，可以理解为图中的点。每次玩家都是从新手村出发，直到最后找到最终boss的地方。玩家的思路肯定是每次要先找新手村附近离新手村最近的场景A，然后是找新手村和场景A附近距离最近的场景B，然后是找新手村，场景A，场景B附近距离最近的场景C，直到最后找到最终boss。这是一种很自然的想法，总体思路是总是前往花费最小的没去过的点。</p>
+<p>用代码实现如下，需要保存要去但是还没有去的场景<code>frontier</code>，以及保存自己前往场景的路线<code>cameFrom</code>，以及实时的前往每个场景的花费，可以是时间，或者是其他的。</p>
+<p>每次更新花费的时候比较当前记录的花费是否大于计算出来的新花费，然后再更新。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;<span class="built_in">string</span>&gt; <span class="title">Dijkstra</span>(<span class="params">Graph graph, <span class="built_in">string</span> begin, <span class="built_in">string</span> end</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> frontier = <span class="keyword">new</span> PriorityQueue&lt;<span class="built_in">string</span>, <span class="built_in">double</span>&gt;(); <span class="comment">// 边界上还未探索过的点</span></span><br><span class="line">    frontier.Enqueue(begin, <span class="number">0</span>); <span class="comment">// 刚开始只到过起点</span></span><br><span class="line">    <span class="keyword">var</span> cameFrom = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>?&gt;(); <span class="comment">// 某个点从哪个点走来</span></span><br><span class="line">    cameFrom[begin] = <span class="literal">null</span>; <span class="comment">// null表示起点</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> costSoFar = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">double</span>&gt;(); <span class="comment">// 目前的走到某个点的消耗</span></span><br><span class="line">    costSoFar[begin] = <span class="number">0</span>; <span class="comment">// 到起点的花费为0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (frontier.TryDequeue(<span class="keyword">out</span> <span class="keyword">var</span> current, <span class="keyword">out</span> _))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (current == end) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> (next, cost) <span class="keyword">in</span> graph.GetNeighbors(current))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> newCost = costSoFar[current] + cost;</span><br><span class="line">            <span class="keyword">if</span> (!costSoFar.TryGetValue(next, <span class="keyword">out</span> <span class="keyword">var</span> costRecord) || newCost &lt; costRecord)</span><br><span class="line">            &#123;</span><br><span class="line">                costSoFar[next] = newCost;</span><br><span class="line">                frontier.Enqueue(next, newCost); <span class="comment">// 把花费作为优先级排序</span></span><br><span class="line">                cameFrom[next] = current;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> GetPathFromCameFrom(cameFrom, begin, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Greedy-算法"><a href="#Greedy-算法" class="headerlink" title="Greedy 算法"></a>Greedy 算法</h2><p>贪心算法的每次选择下一点的思路从Dijkstra计算每次前往某个点的成本，变成了计算这个点到终点的预估成本。</p>
+<p>因为还没有到终点，无法获得准确成本，所以只能通过已知信息预测。而这个预测方法可以有很多种，比如通过曼哈顿距离预测，或者是直线距离预测。</p>
+<p>总体的代码如下，总体上类似Dijkstra，但是不用保存每次的花费，再计算下一步的优先级上也是采取预估成本。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;<span class="built_in">string</span>&gt; <span class="title">Greedy</span>(<span class="params">Graph graph, <span class="built_in">string</span> begin, <span class="built_in">string</span> end</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> frontier = <span class="keyword">new</span> PriorityQueue&lt;<span class="built_in">string</span>, <span class="built_in">double</span>&gt;(); <span class="comment">// 边界上还未探索过的点</span></span><br><span class="line">    <span class="keyword">var</span> cameFrom = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>?&gt;(); <span class="comment">// 某个点从哪个点走来</span></span><br><span class="line">    frontier.Enqueue(begin, <span class="number">0</span>);</span><br><span class="line">    cameFrom[begin] = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (frontier.TryDequeue(<span class="keyword">out</span> <span class="keyword">var</span> current, <span class="keyword">out</span> _))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (current == end) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> (next, _) <span class="keyword">in</span> graph.GetNeighbors(current))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!cameFrom.ContainsKey(next))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> priority = graph.EstimatedCost(next, end); <span class="comment">// 采取预估成本</span></span><br><span class="line">                frontier.Enqueue(next, priority);</span><br><span class="line">                cameFrom[next] = current;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> GetPathFromCameFrom(cameFrom, begin, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h2><p>看了上面两种算法，A*算法就变得很简单了。所谓的A*算法，就是结合了上述两种方案，把选择下一步的成本变成了目前已知的到点的距离加上预估的距离成本。如果要更加优化，可以考虑这两个成本的线性组合。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;<span class="built_in">string</span>&gt; <span class="title">AStar</span>(<span class="params">Graph graph, <span class="built_in">string</span> begin, <span class="built_in">string</span> end</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> frontier = <span class="keyword">new</span> PriorityQueue&lt;<span class="built_in">string</span>, <span class="built_in">double</span>&gt;(); <span class="comment">// 边界上还未探索过的点</span></span><br><span class="line">    frontier.Enqueue(begin, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> cameFrom = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>?&gt;(); <span class="comment">// 某个点从哪个点走来</span></span><br><span class="line">    cameFrom[begin] = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> costSoFar = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">double</span>&gt;(); <span class="comment">// 目前的走到某个点的消耗</span></span><br><span class="line">    costSoFar[begin] = <span class="number">0</span>; <span class="comment">// 到起点的花费为0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (frontier.TryDequeue(<span class="keyword">out</span> <span class="keyword">var</span> current, <span class="keyword">out</span> _))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (current == end) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> (next, cost) <span class="keyword">in</span> graph.GetNeighbors(current))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> newCost = costSoFar[current] + cost;</span><br><span class="line">            <span class="keyword">if</span> (!costSoFar.TryGetValue(next, <span class="keyword">out</span> <span class="keyword">var</span> costRecord) || newCost &lt; costRecord)</span><br><span class="line">            &#123;</span><br><span class="line">                costSoFar[next] = newCost;</span><br><span class="line">                <span class="keyword">var</span> priority = newCost + graph.EstimatedCost(next, end); <span class="comment">// 综合两者考虑优先级</span></span><br><span class="line">                frontier.Enqueue(next, priority);</span><br><span class="line">                cameFrom[next] = current;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> GetPathFromCameFrom(cameFrom, begin, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>Algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CSP中图层的各种类型和解释</title>
+    <url>/2024/03/26/CSP%E4%B8%AD%E5%9B%BE%E5%B1%82%E7%9A%84%E5%90%84%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%A7%A3%E9%87%8A/</url>
+    <content><![CDATA[<p>各种绘画软件中，图层都会有很多类型，比如说正片叠底，变亮等等类型。鉴于以理解为目的，就把这些不同的常用类型梳理了一下作用，记录于本文。本文使用的软件是CSP，但是应该和其他软件类似，比如PS，SAI等。</p>
+<h2 id="多图层含义"><a href="#多图层含义" class="headerlink" title="多图层含义"></a>多图层含义</h2><p>可以把多图层想象成一个很多幅画的队列，要显示时把所有图层中的颜色按照一定的规则混合起来。这个混合的规则就是图层类型决定的。图层类型不同混合规则也不同。</p>
+<p>混合图层是是按照自底向上进行混合。这里记每一步混合产生的中间结果颜色为$C_{r}$，每次之前的混合图层颜色为$C_{p}$，图层的颜色为$C_{l}$，而混合规则为$f$​。</p>
+<p>$C.r$，$C.g$，$C.b$，$C.a$分别表示颜色的各个分量，范围均正则化到为0到1<br>$$<br>C_r &#x3D; f(C_p, C_l) * C_l.a + C_p * C_p.a<br>$$<br>下文中所讨论的仅为混合规则$f$，也就是不考虑透明度的情况。</p>
+<h2 id="常用图层解释"><a href="#常用图层解释" class="headerlink" title="常用图层解释"></a>常用图层解释</h2><h3 id="正常"><a href="#正常" class="headerlink" title="正常"></a>正常</h3><p>就是默认的图层类型，显示的颜色就是本来存在于这个图层上的颜色。</p>
+<p>即最终显示颜色为<br>$$<br>f(C_p, C_l)&#x3D; C_l<br>$$</p>
+<h3 id="变暗-变亮"><a href="#变暗-变亮" class="headerlink" title="变暗&#x2F;变亮"></a>变暗&#x2F;变亮</h3><p>选取两个图层中RGB分量较小（较大）的分量作为显示的颜色</p>
+<p>变暗为<br>$$<br>f(C_p, C_l)&#x3D; Color{\min(C_p.r, C_l.r),;\min(C_p.g, C_l.g),;\min(C_p.b, C_l.b)}<br>$$<br>变亮为<br>$$<br>f(C_p, C_l)&#x3D; Color{\max(C_p.r, C_l.r),;\max(C_p.g, C_l.g),;\max(C_p.b, C_l.b)}<br>$$</p>
+<h3 id="正片叠底"><a href="#正片叠底" class="headerlink" title="正片叠底"></a>正片叠底</h3><p>作为最常用的压暗图层，相比于变暗图层，正片叠底会变得更深。因为正片叠底是计算两个图层分量的乘积而不是最小值。<br>$$<br>\begin{align}<br>f(C_p, C_l) &amp;&#x3D; Color{C_p.r * C_l.r,;C_p.g* C_l.g,;C_p.b* C_l.b} \<br>            &amp;&#x3D; C_p * C_l<br>\end{align}<br>$$</p>
+<h3 id="滤色"><a href="#滤色" class="headerlink" title="滤色"></a>滤色</h3><p>类似于正片叠底，是两个通道相乘得到的结果，但是通量要是预先被1减过的那部分，即通道的反向，记作$C^T&#x3D;1-C$，和正片叠底刚好相反。<br>$$<br>f(C_p, C_l)&#x3D; (C_p^T * C_l^T)^T<br>$$</p>
+<h3 id="颜色减淡"><a href="#颜色减淡" class="headerlink" title="颜色减淡"></a>颜色减淡</h3><p>通常用在光照，高光的地方<br>$$<br>f(C_p, C_l)&#x3D; C_p + (C_p * C_l) &#x2F; C_l^T<br>$$<br>简单分析一下，当$C_l$为0时，颜色就是本来的颜色；当$C_l$为1时，颜色为白色。这里说一下当它计算出结果大于1时，默认会限制为1。</p>
+<p>通常这个模式还有一个变种，那就是颜色减淡（发光）。</p>
+<p>唯一的区别在于颜色减淡（发光）模式会在图层边缘产生一段高饱和的颜色，可以用来模拟光的照射在物体上的边缘高饱和。</p>
+<h3 id="线性减淡"><a href="#线性减淡" class="headerlink" title="线性减淡"></a>线性减淡</h3><p>非常朴实无华<br>$$<br>f(C_p, C_l)&#x3D; C_p + C_l<br>$$<br>相比于颜色减淡模式，混合的颜色更加偏向于白色。</p>
+<h2 id="图层组的穿透属性"><a href="#图层组的穿透属性" class="headerlink" title="图层组的穿透属性"></a>图层组的穿透属性</h2><p>在使用图形组时，会发现图层组的模式比图层多了一个，叫穿透。</p>
+<p>穿透的含义就是，本来渲染图片时，会先处理图层组内的图层，合并为一个图片后再和外面的图片混合。如果设置为穿透的话，这个图层组就相当于不存在，直接和外面的图片混合。</p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>CSP</tag>
+        <tag>Draw</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C#中泛型的协变，逆变</title>
+    <url>/2024/04/10/CSharp%E4%B8%AD%E6%B3%9B%E5%9E%8B%E7%9A%84%E5%8D%8F%E5%8F%98%EF%BC%8C%E9%80%86%E5%8F%98/</url>
+    <content><![CDATA[<p>本文简单介绍一下什么是协变和逆变。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>在程序中使用泛型会觉得很方便，但有时也有些问题，比如说我想让两个泛型类有类似于继承的关系，可以把一种泛型类赋值给另一个泛型类，类似于把子类赋值给父类变量的感觉。</p>
+<p>这就是协变和逆变的基本概念，也就是说，如果两个类为<code>Base</code>和<code>Derived</code>，分别为父类和子类，那么针对某个泛型接口或泛型委托，可以做到<code>IFoo&lt;Base&gt;</code>和<code>IFoo&lt;Derived&gt;</code>在某些情况下可以类似于父子类的关系。</p>
+<p>协变指<code>IFoo&lt;Derived&gt;</code>可以赋值给<code>IFoo&lt;Base&gt;</code>，而逆变指<code>IFoo&lt;Base&gt;</code>可以赋值给<code>IFoo&lt;Derived&gt;</code>。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="协变"><a href="#协变" class="headerlink" title="协变"></a>协变</h3><p>协变的实现需要使用<code>out</code>关键字，用来修饰泛型变量。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFoo</span>&lt;<span class="keyword">out</span> <span class="title">T</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">Print</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>比如这段代码，<code>out</code>的意思是，<code>T</code>只能作为输出的参数，而不能作为输入的参数。也就是说<code>Print</code>方法中，只能用<code>T</code>作为返回参数，而不是输入参数。</p>
+<p>简单实现一个继承这个接口的类</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> : <span class="title">IFoo</span>&lt;<span class="title">string</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">Print</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello, World&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>具体使用中，就可以把<code>Foo</code>类赋值给<code>IFoo&lt;object&gt;</code>变量了。</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"></span><br><span class="line">IFoo&lt;<span class="built_in">object</span>&gt; fooObj = foo;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(fooObj.Print());</span><br></pre></td></tr></table></figure></div>
+
+<p>具体为什么能这样的原因是程序本身还是把<code>fooObj</code>当作<code>IFoo&lt;string&gt;</code>来进行输入输出，这时返回的还是<code>string</code>，然后会发现<code>IFoo&lt;object&gt;</code>接口需要返回一个<code>object</code>，因为<code>object</code>和<code>string</code>是父子类关系，因此，程序也能正确返回。</p>
+<h3 id="逆变"><a href="#逆变" class="headerlink" title="逆变"></a>逆变</h3><p>逆变和协变同理，使用<code>in</code>关键字。</p>
+<p>简单过一下代码</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"></span><br><span class="line">IFoo&lt;<span class="built_in">string</span>&gt; fooStr = foo;</span><br><span class="line"></span><br><span class="line">fooStr.Print(<span class="string">&quot;Hello, World&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFoo</span>&lt;<span class="keyword">in</span> <span class="title">T</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Print</span>(<span class="params">T t</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Foo</span> : <span class="title">IFoo</span>&lt;<span class="title">object</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Print</span>(<span class="params"><span class="built_in">object</span> t</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>和上文协变类似，只能在输入参数中使用<code>T</code>，那么本来输入的是<code>string</code>，也同时能赋值给<code>object</code>，那么程序也不会出问题。</p>
+<h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><p>协变和逆变只能支持接口和委托，因为类中可能会出现字段，导致不能赋值。</p>
+<p>还有一点就是可变成员作为输入参数，则当前成员的可变性和输入成员可变性相反。具体可以这么理解，参考以下代码</p>
+<div class="highlight-container" data-rel="C#"><figure class="iseeu highlight c#"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFoo</span>&lt;<span class="keyword">in</span> <span class="title">T</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IBar</span>&lt;<span class="keyword">in</span> <span class="title">T</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Print</span>(<span class="params">IFoo&lt;T&gt; fo</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>第一句说明<code>IFoo&lt;Base&gt;</code>可以赋值给<code>IFoo&lt;Derived&gt;</code>，但是在<code>IBar</code>中，如果是逆变的，则有可能会有<code>IFoo&lt;Derived&gt;</code>的输入，则<code>IFoo</code>作为输入参数，要求<code>IFoo&lt;Derived&gt;</code>可以赋值给<code>IFoo&lt;Base&gt;</code>，这是显然不行的，所以<code>IBar</code>必须用<code>out</code>关键字来修饰。</p>
+]]></content>
+      <categories>
+        <category>notes</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
       </tags>
   </entry>
 </search>
